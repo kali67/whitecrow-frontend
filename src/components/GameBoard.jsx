@@ -54,6 +54,10 @@ export default class GameBoard extends React.Component {
           description={tileInformation[j - 1].description}
           action={tileInformation[j - 1].action}
           date={tileInformation[j - 1].date}
+          dateColor={tileInformation[j - 1].dateColor}
+          dateTextColor={tileInformation[j - 1].dateTextColor}
+          descriptionColor={tileInformation[j - 1].descriptionColor}
+          image={tileInformation[j - 1].image}
         />
       );
       if (j % 7 === 0) {
