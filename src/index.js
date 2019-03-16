@@ -1,6 +1,6 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import React from "react";
+import ReactDOM from "react-dom";
+import GameBoard from "./components/GameBoard";
+import "./index.css";
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<GameBoard />, document.getElementById("root"));
