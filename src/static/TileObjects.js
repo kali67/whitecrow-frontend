@@ -1,7 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 
-import img from "./image/starting_flags.png";
+import img from "./image/sunwhite.png";
+import piggyBank from "./image/piggybankwhite.png";
+import moon from "./image/moonwhite.png";
+import sleep from "./image/sleepwhite.png";
+import beach from "./image/beachwhite.png";
+import mail from "./image/mailwhite.png";
+import briefCase from "./image/briefcase.png";
+import whitecrow from "./image/whitecrowwhite.png";
 
 const Day = styled.div`
   background: #3e2a70;
@@ -11,6 +18,20 @@ const Day = styled.div`
   justify-content: center; /* align horizontal */
   align-items: center; /* align vertical */
   color: white;
+`;
+
+const LargeImage = styled.div`
+  background-image: url(${props => props.image});
+  height: 70px;
+  width: 70px;
+  background-size: cover;
+`;
+
+const MediumImage = styled.div`
+  background-image: url(${props => props.image});
+  height: 50px;
+  width: 50px;
+  background-size: cover;
 `;
 
 export const days = [
@@ -24,13 +45,14 @@ export const days = [
 ];
 
 export const tileInformation = [
-  { color: "#181517", title: "Start", image: img },
+  { color: "#181517", title: "Start" },
   {
     date: 1,
     color: "#549A8B",
     dateColor: "#E3613A",
     title: "Mail",
-    description: "Take a mail card."
+    action: "Take a mail card.",
+    image: <MediumImage image={mail} />
   },
   {
     date: 2,
@@ -45,7 +67,8 @@ export const tileInformation = [
     color: "#549A8B",
     dateColor: "#D14873",
     title: "Mail",
-    description: "Recieved mail, take a mail card."
+    action: "Take a mail card.",
+    image: <MediumImage image={mail} />
   },
   {
     date: 4,
@@ -60,7 +83,8 @@ export const tileInformation = [
     color: "#549A8B",
     dateColor: "#DC402E",
     title: "Mail",
-    description: "Take a mail card."
+    action: "Take a mail card.",
+    image: <MediumImage image={mail} />
   },
   {
     date: 6,
@@ -72,7 +96,13 @@ export const tileInformation = [
       "A natural disaster occurred. This action applies to everyone.",
     action: "Pay $100"
   },
-  { date: 7, color: "#69A0CB", dateColor: "#E3613A", title: "Rest Day" },
+  {
+    date: 7,
+    color: "#69A0CB",
+    dateColor: "#E3613A",
+    title: "Rest Day",
+    image: <LargeImage image={img} />
+  },
   {
     date: 8,
     color: "#612E73",
@@ -103,7 +133,8 @@ export const tileInformation = [
     color: "#549A8B",
     dateColor: "#DC402E",
     title: "Mail",
-    description: "Take a mail card."
+    action: "Take a mail card.",
+    image: <MediumImage image={mail} />
   },
   {
     date: 12,
@@ -122,7 +153,13 @@ export const tileInformation = [
     description: "The server hosting bill arrives.",
     action: "Pay $75"
   },
-  { date: 14, color: "#69A0CB", dateColor: "#F2F1E7", title: "Rest Day" },
+  {
+    date: 14,
+    color: "#69A0CB",
+    dateColor: "#F2F1E7",
+    title: "Rest Day",
+    image: <LargeImage image={beach} />
+  },
   {
     date: 15,
     color: "#612E73",
@@ -136,7 +173,8 @@ export const tileInformation = [
     color: "#549A8B",
     dateColor: "#F2F1E7",
     title: "Mail",
-    description: "Take a mail card."
+    action: "Take a mail card.",
+    image: <MediumImage image={mail} />
   },
   {
     date: 17,
@@ -160,21 +198,23 @@ export const tileInformation = [
     dateColor: "#5D3172",
     dateTextColor: "#FFFFFF",
     title: "Mail",
-    description: "Take a mail card."
+    action: "Take a mail card.",
+    image: <MediumImage image={mail} />
   },
   {
     date: 20,
     color: "#D63D82",
     dateColor: "#F2EB67",
     title: "Change",
-    description: "Everyone go back a day"
+    description: "Last minute chagen, everyone go back a day."
   },
   {
     date: 21,
     color: "#69A0CB",
     dateColor: "#32356F",
     dateTextColor: "#FFFFFF",
-    title: "Rest Day"
+    title: "Rest Day",
+    image: <LargeImage image={sleep} />
   },
   {
     date: 22,
@@ -196,7 +236,8 @@ export const tileInformation = [
     color: "#549A8B",
     dateColor: "#977F6B",
     title: "Mail",
-    description: "Recieved mail, take a mail card."
+    action: "Take a mail card.",
+    image: <MediumImage image={mail} />
   },
   {
     date: 25,
@@ -212,7 +253,8 @@ export const tileInformation = [
     dateColor: "#DC402E",
     dateTextColor: "#FFFFFF",
     title: "Mail",
-    description: "Take a mail card."
+    action: "Take a mail card.",
+    image: <MediumImage image={mail} />
   },
   {
     date: 27,
@@ -222,7 +264,13 @@ export const tileInformation = [
     title: "Opportunity",
     description: "Opportunity for improvement. Take it of leave it."
   },
-  { date: 28, color: "#69A0CB", dateColor: "#F2F1E7", title: "Rest Day" },
+  {
+    date: 28,
+    color: "#69A0CB",
+    dateColor: "#F2F1E7",
+    title: "Rest Day",
+    image: <LargeImage image={moon} />
+  },
   {
     date: 29,
     color: "#F8DA56",
@@ -230,7 +278,8 @@ export const tileInformation = [
     dateTextColor: "#FFFFFF",
     title: "",
     description: "For the next 2 weeks, your expenses are reduced by 50%.",
-    descriptionColor: "#000000"
+    descriptionColor: "#000000",
+    image: <MediumImage image={briefCase} />
   },
   {
     date: 30,
@@ -245,9 +294,16 @@ export const tileInformation = [
     color: "#181517",
     dateColor: "#632C7F",
     dateTextColor: "#FFFFFF",
-    action: "Recieve $325"
+    action: "Recieve $325",
+    image: <MediumImage image={whitecrow} />
   },
   { color: "#c1bdbd", title: "" },
-  { color: "#A53B37", title: "" },
-  { color: "#A53B37", title: "" }
+  {
+    color: "#A53B37",
+    title: "",
+    description:
+      "Here is the $$$ that was collected duing the election of the new CEO of the company.",
+    action: "First player to roll a 6 takes all."
+  },
+  { color: "#A53B37", title: "", image: <LargeImage image={piggyBank} /> }
 ];

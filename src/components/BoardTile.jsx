@@ -11,7 +11,6 @@ const Date = styled.div`
   height: 20px;
   font-family: "Patrick Hand", cursive;
   background-color: ${props => props.dateColor};
-//   break-after: always !important; /* New syntax */
 `;
 
 const Title = styled.div`
@@ -26,22 +25,24 @@ const TileWrapper = styled.div`
   display: flex
   flex-direction: row
   flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
   background: ${props => props.inputColor};
   height: 115px;
   width: 140px;
   padding: 6px;
   &:hover {
     border-style: solid;
-    border-width: 1px;
-    border-color: red;
-    padding: 5px;
+    border-width: 2.5px;
+    border-color: #FFFFFF;
+    padding: 3.5px;
   }
 `;
 
 const Description = styled.div`
   flex-grow: 1;
   text-align: center;
-  font-size: 0.85em;
+  font-size: 0.75em;
   width: 100%;
   color: ${props => props.descriptionColor || "#FFFFFF"};
 `;
@@ -54,11 +55,8 @@ const Action = styled.div`
 
 const Image = styled.div`
   background-image: url(${props => props.image});
-  height: 68px;
-  width: 115px;
-  left: 16px;
-  top: 35px;
-  position: absolute;
+  height: 70px;
+  width: 70px;
   background-size: cover;
 `;
 
@@ -85,8 +83,8 @@ export default class BoardTile extends React.Component {
           </Date>
         ) : null}
         <HR />
-        {/* {this.props.image ? <Image image={this.props.image} /> : null} */}
-        {/* <HR /> */}
+        {this.props.image}
+        <HR />
         <Description descriptionColor={this.props.descriptionColor}>
           {this.props.description}
         </Description>

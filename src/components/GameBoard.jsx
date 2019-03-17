@@ -71,7 +71,7 @@ export default class GameBoard extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <PageTitle>What could go wrong in a Software Project?</PageTitle>
+        <PageTitle>What Could Go Wrong in a Software Project?</PageTitle>
         <BoardWrapper>
           <Padding />
           <DayFlex>{days}</DayFlex>
