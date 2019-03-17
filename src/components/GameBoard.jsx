@@ -16,12 +16,13 @@ const Wrapper = styled.div`
 
 const BoardWrapper = styled.div`
   background-color: #c1bdbd;
-  width: 1090px;
-  height: 725px;
+  width: 980px;
+  height: 640px;
   margin-top: 10px;
   border-radius: 20px;
-  position: relative;
-  margin-left: 150px;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
 `;
 
 const DayFlex = styled.div`

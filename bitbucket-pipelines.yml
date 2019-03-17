@@ -6,7 +6,7 @@
 #
 # #######################################################
 pipelines:
-  default:
+  master:
     - step:
         name: Deploy to Heroku
         services:

@@ -2,21 +2,21 @@ import React from "react";
 import styled from "styled-components";
 
 const Date = styled.div`
-  font-size: 0.85em;
+  font-size: 0.8em;
   color: ${props => props.dateTextColor}
   border: 1px solid ${props => props.dateColor};
   border-radius: 100%;
   text-align: center;
-  width: 20px;
-  height: 20px;
+  width: 16px;
+  height: 16px;
   font-family: "Patrick Hand", cursive;
   background-color: ${props => props.dateColor};
 `;
 
 const Title = styled.div`
-  flex-grow: 100;
+  flex-grow: 1;
   text-align: center;
-  font-size: 1.25em;
+  font-size: 1em;
   color: white;
 `;
 
@@ -28,8 +28,8 @@ const TileWrapper = styled.div`
   align-items: center;
   justify-content: center;
   background: ${props => props.inputColor};
-  height: 115px;
-  width: 140px;
+  height: 100px;
+  width: 125px;
   padding: 6px;
   &:hover {
     border-style: solid;
@@ -42,7 +42,7 @@ const TileWrapper = styled.div`
 const Description = styled.div`
   flex-grow: 1;
   text-align: center;
-  font-size: 0.75em;
+  font-size: 0.7em;
   width: 100%;
   color: ${props => props.descriptionColor || "#FFFFFF"};
 `;
@@ -51,13 +51,6 @@ const Action = styled.div`
   flex-grow: 1;
   text-align: center;
   color: white;
-`;
-
-const Image = styled.div`
-  background-image: url(${props => props.image});
-  height: 70px;
-  width: 70px;
-  background-size: cover;
 `;
 
 const HR = styled.div`

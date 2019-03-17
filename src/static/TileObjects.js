@@ -12,8 +12,8 @@ import whitecrow from "./image/whitecrowwhite.png";
 
 const Day = styled.div`
   background: #3e2a70;
-  height: 50px;
-  width: 152px;
+  height: 45px;
+  width: 137px;
   display: flex;
   justify-content: center; /* align horizontal */
   align-items: center; /* align vertical */
@@ -22,15 +22,15 @@ const Day = styled.div`
 
 const LargeImage = styled.div`
   background-image: url(${props => props.image});
-  height: 70px;
-  width: 70px;
+  height: 65px;
+  width: 65px;
   background-size: cover;
 `;
 
 const MediumImage = styled.div`
   background-image: url(${props => props.image});
-  height: 50px;
-  width: 50px;
+  height: 40px;
+  width: 40px;
   background-size: cover;
 `;
 
