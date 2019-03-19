@@ -7,8 +7,8 @@ const Date = styled.div`
   border: 1px solid ${props => props.dateColor};
   border-radius: 100%;
   text-align: center;
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   font-family: "Patrick Hand", cursive;
   background-color: ${props => props.dateColor};
 `;
@@ -28,8 +28,8 @@ const TileWrapper = styled.div`
   align-items: center;
   justify-content: center;
   background: ${props => props.inputColor};
-  height: 100px;
-  width: 125px;
+  height: 120px;
+  width: 137px;
   padding: 6px;
   &:hover {
     border-style: solid;

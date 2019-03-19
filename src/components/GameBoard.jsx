@@ -28,7 +28,7 @@ const Wrapper = styled.div`
 const BoardWrapper = styled.div`
   background-color: #c1bdbd;
   width: 980px;
-  height: 640px;
+  height: 682px;
   margin-top: 10px;
   border-radius: 20px;
   display: flex;
