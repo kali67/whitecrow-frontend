@@ -14,6 +14,7 @@ import {
   BeachImage,
   MoonImage
 } from "../static/TileObjects";
+import Navbar from "./Navbar";
 
 const PageTitle = styled.h1`
   color: white;
@@ -44,6 +45,11 @@ const DayFlex = styled.div`
 
 const Padding = styled.div`
   height: 12.5px;
+`;
+
+const Scrollable = styled.div`
+  overflow-y: scroll;
+  height: 92vh;
 `;
 
 export default class GameBoard extends React.Component {
@@ -117,13 +123,17 @@ export default class GameBoard extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <PageTitle>What Could Go Wrong in a Software Project?</PageTitle>
-        <BoardWrapper>
-          <Padding />
-          <DayFlex>{days}</DayFlex>
-          <Padding />
-          {this.state.weeks}
-        </BoardWrapper>
+        <Scrollable>
+          <PageTitle>Hello world?</PageTitle>
+          <BoardWrapper>
+            <Padding />
+            <DayFlex>{days}</DayFlex>
+            <Padding />
+            {this.state.weeks}
+          </BoardWrapper>
+        </Scrollable>
+
+        {/* <Navbar /> */}
       </React.Fragment>
     );
   }

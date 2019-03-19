@@ -1,9 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import GameBoard from "./components/GameBoard";
-import "./index.css";
 import axios from "axios";
+
+import "./index.css";
+import App from "./components/App";
 
 axios.defaults.baseURL = "http://localhost:8080";
 
-ReactDOM.render(<GameBoard />, document.getElementById("root"));
+ReactDOM.render(<App />, document.getElementById("root"));
