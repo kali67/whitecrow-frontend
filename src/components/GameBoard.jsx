@@ -4,7 +4,7 @@ import axios from "axios";
 
 import BoardTile from "./BoardTile";
 import {
-  days,
+  Days,
   MailImage,
   WhitecrowImage,
   PiggyBankImage,
@@ -14,9 +14,15 @@ import {
   BeachImage,
   MoonImage
 } from "../static/TileObjects";
-import Navbar from "./Navbar";
+import CardModal from "./CardModal";
+import Spinner from "./Spinner";
 
-const PageTitle = styled.h1`
+const PageTitle = styled.h2`
+  color: white;
+  text-align: center;
+`;
+
+const PageDescription = styled.h6`
   color: white;
   text-align: center;
 `;
@@ -37,12 +43,6 @@ const BoardWrapper = styled.div`
   margin: auto;
 `;
 
-const DayFlex = styled.div`
-  display: flex;
-  flex-direction: row;
-  margin-left: 10px;
-`;
-
 const Padding = styled.div`
   height: 12.5px;
 `;
@@ -56,9 +56,22 @@ export default class GameBoard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      weeks: []
+      weeks: [],
+      gameTitle: "",
+      gameDescrition: "",
+      days: [],
+      isShowingHand: false,
+      loading: true
     };
   }
+
+  showCardPicker = () => {
+    this.setState({ isShowingHand: true });
+  };
+
+  onClose = () => {
+    this.setState({ isShowingHand: false });
+  };
 
   componentDidMount() {
     let week = [];
@@ -72,16 +85,17 @@ export default class GameBoard extends React.Component {
         for (var j = 1; j <= 35; j++) {
           week.push(
             <BoardTile
+              onClick={this.showCardPicker}
               key={j}
-              color={response[j - 1].color}
-              title={response[j - 1].title}
-              description={response[j - 1].description}
-              action={response[j - 1].action}
-              date={response[j - 1].date}
-              dateColor={response[j - 1].dateColor}
-              dateTextColor={response[j - 1].dateTextColor}
-              descriptionColor={response[j - 1].descriptionColor}
-              image={response[j - 1].image}
+              color={response["tiles"][j - 1].color}
+              title={response["tiles"][j - 1].title}
+              description={response["tiles"][j - 1].description}
+              action={response["tiles"][j - 1].action}
+              date={response["tiles"][j - 1].date}
+              dateColor={response["tiles"][j - 1].dateColor}
+              dateTextColor={response["tiles"][j - 1].dateTextColor}
+              descriptionColor={response["tiles"][j - 1].descriptionColor}
+              image={response["tiles"][j - 1].image}
             />
           );
           if (j % 7 === 0) {
@@ -89,7 +103,13 @@ export default class GameBoard extends React.Component {
             week = [];
           }
         }
-        this.setState({ weeks: weeks });
+        this.setState({
+          weeks: weeks,
+          gameTitle: response["title"],
+          gameDescrition: response["description"],
+          days: response["days"],
+          loading: false
+        });
       })
       .catch(error => {
         console.log(error);
@@ -97,43 +117,47 @@ export default class GameBoard extends React.Component {
   }
 
   stripTitles = data => {
-    data[34].date = null;
-    data[33].date = null;
+    data["tiles"][34].date = null;
+    data["tiles"][33].date = null;
   };
 
   mapImageToTile = data => {
     let mail = [1, 3, 5, 11, 16, 19, 24, 26];
     mail.forEach(index => {
-      data[index].image = MailImage;
+      data["tiles"][index].image = MailImage;
     });
 
-    data[31].image = WhitecrowImage;
-    data[29].image = BriefCaseImage;
+    data["tiles"][31].image = WhitecrowImage;
+    data["tiles"][29].image = BriefCaseImage;
 
     //Rest Days
-    data[7].image = SunImage;
-    data[14].image = BeachImage;
-    data[21].image = SleepImage;
-    data[28].image = MoonImage;
+    data["tiles"][7].image = SunImage;
+    data["tiles"][14].image = BeachImage;
+    data["tiles"][21].image = SleepImage;
+    data["tiles"][28].image = MoonImage;
 
-    data[34].image = PiggyBankImage;
+    data["tiles"][34].image = PiggyBankImage;
     return data;
   };
 
   render() {
     return (
       <React.Fragment>
-        <Scrollable>
-          <PageTitle>Hello world?</PageTitle>
-          <BoardWrapper>
-            <Padding />
-            <DayFlex>{days}</DayFlex>
-            <Padding />
-            {this.state.weeks}
-          </BoardWrapper>
-        </Scrollable>
-
-        {/* <Navbar /> */}
+        {this.state.loading ? (
+          <Spinner />
+        ) : (
+          <Scrollable>
+            <PageTitle>{this.state.gameTitle}</PageTitle>
+            <PageDescription>{this.state.gameDescrition}</PageDescription>
+            <BoardWrapper>
+              <Padding />
+              <Days days={this.state.days} />
+              <Padding />
+              {this.state.weeks}
+            </BoardWrapper>
+          </Scrollable>
+        )}
+        {this.state.isShowingHand ? <CardModal onClose={this.onClose} /> : null}
       </React.Fragment>
     );
   }

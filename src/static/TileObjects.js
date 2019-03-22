@@ -43,12 +43,22 @@ export const BriefCaseImage = <MediumImage image={briefCase} />;
 export const WhitecrowImage = <MediumImage image={whitecrow} />;
 export const PiggyBankImage = <LargeImage image={piggyBank} />;
 
-export const days = [
-  <Day>Sun</Day>,
-  <Day>Mon</Day>,
-  <Day>Tue</Day>,
-  <Day>Wed</Day>,
-  <Day>Thu</Day>,
-  <Day>Fri</Day>,
-  <Day>Sat</Day>
-];
+const DayFlex = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-left: 10px;
+`;
+
+export const Days = props => {
+  return (
+    <DayFlex>
+      <Day>{props.days[0]}</Day>
+      <Day>{props.days[1]}</Day>
+      <Day>{props.days[2]}</Day>
+      <Day>{props.days[3]}</Day>
+      <Day>{props.days[4]}</Day>
+      <Day>{props.days[5]}</Day>
+      <Day>{props.days[6]}</Day>
+    </DayFlex>
+  );
+};

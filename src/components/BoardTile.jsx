@@ -65,19 +65,17 @@ export default class BoardTile extends React.Component {
 
   render() {
     return (
-      <TileWrapper inputColor={this.props.color}>
+      <TileWrapper onClick={this.props.onClick} inputColor={this.props.color}>
         <Title>{this.props.title}</Title>
         {this.props.date ? (
           <Date
             dateColor={this.props.dateColor}
-            dateTextColor={this.props.dateTextColor}
-          >
+            dateTextColor={this.props.dateTextColor}>
             {this.props.date}
           </Date>
         ) : null}
         <HR />
         {this.props.image}
-        <HR />
         <Description descriptionColor={this.props.descriptionColor}>
           {this.props.description}
         </Description>

@@ -8,7 +8,7 @@ export default class Navbar extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <nav class="navbar fixed-bottom navbar-light bg-light">
+        <nav class="navbar bottom navbar-light bg-light">
           <a class="navbar-brand">WHITECROW</a>
         </nav>
       </React.Fragment>

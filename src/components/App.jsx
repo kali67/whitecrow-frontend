@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import GameBoard from "./GameBoard";
 import HomePage from "../pages/HomePage";
+import CardModal from "./CardModal";
 
 export default class App extends React.Component {
   constructor(props) {
@@ -13,7 +14,7 @@ export default class App extends React.Component {
     return (
       <BrowserRouter>
         <Switch>
-          <Route path="/home" component={HomePage} />
+          <Route path="/home" component={CardModal} />
           <Route path="/" component={GameBoard} />
         </Switch>
       </BrowserRouter>
