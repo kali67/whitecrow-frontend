@@ -9,6 +9,8 @@ import beach from "./image/beachwhite.png";
 import mail from "./image/mailwhite.png";
 import briefCase from "./image/briefcase.png";
 import whitecrow from "./image/whitecrowwhite.png";
+import whitecrowBlack from "./image/whitecrow.png";
+import hamburger from "./image/hamburger.png";
 
 const Day = styled.div`
   background: #3e2a70;
@@ -41,12 +43,13 @@ export const SleepImage = <LargeImage image={sleep} />;
 export const MoonImage = <LargeImage image={moon} />;
 export const BriefCaseImage = <MediumImage image={briefCase} />;
 export const WhitecrowImage = <MediumImage image={whitecrow} />;
+export const WhitecrowBlack = <MediumImage image={whitecrowBlack} />;
+export const HamburgerImage = <MediumImage image={hamburger} />;
 export const PiggyBankImage = <LargeImage image={piggyBank} />;
 
 const DayFlex = styled.div`
   display: flex;
   flex-direction: row;
-  margin-left: 10px;
 `;
 
 export const Days = props => {

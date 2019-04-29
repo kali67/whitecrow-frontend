@@ -3,13 +3,13 @@ import styled from "styled-components";
 
 const CardWrapper = styled.div`
   z-index: 1;
-  height: 80%;
-  width: 30%;
+  max-height: 95%;
+  min-width: 55%;
   max-width: 300px;
   background-color: #f4f4f4;
   border-top-right-radius: 5%;
   border-bottom-right-radius: 5%;
-  margin: 1%;
+  margin: 2%;
   padding: 2.5px;
   &:hover {
     border-style: solid;
@@ -51,6 +51,7 @@ const Action = styled.p`
 
 const SubTitle = styled.h6`
   font-weight: 700;
+  font-size: 14px;
 `;
 
 const Divider = styled.div`
@@ -65,16 +66,46 @@ const CardParagraph = styled.p`
   margin-right: 10px;
 `;
 
+const SubTitleFontSmall = {
+  fontSize: "10px"
+};
+
+const TitleFontSmall = {
+  fontSize: "16px"
+};
+
+const ActionFontSmall = {
+  fontSize: "9px"
+};
+
+const DescriptionFontSmall = {
+  fontSize: "10px"
+};
+
+const ColumnFontSmall = {
+  fontSize: "10px"
+};
+
 const Card = props => {
   return (
     <CardWrapper>
-      <CategoryColumn>{props.card["category"]}</CategoryColumn>
+      <CategoryColumn style={props.small ? ColumnFontSmall : null}>
+        {props.card["category"]}
+      </CategoryColumn>
       <ContentWrapper>
-        <Title>{props.card["title"]}</Title>
-        <Action>{props.card["action"]}</Action>
-        <SubTitle>{props.card["subTitle"]}</SubTitle>
+        <Title style={props.small ? TitleFontSmall : null}>
+          {props.card["title"]}
+        </Title>
+        <Action style={props.small ? ActionFontSmall : null}>
+          {props.card["action"]}
+        </Action>
+        <SubTitle style={props.small ? SubTitleFontSmall : null}>
+          {props.card["subTitle"]}
+        </SubTitle>
         <Divider />
-        <CardParagraph>{props.card["description"]}</CardParagraph>
+        <CardParagraph style={props.small ? DescriptionFontSmall : null}>
+          {props.card["description"]}
+        </CardParagraph>
       </ContentWrapper>
     </CardWrapper>
   );

@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import axios from "axios";
 
-import BoardTile from "./BoardTile";
 import {
   Days,
   MailImage,
@@ -16,6 +15,7 @@ import {
 } from "../static/TileObjects";
 import CardModal from "./CardModal";
 import Spinner from "./Spinner";
+import BoardTile from "./BoardTile";
 
 const PageTitle = styled.h2`
   color: white;
@@ -29,17 +29,18 @@ const PageDescription = styled.h6`
 const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
-  margin-left: 10px;
 `;
 
 const BoardWrapper = styled.div`
   background-color: #c1bdbd;
   width: 980px;
-  height: 682px;
+  height: 690px;
   margin-top: 10px;
   border-radius: 20px;
-  display: flex;
-  flex-direction: column;
+  display: flex; /* establish flex container */
+  flex-direction: column; /* make main axis vertical */
+  justify-content: center; /* center items vertically, in this case */
+  align-items: center; /* center items horizontally, in this case */
   margin: auto;
 `;
 
@@ -49,19 +50,20 @@ const Padding = styled.div`
 
 const Scrollable = styled.div`
   overflow-y: scroll;
-  height: 92vh;
+  height: 100vh;
+  width: 100%;
 `;
 
 export default class GameBoard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      weeks: [],
       gameTitle: "",
       gameDescrition: "",
       days: [],
       isShowingHand: false,
-      loading: true
+      loading: true,
+      players: []
     };
   }
 
@@ -73,38 +75,24 @@ export default class GameBoard extends React.Component {
     this.setState({ isShowingHand: false });
   };
 
-  componentDidMount() {
-    let week = [];
-    let weeks = [];
+  static getDerivedStateFromProps(props, current_state) {
+    if (current_state.players !== props.players) {
+      return {
+        players: props.players
+      };
+    }
+    return null;
+  }
 
+  componentDidMount() {
     axios
       .get("/board?lang=en")
       .then(response => {
         response = this.mapImageToTile(response.data);
         this.stripTitles(response);
-        for (var j = 1; j <= 35; j++) {
-          week.push(
-            <BoardTile
-              onClick={this.showCardPicker}
-              key={j}
-              color={response["tiles"][j - 1].color}
-              title={response["tiles"][j - 1].title}
-              description={response["tiles"][j - 1].description}
-              action={response["tiles"][j - 1].action}
-              date={response["tiles"][j - 1].date}
-              dateColor={response["tiles"][j - 1].dateColor}
-              dateTextColor={response["tiles"][j - 1].dateTextColor}
-              descriptionColor={response["tiles"][j - 1].descriptionColor}
-              image={response["tiles"][j - 1].image}
-            />
-          );
-          if (j % 7 === 0) {
-            weeks.push(<Wrapper>{week}</Wrapper>);
-            week = [];
-          }
-        }
         this.setState({
-          weeks: weeks,
+          response: response,
+          players: this.props.players,
           gameTitle: response["title"],
           gameDescrition: response["description"],
           days: response["days"],
@@ -115,6 +103,36 @@ export default class GameBoard extends React.Component {
         console.log(error);
       });
   }
+
+  buildTiles = () => {
+    let week = [];
+    let weeks = [];
+    for (var j = 1; j <= 35; j++) {
+      week.push(
+        <BoardTile
+          players={this.state.players}
+          onClick={this.showCardPicker}
+          key={j}
+          color={this.state.response["tiles"][j - 1].color}
+          title={this.state.response["tiles"][j - 1].title}
+          description={this.state.response["tiles"][j - 1].description}
+          action={this.state.response["tiles"][j - 1].action}
+          date={this.state.response["tiles"][j - 1].date}
+          dateColor={this.state.response["tiles"][j - 1].dateColor}
+          dateTextColor={this.state.response["tiles"][j - 1].dateTextColor}
+          descriptionColor={
+            this.state.response["tiles"][j - 1].descriptionColor
+          }
+          image={this.state.response["tiles"][j - 1].image}
+        />
+      );
+      if (j % 7 === 0) {
+        weeks.push(<Wrapper key={j}>{week}</Wrapper>);
+        week = [];
+      }
+    }
+    return weeks;
+  };
 
   stripTitles = data => {
     data["tiles"][34].date = null;
@@ -146,18 +164,17 @@ export default class GameBoard extends React.Component {
         {this.state.loading ? (
           <Spinner />
         ) : (
-          <Scrollable>
+          <Scrollable id="game">
             <PageTitle>{this.state.gameTitle}</PageTitle>
             <PageDescription>{this.state.gameDescrition}</PageDescription>
             <BoardWrapper>
               <Padding />
               <Days days={this.state.days} />
               <Padding />
-              {this.state.weeks}
+              {this.buildTiles()}
             </BoardWrapper>
           </Scrollable>
         )}
-        {this.state.isShowingHand ? <CardModal onClose={this.onClose} /> : null}
       </React.Fragment>
     );
   }

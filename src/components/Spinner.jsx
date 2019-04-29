@@ -26,7 +26,7 @@ const Spinner = () => {
   return (
     <LoadingGifContainer>
       <div>
-        <img src={Loading} width="75px" height="75px" />
+        <img alt="spinner" src={Loading} width="75px" height="75px" />
         <WhiteText>Loading ...</WhiteText>
       </div>
     </LoadingGifContainer>

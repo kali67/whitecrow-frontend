@@ -9,10 +9,10 @@ Modal.setAppElement("#root");
 
 const customStyles = {
   content: {
-    height: "65%",
-    width: "65vw",
+    height: "60%",
+    width: "40%",
     top: "50%",
-    left: "50%",
+    left: "52%",
     right: "auto",
     bottom: "auto",
     marginRight: "-50%",
@@ -36,19 +36,51 @@ export default class CardModal extends React.Component {
     this.state = {
       modalIsOpen: true,
       loading: true,
-      cards: []
+      card: {}
     };
   }
 
   componentDidMount() {
-    axios
-      .get("/cards/mail")
-      .then(response => {
-        this.setState({ cards: response.data, loading: false });
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    if (!this.props.readOnly) {
+      if (this.props.isMail) {
+        axios
+          .post(
+            `/game/${this.props.gameId}/mail/card/draw?lang=en`,
+            {},
+            {
+              auth: {
+                username: "hta55",
+                password: "welcome1"
+              }
+            }
+          )
+          .then(response => {
+            this.setState({ card: response.data, loading: false });
+            this.props.addMailCard(response.data);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      } else {
+        axios
+          .get(`/opportunity/card/draw`, {
+            auth: {
+              username: "hta55",
+              password: "welcome1"
+            }
+          })
+          .then(response => {
+            console.log(response);
+            this.setState({ card: response.data[0], loading: false });
+            // this.props.addMailCard(response.data[0]);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      }
+    } else {
+      this.setState({ card: this.props.card, loading: false });
+    }
   }
 
   openModal = () => {
@@ -71,9 +103,7 @@ export default class CardModal extends React.Component {
             onAfterOpen={this.afterOpenModal}
             onRequestClose={this.closeModal}
             style={customStyles}>
-            {this.state.cards.map(card => {
-              return <Card card={card} />;
-            })}
+            <Card card={this.state.card} />
           </Modal>
         )}
       </React.Fragment>

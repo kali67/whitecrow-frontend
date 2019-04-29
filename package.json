@@ -2,7 +2,13 @@
   "name": "whitecrow-frontend",
   "version": "0.1.0",
   "dependencies": {
+    "@atlaskit/button": "^12.0.3",
+    "@atlaskit/flag": "^10.0.6",
+    "@atlaskit/progress-tracker": "^5.0.2",
+    "@atlaskit/table-tree": "^6.0.4",
+    "@atlaskit/tabs": "^9.0.1",
     "@babel/core": "7.2.2",
+    "@babel/plugin-proposal-object-rest-spread": "^7.4.3",
     "@svgr/webpack": "4.1.0",
     "axios": "^0.18.0",
     "babel-core": "7.0.0-bridge.0",
@@ -38,12 +44,16 @@
     "postcss-loader": "3.0.0",
     "postcss-preset-env": "6.5.0",
     "postcss-safe-parser": "4.0.1",
+    "rc-steps": "^3.3.1",
     "react": "^16.8.4",
     "react-app-polyfill": "^0.2.2",
     "react-dev-utils": "^8.0.0",
+    "react-dice-complete": "^1.0.2",
     "react-dom": "^16.8.4",
     "react-modal": "^3.8.1",
     "react-router-dom": "^5.0.0",
+    "react-select": "^2.4.3",
+    "react-slide-out": "^0.1.4",
     "resolve": "1.10.0",
     "sass-loader": "7.1.0",
     "style-loader": "0.23.1",
@@ -103,11 +113,6 @@
     "watchPlugins": [
       "/Users/haydentaylor/Documents/whitecrow-frontend/node_modules/jest-watch-typeahead/filename.js",
       "/Users/haydentaylor/Documents/whitecrow-frontend/node_modules/jest-watch-typeahead/testname.js"
-    ]
-  },
-  "babel": {
-    "presets": [
-      "react-app"
     ]
   },
   "eslintConfig": {
