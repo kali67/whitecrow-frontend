@@ -39,16 +39,18 @@ export default class SinglePlayerController extends React.Component {
     document.getElementById("root").style = "background: #1c2321;";
     let id = this.props.match.params.id;
     axios.get(`/game/details/${id}`).then(response => {
+      console.log(response.data);
       let mappedPlayers = response.data["players"]
         .map(el => {
           return {
             day: el.day,
             id: el.id,
-            username: `Player ${el.id}`,
+            username: el.username,
             order: el.order
           };
         })
         .sort(compare);
+
       this.setState(
         {
           players: mappedPlayers,
@@ -100,7 +102,6 @@ export default class SinglePlayerController extends React.Component {
 
   finishPlayerTurn = (isUserTurn = false) => {
     if (isUserTurn) {
-      console.log("querying results for AI turns");
       this.queryPlayerMovements();
     }
     this.setState({

@@ -6,50 +6,45 @@ import CardModal from "./CardModal";
 export default class CardController extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      loading: false
+    };
   }
 
-  addMailCard = card => {
-    axios.post(
-      `/player/${this.props.userPlayer["id"]}/add/mail/${card["id"]}`,
-      {},
-      {
-        auth: {
-          username: "hta55",
-          password: "welcome1"
+  addOpportunityCard = card => {
+    this.setState({ loading: true });
+    axios
+      .post(
+        `/player/${this.props.userPlayer["id"]}/add/opportunity/${card["id"]}`,
+        {},
+        {
+          auth: {
+            username: "hta55",
+            password: "welcome1"
+          }
         }
-      }
-    );
-    let player = this.props.userPlayer;
-    player["mail"] = [...player["mail"], card];
-    this.props.updatePlayerDrawer(player);
+      )
+      .then(() => {
+        // let player = this.props.userPlayer;
+        // player["op"] = [...player["op"], card];
+        // this.props.updatePlayerDrawer(player); //todo: hoist up
+        this.props.makeCardDecision();
+      });
   };
 
-  addOpportunityCard = card => {
-    axios.post(
-      `/player/${this.props.userPlayer["id"]}/add/opportunity/${card["id"]}`,
-      {},
-      {
-        auth: {
-          username: "hta55",
-          password: "welcome1"
-        }
-      }
-    );
-    let player = this.props.userPlayer;
-    player["op"] = [...player["op"], card];
-    this.props.updatePlayerDrawer(player);
+  declineCard = () => {
+    this.props.makeCardDecision();
   };
 
   render() {
     return (
       <CardModal
+        declineCard={this.declineCard}
+        decision={this.props.decision}
+        requiresDecision={this.props.requiresDecision}
         card={this.props.card}
-        readOnly={this.props.readOnly}
-        addMailCard={this.addMailCard}
         addOpportunityCard={this.addOpportunityCard}
-        isMail={this.props.isMail}
-        onClose={this.props.onClose}
-        gameId={this.props.gameId}
+        loadingAdd={this.state.loading}
       />
     );
   }

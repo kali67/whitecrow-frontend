@@ -6,6 +6,6 @@ import "./index.css";
 import "react-slide-out/lib/index.css";
 import MainRouter from "./components/MainRouter";
 
-axios.defaults.baseURL = "https://whitecrow-backend.herokuapp.com";
+axios.defaults.baseURL = "http://localhost:8080";
 
 ReactDOM.render(<MainRouter />, document.getElementById("root"));

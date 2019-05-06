@@ -3,13 +3,9 @@ import styled from "styled-components";
 
 const CardWrapper = styled.div`
   z-index: 1;
-  max-height: 95%;
-  min-width: 55%;
-  max-width: 300px;
+  min-height: 70%;
+  min-width: 80%;
   background-color: #f4f4f4;
-  border-top-right-radius: 5%;
-  border-bottom-right-radius: 5%;
-  margin: 2%;
   padding: 2.5px;
   &:hover {
     border-style: solid;
@@ -25,7 +21,6 @@ const CategoryColumn = styled.div`
   transform: rotate(-180deg);
   writing-mode: tb-rl;
   align-self: stretch;
-  height: 100%;
   width: 12%;
   background-color: green;
   justify-content: center;

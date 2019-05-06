@@ -5,31 +5,6 @@ import AnimateBoardMovement from "./AnimateBoardMovement";
 import CardController from "./CardController";
 import DieAnimation from "./DieAnimation";
 
-Modal.setAppElement("#root");
-
-const customStyles = {
-  content: {
-    height: "65%",
-    width: "65vw",
-    top: "50%",
-    left: "52%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-    alignItems: "center",
-    justifyContent: "center",
-    display: "flex",
-    flexDirection: "row",
-    backgroundColor: "rgba(0, 0, 0, 0)",
-    borderWidth: "0px",
-    overflow: "hidden"
-  },
-  overlay: {
-    backgroundColor: "rgba(0,0,0,0.9)"
-  }
-};
-
 const ModalText = styled.h1`
   font-size: 80px;
   color: #fff;
@@ -45,9 +20,6 @@ const ModalBody = styled.div`
   justify-content: center;
 `;
 
-//
-// Single Player AI Turn Animator
-//
 export default class PlayerTurnProgress extends React.Component {
   constructor(props) {
     super(props);
@@ -106,8 +78,23 @@ export default class PlayerTurnProgress extends React.Component {
           }, 5000);
         }
       );
-    } else if (this.state.finalPlayerState["oppourtunityCard"]) {
-      this.props.finishPlayerTurn();
+    } else if (this.state.finalPlayerState["opportunityCardResult"]) {
+      this.setState(
+        {
+          showCards: true,
+          decision: this.state.finalPlayerState["opportunityCardResult"][
+            "decision"
+          ],
+          card: this.state.finalPlayerState["opportunityCardResult"]["card"]
+        },
+        () => {
+          setTimeout(() => {
+            this.setState({ showCards: false, decision: null }, () =>
+              this.props.finishPlayerTurn()
+            );
+          }, 5000);
+        }
+      );
     } else {
       this.props.finishPlayerTurn();
     }
@@ -131,16 +118,15 @@ export default class PlayerTurnProgress extends React.Component {
     }
     if (this.state.turnNotificator) {
       return (
-        <Modal isOpen={true} style={customStyles}>
-          <ModalBody>
-            <ModalText>{this.state.player["username"].toUpperCase()}</ModalText>
-          </ModalBody>
-        </Modal>
+        <TurnNotification
+          username={this.state.player["username"].toUpperCase()}
+        />
       );
     }
     if (this.state.showCards) {
       return (
         <CardController
+          decision={this.state.decision}
           onClose={e => e.preventDefault()}
           readOnly={true}
           card={this.state.card}
@@ -197,6 +183,11 @@ export class SinglePlayerTurn extends React.Component {
     this.props.updatePlayers(newPosition);
   };
 
+  makeCardDecision = () => {
+    this.setState({ drewMail: false });
+    this.props.finishPlayerTurn(true);
+  };
+
   parseTurnResult = () => {
     let result = this.state.finalPlayerState;
     if (result["mailCard"]) {
@@ -205,6 +196,12 @@ export class SinglePlayerTurn extends React.Component {
           this.setState({ drewMail: false });
           this.props.finishPlayerTurn(true);
         }, 5000);
+      });
+    } else if (result["opportunityCardResult"]) {
+      this.setState({
+        drewOppourtunity: true,
+        drewMail: true,
+        card: result["opportunityCardResult"]["card"]
       });
     } else {
       this.props.finishPlayerTurn(true);
@@ -224,19 +221,14 @@ export class SinglePlayerTurn extends React.Component {
       );
     }
     if (this.state.showTurnNotification) {
-      return (
-        <Modal isOpen={true} style={customStyles}>
-          <ModalBody>
-            <ModalText>Your Turn!</ModalText>
-          </ModalBody>
-        </Modal>
-      );
+      return <TurnNotification username="Your Turn!" />;
     }
     if (this.state.drewMail) {
       return (
         <CardController
-          onClose={e => e.preventDefault()}
-          readOnly={true}
+          userPlayer={this.state.player}
+          makeCardDecision={this.makeCardDecision}
+          requiresDecision={this.state.drewOppourtunity}
           card={this.state.card}
         />
       );
@@ -244,3 +236,38 @@ export class SinglePlayerTurn extends React.Component {
     return null;
   }
 }
+
+const TurnNotification = props => {
+  return (
+    <Modal isOpen={true} style={customStyles}>
+      <ModalBody>
+        <ModalText>{props.username}</ModalText>
+      </ModalBody>
+    </Modal>
+  );
+};
+
+Modal.setAppElement("#root");
+
+const customStyles = {
+  content: {
+    height: "65%",
+    width: "65vw",
+    top: "50%",
+    left: "52%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    alignItems: "center",
+    justifyContent: "center",
+    display: "flex",
+    flexDirection: "row",
+    backgroundColor: "rgba(0, 0, 0, 0)",
+    borderWidth: "0px",
+    overflow: "hidden"
+  },
+  overlay: {
+    backgroundColor: "rgba(0,0,0,0.9)"
+  }
+};

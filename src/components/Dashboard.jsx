@@ -1,16 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import axios from "axios";
 
 import hamburger from "../static/image/hamburger.png";
-import Button from "@atlaskit/button";
 import Slider from "react-slide-out";
-import Tabs from "@atlaskit/tabs";
-import CardHistroy from "./CardHistroy";
-import InvestmentHistory from "./InvestmentHistory";
-import PlayerTurnTracker from "./PlayerTurnTracker";
 import { PlayerContext } from "../pages/SinglePlayerController";
-import CardController from "./CardController";
+import PlayerControls, { CardHolder } from "./PlayerControls";
+import HelpModal from "./HelpModal";
 
 const Hamburger = styled.div`
   background-image: url(${props => props.image});
@@ -35,32 +30,6 @@ const DrawerContainer = styled.div`
   overflow-y: scroll;
 `;
 
-const Div = styled.div`
-  display: flex;
-  min-width: 10%;
-  padding-right: 2%;
-  flex-direction: column;
-  text-align: center;
-`;
-
-const PlayerControlContainer = styled.div`
-  min-height: 375px;
-  display: flex;
-  flex-direction: row;
-  padding: 2%;
-  border-radius: 1%;
-  background-color: #f7f7f7;
-  border: 2px solid #e1e1e1;
-`;
-
-const PlayerInfoContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  padding-left: 2%;
-  border-left: 1px dashed #e1e1e1;
-`;
-
 export default class Dashboard extends React.Component {
   constructor(props) {
     super(props);
@@ -68,8 +37,8 @@ export default class Dashboard extends React.Component {
       isOpen: false,
       isLoadingRoll: false,
       playerTurn: 0,
-      isShowingHand: false,
-      userPlayer: null
+      userPlayer: null,
+      helpModalIsOpen: false
     };
   }
 
@@ -77,16 +46,26 @@ export default class Dashboard extends React.Component {
     this.setState({ userPlayer: this.props.userPlayer });
   }
 
-  showCardPicker = isMail => {
-    this.setState({ isShowingHand: true, isMail: isMail, isOpen: false });
-  };
-
-  onClose = () => {
-    this.setState({ isShowingHand: false, isOpen: true });
-  };
-
   updatePlayerDrawer = data => {
     this.setState({ userPlayer: data });
+  };
+
+  closeDrawer = () => {
+    this.setState({ isOpen: false });
+  };
+
+  showHelpModal = () => {
+    this.setState({ helpModalIsOpen: true });
+    this.closeDrawer();
+  };
+
+  closeHelpModal = () => {
+    this.setState({ helpModalIsOpen: false, isOpen: true });
+  };
+
+  rollDie = () => {
+    this.setState({ isOpen: false });
+    this.props.rollDie();
   };
 
   render() {
@@ -107,8 +86,10 @@ export default class Dashboard extends React.Component {
                     players={players}
                     userPlayer={this.props.userPlayer}
                     isLoadingRoll={this.state.isLoadingRoll}
-                    rollDie={this.props.rollDie}
-                    showCardPicker={this.showCardPicker}
+                    rollDie={this.rollDie}
+                    closeDrawer={this.closeDrawer}
+                    helpModalIsOpen={this.state.helpModalIsOpen}
+                    showHelpModal={this.showHelpModal}
                   />
                 );
               }}
@@ -122,71 +103,11 @@ export default class Dashboard extends React.Component {
             onClick={e => this.setState({ isOpen: !this.state.isOpen })}
           />
         </ClosedDrawer>
-        {this.state.isShowingHand ? (
-          <CardController
-            userPlayer={this.state.userPlayer}
-            updatePlayerDrawer={this.updatePlayerDrawer}
-            isMail={this.state.isMail}
-            gameId={this.props.gameId}
-            onClose={this.onClose}
-          />
-        ) : null}
+        <HelpModal
+          isOpen={this.state.helpModalIsOpen}
+          closeHelpModal={this.closeHelpModal}
+        />
       </React.Fragment>
     );
   }
 }
-
-const PlayerControls = props => {
-  let isDisable = true;
-  if (props.isSinglePlayersTurn) {
-    isDisable = false;
-  }
-  return (
-    <PlayerControlContainer>
-      <Div>
-        <b style={{ marginBottom: "15%", textDecoration: "underline" }}>
-          Player Order
-        </b>
-        <PlayerTurnTracker
-          userPlayerId={props.userPlayer.id}
-          players={props.players}
-          playerTurn={props.playerTurn}
-        />
-      </Div>
-      <PlayerInfoContainer>
-        <p className="lead">Username: {props.userPlayer.username}</p>
-        <p>Money Left: ${props.userPlayer.money}</p>
-        <p>Day: {props.userPlayer.day}</p>
-        <div style={{ width: "100px" }}>
-          <Button
-            onClick={e => props.rollDie()}
-            appearance="primary"
-            isDisabled={isDisable}
-            isLoading={props.isLoadingRoll}>
-            Roll Dice
-          </Button>
-        </div>
-      </PlayerInfoContainer>
-    </PlayerControlContainer>
-  );
-};
-
-const tabs = props => {
-  return [
-    { label: "Mail Cards", content: <CardHistroy {...props} isMail={true} /> },
-    {
-      label: "Oppourtunities Taken",
-      content: <CardHistroy {...props} isMail={false} />
-    },
-    { label: "Cashflows", content: <InvestmentHistory {...props} /> }
-  ];
-};
-
-const CardHolder = props => {
-  return (
-    <Tabs
-      tabs={tabs(props)}
-      onSelect={(tab, index) => console.log("Selected Tab", index + 1)}
-    />
-  );
-};

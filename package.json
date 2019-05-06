@@ -4,11 +4,13 @@
   "dependencies": {
     "@atlaskit/button": "^12.0.3",
     "@atlaskit/flag": "^10.0.6",
+    "@atlaskit/modal-dialog": "^9.0.0",
     "@atlaskit/progress-tracker": "^5.0.2",
     "@atlaskit/table-tree": "^6.0.4",
     "@atlaskit/tabs": "^9.0.1",
     "@babel/core": "7.2.2",
     "@babel/plugin-proposal-object-rest-spread": "^7.4.3",
+    "@storybook/react": "^5.0.11",
     "@svgr/webpack": "4.1.0",
     "axios": "^0.18.0",
     "babel-core": "7.0.0-bridge.0",
@@ -68,7 +70,8 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js"
+    "test": "node scripts/test.js",
+    "storybook": "start-storybook"
   },
   "jest": {
     "collectCoverageFrom": [

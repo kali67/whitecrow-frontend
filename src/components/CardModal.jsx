@@ -1,15 +1,16 @@
 import React from "react";
 import Modal from "react-modal";
-import axios from "axios";
+import styled from "styled-components";
 
 import Card from "./Card";
 import Spinner from "./Spinner";
+import { Button } from "@atlaskit/button/components/Button";
 
 Modal.setAppElement("#root");
 
 const customStyles = {
   content: {
-    height: "60%",
+    height: "80%",
     width: "40%",
     top: "50%",
     left: "52%",
@@ -20,7 +21,7 @@ const customStyles = {
     alignItems: "center",
     justifyContent: "center",
     display: "flex",
-    flexDirection: "row",
+    flexDirection: "column",
     backgroundColor: "rgba(0, 0, 0, 0)",
     borderWidth: "0px",
     overflow: "hidden"
@@ -34,79 +35,91 @@ export default class CardModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      modalIsOpen: true,
       loading: true,
       card: {}
     };
   }
 
   componentDidMount() {
-    if (!this.props.readOnly) {
-      if (this.props.isMail) {
-        axios
-          .post(
-            `/game/${this.props.gameId}/mail/card/draw?lang=en`,
-            {},
-            {
-              auth: {
-                username: "hta55",
-                password: "welcome1"
-              }
-            }
-          )
-          .then(response => {
-            this.setState({ card: response.data, loading: false });
-            this.props.addMailCard(response.data);
-          })
-          .catch(error => {
-            console.log(error);
-          });
-      } else {
-        axios
-          .get(`/opportunity/card/draw`, {
-            auth: {
-              username: "hta55",
-              password: "welcome1"
-            }
-          })
-          .then(response => {
-            console.log(response);
-            this.setState({ card: response.data[0], loading: false });
-            // this.props.addMailCard(response.data[0]);
-          })
-          .catch(error => {
-            console.log(error);
-          });
-      }
-    } else {
-      this.setState({ card: this.props.card, loading: false });
-    }
+    this.setState({ card: this.props.card, loading: false });
   }
 
-  openModal = () => {
-    this.setState({ modalIsOpen: true });
-  };
-
-  closeModal = () => {
-    this.props.onClose();
-    this.setState({ modalIsOpen: false });
-  };
-
   render() {
+    if (this.state.loading) {
+      return <Spinner />;
+    }
     return (
-      <React.Fragment>
-        {this.state.loading ? (
-          <Spinner />
-        ) : (
-          <Modal
-            isOpen={this.state.modalIsOpen}
-            onAfterOpen={this.afterOpenModal}
-            onRequestClose={this.closeModal}
-            style={customStyles}>
-            <Card card={this.state.card} />
-          </Modal>
-        )}
-      </React.Fragment>
+      <Modal
+        isOpen={true}
+        onAfterOpen={this.afterOpenModal}
+        style={customStyles}>
+        <ModalCardWrapper>
+          <Card card={this.state.card} />
+          {this.props.requiresDecision ? (
+            <CardDecisionControls
+              accept={() => this.props.addOpportunityCard(this.state.card)}
+              loading={this.props.loadingAdd}
+              declineCard={this.props.declineCard}
+            />
+          ) : null}
+          {this.props.decision ? (
+            <CardDecisionOutcome decision={this.props.decision} />
+          ) : null}
+        </ModalCardWrapper>
+      </Modal>
     );
   }
 }
+
+const ModalCardWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 55%;
+  max-width: 300px;
+  flex-direction: column
+  height: 100%;
+`;
+const ButtonWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 5%;
+  width: 100%;
+`;
+
+const CardDecisionControls = props => {
+  return (
+    <ButtonWrapper>
+      <Button
+        appearance="danger"
+        style={{
+          width: "110px",
+          justifyContent: "center"
+        }}
+        onClick={() => {
+          props.declineCard();
+        }}>
+        Decline
+      </Button>
+      <Button
+        loading={props.loading}
+        appearance="primary"
+        onClick={() => {
+          props.accept();
+        }}
+        style={{
+          background: "green",
+          width: "110px",
+          justifyContent: "center"
+        }}>
+        Accept
+      </Button>
+    </ButtonWrapper>
+  );
+};
+
+const CardDecisionOutcome = props => {
+  let decisionTextColor = props.decision == "ACCEPTED" ? "lime" : "red";
+  return <h1 style={{ color: decisionTextColor }}>{props.decision}</h1>;
+};

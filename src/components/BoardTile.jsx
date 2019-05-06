@@ -2,6 +2,8 @@ import React from "react";
 import PlayerPositionTile from "./PlayerPositionTile";
 import Tile from "./Tile";
 
+const NUMBER_DAYS_MONTH = 31;
+
 export default class BoardTile extends React.Component {
   constructor(props) {
     super(props);
@@ -24,7 +26,7 @@ export default class BoardTile extends React.Component {
     let playerPositions = this.state.players.map(el => el.day);
     let playersOnTile = [];
     for (var i = 0; i < playerPositions.length; i++) {
-      if (date === playerPositions[i]) {
+      if (date === playerPositions[i] % (NUMBER_DAYS_MONTH + 1)) {
         playersOnTile.push(this.state.players[i]);
       }
     }
