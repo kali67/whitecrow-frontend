@@ -3,9 +3,8 @@ import axios from "axios";
 import GameBoard from "../components/GameBoard";
 import Spinner from "../components/Spinner";
 import DrawerController from "../components/DrawerController";
-import PlayerTurnProgress, {
-  SinglePlayerTurn
-} from "../components/PlayerTurnProgress";
+import PlayerTurnProgress from "../components/PlayerTurnProgress";
+import UserPlayerTurn from "../components/UserPlayerTurn";
 
 export const PlayerContext = React.createContext([]);
 
@@ -28,7 +27,6 @@ export default class SinglePlayerController extends React.Component {
       numberRounds: 0,
       loading: true,
       playerTurnIndex: 0,
-      staticPlayers: [],
       playerTurnResults: [],
       userPlayerId: 0,
       singlePlayerTurnResult: null
@@ -39,24 +37,13 @@ export default class SinglePlayerController extends React.Component {
     document.getElementById("root").style = "background: #1c2321;";
     let id = this.props.match.params.id;
     axios.get(`/game/details/${id}`).then(response => {
-      console.log(response.data);
-      let mappedPlayers = response.data["players"]
-        .map(el => {
-          return {
-            day: el.day,
-            id: el.id,
-            username: el.username,
-            order: el.order
-          };
-        })
-        .sort(compare);
-
+      let mappedPlayers = response.data["players"];
+      mappedPlayers.sort(compare);
       this.setState(
         {
           players: mappedPlayers,
           numberRounds: response.data["numberRounds"],
           playerTurnIndex: response.data["next"].order,
-          staticPlayers: mappedPlayers,
           loading: false
         },
         () => {
@@ -105,13 +92,8 @@ export default class SinglePlayerController extends React.Component {
       this.queryPlayerMovements();
     }
     this.setState({
-      playerTurnIndex:
-        (this.state.playerTurnIndex + 1) % this.state.staticPlayers.length
+      playerTurnIndex: (this.state.playerTurnIndex + 1) % this.state.players.length
     });
-  };
-
-  notifySinglePlayersTurn = () => {
-    this.setState({ isSinglePlayersTurn: true });
   };
 
   queryPlayerMovements = () => {
@@ -138,26 +120,25 @@ export default class SinglePlayerController extends React.Component {
   };
 
   findPlayerTurnResult = () => {
-    let playerNext = this.state.staticPlayers[this.state.playerTurnIndex];
-    let results = this.state.playerTurnResults.filter(value => {
+    let playerNext = this.state.players[this.state.playerTurnIndex];
+    return this.state.playerTurnResults.filter(value => {
       if (value["playerId"] == playerNext["id"]) return value;
     })[0];
-    return results;
   };
 
   render() {
     if (this.state.loading) {
       return <Spinner />;
     }
+    let currentPlayerId = this.state.players[this.state.playerTurnIndex]["id"];
+    let isSinglePlayerTurn = currentPlayerId == this.state.userPlayerId;
     return (
       <div style={{ display: "flex" }}>
         <PlayerContext.Provider
           value={{
             players: this.state.players,
             playerTurnIndex: this.state.playerTurnIndex,
-            isSinglePlayersTurn:
-              this.state.staticPlayers[this.state.playerTurnIndex]["id"] ==
-              this.state.userPlayerId
+            isSinglePlayersTurn: isSinglePlayerTurn
           }}>
           <DrawerController
             {...this.props}
@@ -172,19 +153,18 @@ export default class SinglePlayerController extends React.Component {
             numberRounds={this.state.numberRounds}
           />
         </PlayerContext.Provider>
-        {this.state.staticPlayers[this.state.playerTurnIndex]["id"] ==
-        this.state.userPlayerId ? (
-          <SinglePlayerTurn
+        {isSinglePlayerTurn ? (
+          <UserPlayerTurn
             finishPlayerTurn={this.finishPlayerTurn}
             updatePlayers={this.updatePlayers}
             singlePlayerTurnResult={this.state.singlePlayerTurnResult}
-            player={this.state.staticPlayers[this.state.playerTurnIndex]}
+            player={this.state.players[this.state.playerTurnIndex]}
           />
         ) : (
           <PlayerTurnProgress
             userPlayerId={this.state.userPlayerId}
             finishPlayerTurn={this.finishPlayerTurn}
-            player={this.state.staticPlayers[this.state.playerTurnIndex]}
+            player={this.state.players[this.state.playerTurnIndex]}
             finalPlayerState={this.findPlayerTurnResult()}
             updatePlayers={this.updatePlayers}
           />

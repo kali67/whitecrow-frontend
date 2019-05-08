@@ -4,7 +4,7 @@ import styled from "styled-components";
 const CardWrapper = styled.div`
   z-index: 1;
   min-height: 70%;
-  min-width: 80%;
+  width: 100%;
   background-color: #f4f4f4;
   padding: 2.5px;
   &:hover {
