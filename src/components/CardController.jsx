@@ -33,6 +33,21 @@ export default class CardController extends React.Component {
   };
 
   declineCard = () => {
+    // this.setState({ loading: true });
+    // axios
+    //   .post(
+    //     `/player/${this.props.userPlayer["id"]}/add/opportunity/${card["id"]}`,
+    //     {},
+    //     {
+    //       auth: {
+    //         username: "hta55",
+    //         password: "welcome1"
+    //       }
+    //     }
+    //   )
+    //   .then(() => {
+    //     this.props.makeCardDecision();
+    //   });
     this.props.makeCardDecision();
   };
 

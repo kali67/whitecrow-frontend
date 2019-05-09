@@ -42,13 +42,17 @@ export default class PlayerControls extends React.Component {
     };
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.isSinglePlayersTurn != this.props.isSinglePlayersTurn) {
+      this.setState({ rolledDisabled: prevProps.isSinglePlayersTurn });
+    }
+  }
+
   render() {
     return (
       <PlayerControlContainer>
         <PlayerOrderWrapper>
-          <b style={{ marginBottom: "15%", textDecoration: "underline" }}>
-            Player Order
-          </b>
+          <b style={{ marginBottom: "15%", textDecoration: "underline" }}>Player Order</b>
           <PlayerTurnTracker
             userPlayerId={this.props.userPlayer.id}
             players={this.props.players}

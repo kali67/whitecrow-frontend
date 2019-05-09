@@ -99,9 +99,7 @@ const TileInner = props => (
     ) : null}
     <HR />
     {props.image}
-    <Description descriptionColor={props.descriptionColor}>
-      {props.description}
-    </Description>
+    <Description descriptionColor={props.descriptionColor}>{props.description}</Description>
     <Action>{props.action}</Action>
   </React.Fragment>
 );

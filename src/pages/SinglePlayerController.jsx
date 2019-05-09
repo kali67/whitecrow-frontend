@@ -5,6 +5,7 @@ import Spinner from "../components/Spinner";
 import DrawerController from "../components/DrawerController";
 import PlayerTurnProgress from "../components/PlayerTurnProgress";
 import UserPlayerTurn from "../components/UserPlayerTurn";
+import { Redirect } from "react-router";
 
 export const PlayerContext = React.createContext([]);
 
@@ -21,7 +22,6 @@ const compare = (a, b) => {
 export default class SinglePlayerController extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       players: [],
       numberRounds: 0,
@@ -29,7 +29,7 @@ export default class SinglePlayerController extends React.Component {
       playerTurnIndex: 0,
       playerTurnResults: [],
       userPlayerId: 0,
-      singlePlayerTurnResult: null
+      gameHasEnded: false
     };
   }
 
@@ -66,7 +66,13 @@ export default class SinglePlayerController extends React.Component {
   };
 
   start = () => {
-    this.queryPlayerMovements();
+    this.queryPlayerMovements().then(response => {
+      this.setState({
+        isLoadingRoll: false,
+        isOpen: false,
+        playerTurnResults: response.data
+      });
+    });
   };
 
   rollDie = () => {
@@ -89,34 +95,34 @@ export default class SinglePlayerController extends React.Component {
 
   finishPlayerTurn = (isUserTurn = false) => {
     if (isUserTurn) {
-      this.queryPlayerMovements();
+      this.queryPlayerMovements().then(response => {
+        this.setState({
+          isLoadingRoll: false,
+          isOpen: false,
+          playerTurnResults: response.data,
+          playerTurnIndex: (this.state.playerTurnIndex + 1) % this.state.players.length
+        });
+      });
+    } else {
+      this.setState({
+        playerTurnIndex: (this.state.playerTurnIndex + 1) % this.state.players.length
+      });
     }
-    this.setState({
-      playerTurnIndex: (this.state.playerTurnIndex + 1) % this.state.players.length
-    });
   };
 
   queryPlayerMovements = () => {
     let id = this.props.match.params.id;
     this.setState({ isLoadingRoll: true });
-    axios
-      .post(
-        `/game/single/${id}/start`,
-        {},
-        {
-          auth: {
-            username: "hta55",
-            password: "welcome1"
-          }
+    return axios.post(
+      `/game/single/${id}/start`,
+      {},
+      {
+        auth: {
+          username: "hta55",
+          password: "welcome1"
         }
-      )
-      .then(response => {
-        this.setState({
-          isLoadingRoll: false,
-          isOpen: false,
-          playerTurnResults: response.data
-        });
-      });
+      }
+    );
   };
 
   findPlayerTurnResult = () => {
@@ -126,9 +132,16 @@ export default class SinglePlayerController extends React.Component {
     })[0];
   };
 
+  endGame = () => {
+    this.setState({ gameHasEnded: true });
+  };
+
   render() {
     if (this.state.loading) {
       return <Spinner />;
+    }
+    if (this.state.gameHasEnded) {
+      return <Redirect to={`/game/${this.props.match.params.id}/end`} />;
     }
     let currentPlayerId = this.state.players[this.state.playerTurnIndex]["id"];
     let isSinglePlayerTurn = currentPlayerId == this.state.userPlayerId;
@@ -153,20 +166,23 @@ export default class SinglePlayerController extends React.Component {
             numberRounds={this.state.numberRounds}
           />
         </PlayerContext.Provider>
-        {isSinglePlayerTurn ? (
+        {isSinglePlayerTurn && (
           <UserPlayerTurn
             finishPlayerTurn={this.finishPlayerTurn}
             updatePlayers={this.updatePlayers}
             singlePlayerTurnResult={this.state.singlePlayerTurnResult}
             player={this.state.players[this.state.playerTurnIndex]}
+            endGame={this.endGame}
           />
-        ) : (
+        )}
+        {!isSinglePlayerTurn && !this.state.isLoadingRoll && (
           <PlayerTurnProgress
             userPlayerId={this.state.userPlayerId}
             finishPlayerTurn={this.finishPlayerTurn}
             player={this.state.players[this.state.playerTurnIndex]}
             finalPlayerState={this.findPlayerTurnResult()}
             updatePlayers={this.updatePlayers}
+            endGame={this.endGame}
           />
         )}
       </div>

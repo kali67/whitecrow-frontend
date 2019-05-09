@@ -51,20 +51,12 @@ export default class PlayerPositionTile extends React.Component {
   render() {
     if (!this.state.showingDetails) {
       return (
-        <IndicatedTileWrapper
-          onClick={e => this.onClick(e)}
-          inputColor={this.props.color}>
+        <IndicatedTileWrapper onClick={e => this.onClick(e)} inputColor={this.props.color}>
           <CounterContainer>{this.playerCounters()}</CounterContainer>
         </IndicatedTileWrapper>
       );
     } else {
-      return (
-        <Tile
-          {...this.props}
-          onClick={e => this.onClick(e)}
-          isPlayerTile={true}
-        />
-      ); //override onclick
+      return <Tile {...this.props} onClick={e => this.onClick(e)} isPlayerTile={true} />; //override onclick
     }
   }
 }

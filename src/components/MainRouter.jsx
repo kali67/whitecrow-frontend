@@ -3,10 +3,10 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import styled from "styled-components";
 import HomePage from "../pages/HomePage";
-import GameController from "../pages/GameController";
 
 import { WhitecrowBlack } from "../static/TileObjects";
 import SinglePlayerController from "../pages/SinglePlayerController";
+import EndGame from "./EndGame";
 
 export default class MainRouter extends React.Component {
   render() {
@@ -23,6 +23,7 @@ export default class MainRouter extends React.Component {
             )}
           />
           <Route exact path="/game/:id" component={SinglePlayerController} />
+          <Route exact path="/game/:id/end" render={props => <EndGame {...props} />} />
         </Switch>
       </BrowserRouter>
     );

@@ -16,26 +16,30 @@ export default class PlayerTurnProgress extends React.Component {
     };
   }
 
+  componentDidMount() {
+    this.updateComponentState();
+  }
+
   componentDidUpdate(prevProps) {
-    if (
-      (prevProps.player != this.props.player ||
-        this.state.player != prevProps.player) &&
-      this.props.finalPlayerState
-    ) {
-      this.setState(
-        {
-          turnNotificator: true,
-          player: this.props.player,
-          finalPlayerState: this.props.finalPlayerState
-        },
-        () => {
-          setTimeout(() => {
-            this.setState({ roll: true, turnNotificator: false });
-          }, 3000);
-        }
-      );
+    if (prevProps.player != this.props.player) {
+      this.updateComponentState();
     }
   }
+
+  updateComponentState = () => {
+    this.setState(
+      {
+        turnNotificator: true,
+        player: this.props.player,
+        finalPlayerState: this.props.finalPlayerState
+      },
+      () => {
+        setTimeout(() => {
+          this.setState({ roll: true, turnNotificator: false });
+        }, 3000);
+      }
+    );
+  };
 
   updatePosition = newPosition => {
     this.props.updatePlayers(newPosition);
@@ -47,6 +51,14 @@ export default class PlayerTurnProgress extends React.Component {
     });
   };
 
+  finishTurn = () => {
+    if (this.state.finalPlayerState["gameEnding"] == true) {
+      this.props.endGame();
+    } else {
+      this.props.finishPlayerTurn();
+    }
+  };
+
   checkCards = () => {
     if (this.state.finalPlayerState["mailCard"]) {
       this.setState(
@@ -56,9 +68,9 @@ export default class PlayerTurnProgress extends React.Component {
         },
         () => {
           setTimeout(() => {
-            this.setState({ showCards: false }, () =>
-              this.props.finishPlayerTurn()
-            );
+            this.setState({ showCards: false }, () => {
+              this.finishTurn();
+            });
           }, 5000);
         }
       );
@@ -66,21 +78,19 @@ export default class PlayerTurnProgress extends React.Component {
       this.setState(
         {
           showCards: true,
-          decision: this.state.finalPlayerState["opportunityCardResult"][
-            "decision"
-          ],
+          decision: this.state.finalPlayerState["opportunityCardResult"]["decision"],
           card: this.state.finalPlayerState["opportunityCardResult"]["card"]
         },
         () => {
           setTimeout(() => {
-            this.setState({ showCards: false, decision: null }, () =>
-              this.props.finishPlayerTurn()
-            );
+            this.setState({ showCards: false, decision: null }, () => {
+              this.finishTurn();
+            });
           }, 5000);
         }
       );
     } else {
-      this.props.finishPlayerTurn();
+      this.finishTurn();
     }
   };
 
@@ -101,11 +111,7 @@ export default class PlayerTurnProgress extends React.Component {
       );
     }
     if (this.state.turnNotificator) {
-      return (
-        <TurnNotification
-          username={this.state.player["username"].toUpperCase()}
-        />
-      );
+      return <TurnNotification username={this.state.player["username"].toUpperCase()} />;
     }
     if (this.state.showCards) {
       return (
@@ -121,9 +127,7 @@ export default class PlayerTurnProgress extends React.Component {
       return (
         <DieAnimation
           callback={this.dieRollFinished}
-          number={
-            this.state.finalPlayerState["currentDay"] - this.state.player["day"]
-          }
+          number={this.state.finalPlayerState["currentDay"] - this.state.player["day"]}
         />
       );
     }
