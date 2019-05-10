@@ -29,7 +29,8 @@ export default class SinglePlayerController extends React.Component {
       playerTurnIndex: 0,
       playerTurnResults: [],
       userPlayerId: 0,
-      gameHasEnded: false
+      gameHasEnded: false,
+      hasFinishedTurnAnimation: true
     };
   }
 
@@ -89,7 +90,7 @@ export default class SinglePlayerController extends React.Component {
         }
       )
       .then(response => {
-        this.setState({ singlePlayerTurnResult: response.data });
+        this.setState({ singlePlayerTurnResult: response.data, hasFinishedTurnAnimation: false });
       });
   };
 
@@ -100,12 +101,14 @@ export default class SinglePlayerController extends React.Component {
           isLoadingRoll: false,
           isOpen: false,
           playerTurnResults: response.data,
-          playerTurnIndex: (this.state.playerTurnIndex + 1) % this.state.players.length
+          playerTurnIndex: (this.state.playerTurnIndex + 1) % this.state.players.length,
+          hasFinishedTurnAnimation: true
         });
       });
     } else {
       this.setState({
-        playerTurnIndex: (this.state.playerTurnIndex + 1) % this.state.players.length
+        playerTurnIndex: (this.state.playerTurnIndex + 1) % this.state.players.length,
+        hasFinishedTurnAnimation: true
       });
     }
   };
@@ -151,7 +154,9 @@ export default class SinglePlayerController extends React.Component {
           value={{
             players: this.state.players,
             playerTurnIndex: this.state.playerTurnIndex,
-            isSinglePlayersTurn: isSinglePlayerTurn
+            isSinglePlayersTurn: isSinglePlayerTurn,
+            usersPlayerUpdated: this.state.singlePlayerTurnResult,
+            hasFinishedTurnAnimation: this.state.hasFinishedTurnAnimation
           }}>
           <DrawerController
             {...this.props}

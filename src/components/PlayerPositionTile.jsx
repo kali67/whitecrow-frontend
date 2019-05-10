@@ -1,8 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Tile from "./Tile";
-
-import { IndicatedTileWrapper } from "./Tile";
+import Tile, {IndicatedTileWrapper} from "./Tile";
 
 const Counter = styled.div`
   align-items: center;
@@ -42,10 +40,9 @@ export default class PlayerPositionTile extends React.Component {
   };
 
   playerCounters = () => {
-    let counters = this.props.players.map((element, i) => {
+    return this.props.players.map((element, i) => {
       return <Counter key={i}>{element.id}</Counter>;
     });
-    return counters;
   };
 
   render() {

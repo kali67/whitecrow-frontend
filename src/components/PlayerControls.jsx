@@ -6,7 +6,8 @@ import Tabs from "@atlaskit/tabs";
 import CardHistroy from "./CardHistroy";
 import InvestmentHistory from "./InvestmentHistory";
 import PlayerTurnTracker from "./PlayerTurnTracker";
-import HelpModal from "./HelpModal";
+import coin from "../static/image/coin.png";
+import calendar from "../static/image/calendar.png";
 
 const PlayerOrderWrapper = styled.div`
   display: flex;
@@ -16,13 +17,21 @@ const PlayerOrderWrapper = styled.div`
   text-align: center;
 `;
 
+const LargeIcon = styled.div`
+  background-image: url(${props => props.image});
+  height: 40px;
+  width: 35px;
+  margin-right: 10px;
+  background-size: cover;
+`;
+
 const PlayerControlContainer = styled.div`
   min-height: 375px;
   display: flex;
   flex-direction: row;
   padding: 2%;
+  margin-bottom: 3%;
   border-radius: 1%;
-  background-color: #f7f7f7;
   border: 2px solid #e1e1e1;
 `;
 
@@ -31,6 +40,7 @@ const PlayerInfoContainer = styled.div`
   flex-direction: column;
   flex-grow: 1;
   padding-left: 2%;
+  min-width: 50%;
   border-left: 1px dashed #e1e1e1;
 `;
 
@@ -48,6 +58,15 @@ export default class PlayerControls extends React.Component {
     }
   }
 
+  calculatePlayersMoneyFromTurn = () => {
+    if (!this.props.usersPlayerUpdated || !this.props.hasFinishedTurnAnimation) {
+      return this.props.userPlayer.money;
+    }
+    if (this.props.hasFinishedTurnAnimation) {
+      return this.props.userPlayer.money + this.props.usersPlayerUpdated["moneyDifference"];
+    }
+  };
+
   render() {
     return (
       <PlayerControlContainer>
@@ -61,7 +80,7 @@ export default class PlayerControls extends React.Component {
         </PlayerOrderWrapper>
         <PlayerInfoView
           username={this.props.userPlayer["username"]}
-          money={this.props.userPlayer.money}
+          money={this.calculatePlayersMoneyFromTurn()}
           day={this.props.userPlayer.day}
           rollDie={this.props.rollDie}
           rolledDisabled={this.state.rolledDisabled}
@@ -97,6 +116,39 @@ const HelpIconWrapper = styled.div`
   justify-content: flex-end;
 `;
 
+const RollDiceBtnWrapper = styled.div`
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+`;
+
+const TextWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+const IconText = styled.div`
+  color: ${props => props.color};
+  margin-top: 8px;
+`;
+
+const ActiveRollButtonStyle = {
+  height: "22%",
+  width: "100%",
+  justifyContent: "center",
+  background: "#36B37E"
+};
+const DisabledRollButtonStyle = { height: "22%", width: "100%", justifyContent: "center" };
+
+const getMoneyTextColor = money => {
+  if (money > 800) {
+    return "#36B37E";
+  } else if (money < 200) {
+    return "#BF2600";
+  }
+  return "#FF8B00";
+};
+
 const PlayerInfoView = ({
   username,
   money,
@@ -116,18 +168,32 @@ const PlayerInfoView = ({
           ?
         </HelpIcon>
       </HelpIconWrapper>
-      <p className="lead">Username: {username}</p>
-      <p>Money Left: ${money}</p>
-      <p>Day: {day}</p>
-      <div style={{ width: "100px" }}>
+
+      <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-evenly" }}>
+        <TextWrapper>
+          <LargeIcon image={coin} />
+          <IconText color={getMoneyTextColor(money)}>
+            <h4>${money}</h4>
+          </IconText>
+        </TextWrapper>
+        <TextWrapper>
+          <LargeIcon image={calendar} />
+          <IconText color="black">
+            <h4>Day {day}</h4>
+          </IconText>
+        </TextWrapper>
+      </div>
+
+      <RollDiceBtnWrapper>
         <Button
+          style={rolledDisabled ? DisabledRollButtonStyle : ActiveRollButtonStyle}
           onClick={e => rollDie()}
           appearance="primary"
           isDisabled={rolledDisabled}
           isLoading={isLoadingRoll}>
           Roll Dice
         </Button>
-      </div>
+      </RollDiceBtnWrapper>
     </PlayerInfoContainer>
   );
 };

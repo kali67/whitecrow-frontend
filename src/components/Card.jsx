@@ -17,6 +17,8 @@ const CardWrapper = styled.div`
   display: flex;
 `;
 
+const CardWrapperSmallStyle = { minHeight: "100%" };
+
 const CategoryColumn = styled.div`
   transform: rotate(-180deg);
   writing-mode: tb-rl;
@@ -83,20 +85,14 @@ const ColumnFontSmall = {
 
 const Card = props => {
   return (
-    <CardWrapper>
+    <CardWrapper style={props.small ? CardWrapperSmallStyle : null}>
       <CategoryColumn style={props.small ? ColumnFontSmall : null}>
         {props.card["category"]}
       </CategoryColumn>
       <ContentWrapper>
-        <Title style={props.small ? TitleFontSmall : null}>
-          {props.card["title"]}
-        </Title>
-        <Action style={props.small ? ActionFontSmall : null}>
-          {props.card["action"]}
-        </Action>
-        <SubTitle style={props.small ? SubTitleFontSmall : null}>
-          {props.card["subTitle"]}
-        </SubTitle>
+        <Title style={props.small ? TitleFontSmall : null}>{props.card["title"]}</Title>
+        <Action style={props.small ? ActionFontSmall : null}>{props.card["action"]}</Action>
+        <SubTitle style={props.small ? SubTitleFontSmall : null}>{props.card["subTitle"]}</SubTitle>
         <Divider />
         <CardParagraph style={props.small ? DescriptionFontSmall : null}>
           {props.card["description"]}

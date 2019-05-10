@@ -78,9 +78,17 @@ export default class Dashboard extends React.Component {
           onOutsideClick={() => this.setState({ isOpen: false })}>
           <DrawerContainer>
             <PlayerContext.Consumer>
-              {({ players, playerTurnIndex, isSinglePlayersTurn }) => {
+              {({
+                players,
+                playerTurnIndex,
+                isSinglePlayersTurn,
+                usersPlayerUpdated,
+                hasFinishedTurnAnimation
+              }) => {
                 return (
                   <PlayerControls
+                    hasFinishedTurnAnimation={hasFinishedTurnAnimation}
+                    usersPlayerUpdated={usersPlayerUpdated}
                     isSinglePlayersTurn={isSinglePlayersTurn}
                     playerTurn={playerTurnIndex}
                     players={players}
@@ -103,10 +111,7 @@ export default class Dashboard extends React.Component {
             onClick={e => this.setState({ isOpen: !this.state.isOpen })}
           />
         </ClosedDrawer>
-        <HelpModal
-          isOpen={this.state.helpModalIsOpen}
-          closeHelpModal={this.closeHelpModal}
-        />
+        <HelpModal isOpen={this.state.helpModalIsOpen} closeHelpModal={this.closeHelpModal} />
       </React.Fragment>
     );
   }

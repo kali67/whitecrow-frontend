@@ -13,7 +13,6 @@ import {
   BeachImage,
   MoonImage
 } from "../static/TileObjects";
-import CardModal from "./CardModal";
 import Spinner from "./Spinner";
 import BoardTile from "./BoardTile";
 
@@ -52,6 +51,7 @@ const Scrollable = styled.div`
   overflow-y: scroll;
   height: 100vh;
   width: 100%;
+  display: flex;
 `;
 
 export default class GameBoard extends React.Component {
@@ -69,10 +69,6 @@ export default class GameBoard extends React.Component {
 
   showCardPicker = () => {
     this.setState({ isShowingHand: true });
-  };
-
-  onClose = () => {
-    this.setState({ isShowingHand: false });
   };
 
   static getDerivedStateFromProps(props, current_state) {
@@ -120,9 +116,7 @@ export default class GameBoard extends React.Component {
           date={this.state.response["tiles"][j - 1].date}
           dateColor={this.state.response["tiles"][j - 1].dateColor}
           dateTextColor={this.state.response["tiles"][j - 1].dateTextColor}
-          descriptionColor={
-            this.state.response["tiles"][j - 1].descriptionColor
-          }
+          descriptionColor={this.state.response["tiles"][j - 1].descriptionColor}
           image={this.state.response["tiles"][j - 1].image}
         />
       );
@@ -165,8 +159,8 @@ export default class GameBoard extends React.Component {
           <Spinner />
         ) : (
           <Scrollable id="game">
-            <PageTitle>{this.state.gameTitle}</PageTitle>
-            <PageDescription>{this.state.gameDescrition}</PageDescription>
+            {/* <PageTitle>{this.state.gameTitle}</PageTitle>
+            <PageDescription>{this.state.gameDescrition}</PageDescription> */}
             <BoardWrapper>
               <Padding />
               <Days days={this.state.days} />

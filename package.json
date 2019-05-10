@@ -8,6 +8,7 @@
     "@atlaskit/progress-tracker": "^5.0.2",
     "@atlaskit/table-tree": "^6.0.4",
     "@atlaskit/tabs": "^9.0.1",
+    "@atlaskit/theme": "^9.0.0",
     "@babel/core": "7.2.2",
     "@babel/plugin-proposal-object-rest-spread": "^7.4.3",
     "@storybook/react": "^5.0.11",

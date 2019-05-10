@@ -27,18 +27,20 @@ export default class PlayerTurnProgress extends React.Component {
   }
 
   updateComponentState = () => {
-    this.setState(
-      {
-        turnNotificator: true,
-        player: this.props.player,
-        finalPlayerState: this.props.finalPlayerState
-      },
-      () => {
-        setTimeout(() => {
-          this.setState({ roll: true, turnNotificator: false });
-        }, 3000);
-      }
-    );
+    if (this.props.finalPlayerState) {
+      this.setState(
+        {
+          turnNotificator: true,
+          player: this.props.player,
+          finalPlayerState: this.props.finalPlayerState
+        },
+        () => {
+          setTimeout(() => {
+            this.setState({ roll: true, turnNotificator: false });
+          }, 3000);
+        }
+      );
+    }
   };
 
   updatePosition = newPosition => {
