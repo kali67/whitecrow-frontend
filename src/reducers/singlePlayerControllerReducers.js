@@ -1,11 +1,12 @@
 import {
   FETCH_GAME_DETAILS,
-  UPDATE_PLAYERS,
+  UPDATE_PLAYER_POSITION,
   LOADING,
   UPDATE_PLAYER_TURN_RESULTS,
   ROLL_DIE,
   FINISH_USER_TURN,
-  FINISH_AI_TURN
+  FINISH_AI_TURN,
+  END_GAME
 } from "../actions/types";
 
 const initialState = {
@@ -14,7 +15,7 @@ const initialState = {
   players: [],
   numberRounds: 0,
   playerTurnIndex: 0,
-  playerTurnResults: [],
+  AITurnResults: [],
   gameId: -1,
   gameHasEnded: false,
   showEndTurnUpdate: true
@@ -32,7 +33,7 @@ export default function(state = initialState, action) {
         loading: action.loading,
         gameId: action.gameId
       };
-    case UPDATE_PLAYERS:
+    case UPDATE_PLAYER_POSITION:
       return {
         ...state,
         players: action.players
@@ -46,19 +47,19 @@ export default function(state = initialState, action) {
       return {
         ...state,
         loading: action.loading,
-        playerTurnResults: action.playerTurnResults
+        AITurnResults: action.AITurnResults
       };
     case ROLL_DIE:
       return {
         ...state,
-        singlePlayerTurnResult: action.singlePlayerTurnResult,
+        userTurnResult: action.userTurnResult,
         showEndTurnUpdate: action.showEndTurnUpdate
       };
     case FINISH_USER_TURN:
       return {
         ...state,
         isLoadingRoll: action.isLoadingRoll,
-        playerTurnResults: action.playerTurnResults,
+        AITurnResults: action.AITurnResults,
         playerTurnIndex: action.playerTurnIndex,
         showEndTurnUpdate: action.showEndTurnUpdate
       };
@@ -67,6 +68,11 @@ export default function(state = initialState, action) {
         ...state,
         playerTurnIndex: action.playerTurnIndex,
         showEndTurnUpdate: action.showEndTurnUpdate
+      };
+    case END_GAME:
+      return {
+        ...state,
+        gameHasEnded: true
       };
     default:
       return state;

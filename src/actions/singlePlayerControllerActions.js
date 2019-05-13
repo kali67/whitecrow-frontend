@@ -1,7 +1,7 @@
 import axios from "axios";
 import {
   FETCH_GAME_DETAILS,
-  UPDATE_PLAYERS,
+  UPDATE_PLAYER_POSITION,
   LOADING,
   UPDATE_PLAYER_TURN_RESULTS,
   ROLL_DIE,
@@ -56,7 +56,7 @@ export const startGame = gameId => dispatch => {
   queryPlayerTurns(gameId).then(response => {
     dispatch({
       type: UPDATE_PLAYER_TURN_RESULTS,
-      playerTurnResults: response.data,
+      AITurnResults: response.data,
       loading: false
     });
   });
@@ -64,7 +64,7 @@ export const startGame = gameId => dispatch => {
 
 export const updatePlayerModels = players => dispatch => {
   dispatch({
-    type: UPDATE_PLAYERS,
+    type: UPDATE_PLAYER_POSITION,
     players: players
   });
 };
@@ -84,7 +84,7 @@ export const rollDie = (userPlayerId, gameId) => dispatch => {
     .then(response => {
       dispatch({
         type: ROLL_DIE,
-        singlePlayerTurnResult: response.data,
+        userTurnResult: response.data,
         showEndTurnUpdate: false,
         loading: false
       });
@@ -101,7 +101,7 @@ export const finishPlayerTurn = (
     queryPlayerTurns(gameId).then(response => {
       dispatch({
         type: FINISH_USER_TURN,
-        playerTurnResults: response.data,
+        AITurnResults: response.data,
         playerTurnIndex: (playerTurnIndex + 1) % players.length,
         showEndTurnUpdate: true
       });

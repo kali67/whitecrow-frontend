@@ -24,10 +24,10 @@ class UserPlayerTurn extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.singlePlayerTurnResult != this.props.singlePlayerTurnResult) {
+    if (prevProps.userTurnResult != this.props.userTurnResult) {
       this.setState({
         animateMovement: true,
-        finalPlayerState: this.props.singlePlayerTurnResult
+        finalPlayerState: this.props.userTurnResult
       });
     }
   }
@@ -67,7 +67,6 @@ class UserPlayerTurn extends React.Component {
     } else {
       this.props.finishPlayerTurn(true);
     }
-    console.log(result);
     this.props.updatePlayerMoney(result["moneyDifference"]);
     this.props.updatePlayerDay(result["currentDay"]);
   };
@@ -101,7 +100,11 @@ class UserPlayerTurn extends React.Component {
   }
 }
 
+const mapStateToProps = state => ({
+  userTurnResult: state.game.userTurnResult
+});
+
 export default connect(
-  null,
+  mapStateToProps,
   { updatePlayerCards, updatePlayerMoney, updatePlayerDay }
 )(UserPlayerTurn);

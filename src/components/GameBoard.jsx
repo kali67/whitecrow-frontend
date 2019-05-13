@@ -88,7 +88,7 @@ export default class GameBoard extends React.Component {
         this.stripTitles(response);
         this.setState({
           response: response,
-          players: this.props.players,
+          players: this.state.players,
           gameTitle: response["title"],
           gameDescrition: response["description"],
           days: response["days"],

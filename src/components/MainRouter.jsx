@@ -6,7 +6,7 @@ import HomePage from "../pages/HomePage";
 
 import { WhitecrowBlack } from "../static/TileObjects";
 import SinglePlayerController from "../pages/SinglePlayerController";
-import EndGame from "./EndGame";
+import EndGameController from "./EndGameController";
 
 export default class MainRouter extends React.Component {
   render() {
@@ -23,7 +23,7 @@ export default class MainRouter extends React.Component {
             )}
           />
           <Route exact path="/game/:id" component={SinglePlayerController} />
-          <Route exact path="/game/:id/end" render={props => <EndGame {...props} />} />
+          <Route exact path="/game/:id/end" render={props => <EndGameController {...props} />} />
         </Switch>
       </BrowserRouter>
     );

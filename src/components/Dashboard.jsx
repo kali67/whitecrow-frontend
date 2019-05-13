@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
+import Proptypes from "prop-types";
+
 import {
   openDashboard,
   closeDashboard,
@@ -10,7 +12,6 @@ import {
 
 import hamburger from "../static/image/hamburger.png";
 import Slider from "react-slide-out";
-import { PlayerContext } from "../pages/SinglePlayerController";
 import PlayerControls, { CardHolder } from "./PlayerControls";
 import HelpModal from "./HelpModal";
 
@@ -41,9 +42,7 @@ class Dashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoadingRoll: false,
-      playerTurn: 0,
-      userPlayer: null
+      isLoadingRoll: false
     };
   }
 
@@ -65,31 +64,18 @@ class Dashboard extends React.Component {
           leftToRight={true}
           onOutsideClick={() => this.props.closeDashboard()}>
           <DrawerContainer>
-            <PlayerContext.Consumer>
-              {({
-                players,
-                playerTurnIndex,
-                isSinglePlayersTurn,
-                usersPlayerUpdated,
-                showEndTurnUpdate
-              }) => {
-                return (
-                  <PlayerControls
-                    showEndTurnUpdate={showEndTurnUpdate}
-                    usersPlayerUpdated={usersPlayerUpdated}
-                    isSinglePlayersTurn={isSinglePlayersTurn}
-                    playerTurn={playerTurnIndex}
-                    players={players}
-                    userPlayer={this.props.userPlayer}
-                    isLoadingRoll={this.state.isLoadingRoll}
-                    rollDie={this.rollDie}
-                    closeDrawer={() => this.props.closeDashboard()}
-                    helpModalIsOpen={this.props.helpModalIsOpen}
-                    showHelpModal={() => this.props.showHelpModal()}
-                  />
-                );
-              }}
-            </PlayerContext.Consumer>
+            <PlayerControls
+              usersPlayerUpdated={this.props.userPlayerUpdated}
+              isSinglePlayersTurn={this.props.isSinglePlayersTurn}
+              playerTurn={this.props.playerTurnIndex}
+              players={this.props.players}
+              userPlayer={this.props.userPlayer}
+              isLoadingRoll={this.state.isLoadingRoll}
+              rollDie={this.rollDie}
+              closeDrawer={() => this.props.closeDashboard()}
+              helpModalIsOpen={this.props.helpModalIsOpen}
+              showHelpModal={() => this.props.showHelpModal()}
+            />
             <CardHolder {...this.props} />
           </DrawerContainer>
         </Slider>
@@ -107,7 +93,13 @@ class Dashboard extends React.Component {
 
 const mapStateToProps = state => ({
   isOpen: state.dashboard.isOpen,
-  helpModalIsOpen: state.dashboard.helpModalIsOpen
+  helpModalIsOpen: state.dashboard.helpModalIsOpen,
+  players: state.game.players,
+  playerTurnIndex: state.game.playerTurnIndex,
+  isSinglePlayersTurn:
+    state.game.players[state.game.playerTurnIndex]["id"] == state.user.player["id"],
+  userPlayerUpdated: state.game.userTurnResult,
+  userPlayer: state.user.player
 });
 
 export default connect(

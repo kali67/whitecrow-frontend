@@ -57,7 +57,7 @@ class SinglePlayerController extends React.Component {
 
   findPlayerTurnResult = () => {
     let playerNext = this.props.players[this.props.playerTurnIndex];
-    return this.props.playerTurnResults.filter(value => {
+    return this.props.AITurnResults.filter(value => {
       if (value["playerId"] == playerNext["id"]) return value;
     })[0];
   };
@@ -66,72 +66,60 @@ class SinglePlayerController extends React.Component {
     this.props.endGame();
   };
 
+  isUsersTurn = () => {
+    let currentPlayerId = this.props.players[this.props.playerTurnIndex]["id"];
+    return currentPlayerId == this.props.userPlayer["id"];
+  };
+
   render() {
     if (this.props.loadingGameDetails || this.props.loadingUserDetails) {
       return <Spinner />;
-    } else if (this.props.gameHasEnded) {
-      return <Redirect to={`/game/${this.props.match.params.id}/end`} />;
-    } else {
-      let currentPlayerId = this.props.players[this.props.playerTurnIndex]["id"];
-      let isSinglePlayerTurn = currentPlayerId == this.props.userPlayer["id"];
-      return (
-        <div style={{ display: "flex" }}>
-          <PlayerContext.Provider
-            value={{
-              players: this.props.players,
-              playerTurnIndex: this.props.playerTurnIndex,
-              isSinglePlayersTurn: isSinglePlayerTurn,
-              usersPlayerUpdated: this.props.singlePlayerTurnResult,
-              showEndTurnUpdate: this.props.showEndTurnUpdate
-            }}>
-            <DrawerController
-              {...this.props}
-              gameId={this.props.match.params.id}
-              rollDie={this.rollDie}
-              updatePlayerPositions={this.updatePlayerPositions}
-            />
-            <GameBoard
-              {...this.props}
-              players={this.props.players}
-              numberRounds={this.props.numberRounds}
-            />
-          </PlayerContext.Provider>
-          {isSinglePlayerTurn && (
-            <UserPlayerTurn
-              finishPlayerTurn={this.finishPlayerTurn}
-              updatePlayers={this.updatePlayers}
-              singlePlayerTurnResult={this.props.singlePlayerTurnResult}
-              player={this.props.players[this.props.playerTurnIndex]}
-              endGame={this.endGame}
-            />
-          )}
-          {!isSinglePlayerTurn && !this.props.isLoadingRoll && (
-            <PlayerTurnProgress
-              finishPlayerTurn={this.finishPlayerTurn}
-              player={this.props.players[this.props.playerTurnIndex]}
-              finalPlayerState={this.findPlayerTurnResult()}
-              updatePlayers={this.updatePlayers}
-              endGame={this.endGame}
-            />
-          )}
-        </div>
-      );
     }
+    if (this.props.gameHasEnded) {
+      return <Redirect to={`/game/${this.props.gameId}/end`} />;
+    }
+    return (
+      <div style={{ display: "flex" }}>
+        <DrawerController
+          gameId={this.props.match.params.id}
+          rollDie={this.rollDie}
+          updatePlayerPositions={this.updatePlayerPositions}
+        />
+        <GameBoard players={this.props.players} />
+        {this.isUsersTurn() && (
+          <UserPlayerTurn
+            finishPlayerTurn={this.finishPlayerTurn}
+            updatePlayers={this.updatePlayers}
+            player={this.props.players[this.props.playerTurnIndex]}
+            endGame={this.endGame}
+          />
+        )}
+        {!this.isUsersTurn() && !this.props.isLoadingRoll && (
+          <PlayerTurnProgress
+            finishPlayerTurn={this.finishPlayerTurn}
+            player={this.props.players[this.props.playerTurnIndex]}
+            finalPlayerState={this.findPlayerTurnResult()}
+            updatePlayers={this.updatePlayers}
+            endGame={this.endGame}
+          />
+        )}
+      </div>
+    );
   }
 }
 
-const mapStateToProps = state => ({
-  loadingGameDetails: state.game.loading,
-  loadingUserDetails: state.user.loading,
-  userPlayer: state.user.player,
-  players: state.game.players,
-  numberRounds: state.game.numberRounds,
-  playerTurnIndex: state.game.playerTurnIndex,
-  playerTurnResults: state.game.playerTurnResults,
-  gameId: state.game.gameId,
-  gameHasEnded: state.game.gameHasEnded,
-  showEndTurnUpdate: state.game.showEndTurnUpdate,
-  singlePlayerTurnResult: state.game.singlePlayerTurnResult
+const mapStateToProps = ({ game, user }) => ({
+  loadingGameDetails: game.loading,
+  loadingUserDetails: user.loading,
+  userPlayer: user.player,
+  players: game.players,
+  numberRounds: game.numberRounds,
+  playerTurnIndex: game.playerTurnIndex,
+  AITurnResults: game.AITurnResults,
+  gameId: game.gameId,
+  gameHasEnded: game.gameHasEnded,
+  showEndTurnUpdate: game.showEndTurnUpdate,
+  userTurnResult: game.userTurnResult
 });
 
 export default connect(

@@ -9,8 +9,6 @@ export default class DrawerController extends React.Component {
       <Dashboard
         gameId={this.props.gameId}
         rollDie={this.props.rollDie}
-        playerTurn={this.props.playerTurnIndex}
-        userPlayer={this.props.userPlayer}
         updatePlayerPositions={this.props.updatePlayerPositions}
       />
     );
