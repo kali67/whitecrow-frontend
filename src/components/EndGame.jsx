@@ -11,6 +11,7 @@ export default class EndGame extends React.Component {
     };
   }
   componentDidMount() {
+    document.getElementById("root").style = "background: #ffffff;";
     axios
       .post(
         `/game/${this.props.match.params.id}/end`,

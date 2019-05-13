@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 import GameBoard from "../components/GameBoard";
 import Spinner from "../components/Spinner";
 import DrawerController from "../components/DrawerController";
@@ -7,190 +6,143 @@ import PlayerTurnProgress from "../components/PlayerTurnProgress";
 import UserPlayerTurn from "../components/UserPlayerTurn";
 import { Redirect } from "react-router";
 
+import {
+  fetchGameDetails,
+  updatePlayerModels,
+  startGame,
+  finishPlayerTurn,
+  rollDie,
+  endGame
+} from "../actions/singlePlayerControllerActions";
+
+import { fetchUserPlayer } from "../actions/userActions";
+
+import { connect } from "react-redux";
+
 export const PlayerContext = React.createContext([]);
 
-const compare = (a, b) => {
-  if (a.order < b.order) {
-    return -1;
-  }
-  if (a.order > b.order) {
-    return 1;
-  }
-  return 0;
-};
-
-export default class SinglePlayerController extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      players: [],
-      numberRounds: 0,
-      loading: true,
-      playerTurnIndex: 0,
-      playerTurnResults: [],
-      userPlayerId: 0,
-      gameHasEnded: false,
-      hasFinishedTurnAnimation: true
-    };
-  }
-
+class SinglePlayerController extends React.Component {
   componentDidMount() {
     document.getElementById("root").style = "background: #1c2321;";
-    let id = this.props.match.params.id;
-    axios.get(`/game/details/${id}`).then(response => {
-      let mappedPlayers = response.data["players"];
-      mappedPlayers.sort(compare);
-      this.setState(
-        {
-          players: mappedPlayers,
-          numberRounds: response.data["numberRounds"],
-          playerTurnIndex: response.data["next"].order,
-          loading: false
-        },
-        () => {
-          this.start();
-        }
-      );
-    });
+    this.props.fetchGameDetails(this.props.match.params.id);
+    this.props.fetchUserPlayer(this.props.match.params.id);
   }
 
-  setUserPlayerID = id => {
-    this.setState({ userPlayerId: id });
-  };
+  componentDidUpdate(prevProps) {
+    if (prevProps.gameId != this.props.gameId) {
+      this.props.startGame(this.props.gameId);
+    }
+  }
 
   updatePlayers = updatedPosition => {
-    let players = this.state.players.slice();
-    let updatedPlayer = this.state.players[this.state.playerTurnIndex];
+    let players = this.props.players.slice();
+    let updatedPlayer = this.props.players[this.props.playerTurnIndex];
     updatedPlayer["day"] = updatedPosition;
-    players[this.state.playerTurnIndex] = updatedPlayer;
-    this.setState({ players: players });
-  };
-
-  start = () => {
-    this.queryPlayerMovements().then(response => {
-      this.setState({
-        isLoadingRoll: false,
-        isOpen: false,
-        playerTurnResults: response.data
-      });
-    });
+    players[this.props.playerTurnIndex] = updatedPlayer;
+    this.props.updatePlayerModels(players);
   };
 
   rollDie = () => {
-    let id = this.props.match.params.id;
-    axios
-      .post(
-        `player/${this.state.userPlayerId}/game/${id}/roll`,
-        {},
-        {
-          auth: {
-            username: "hta55",
-            password: "welcome1"
-          }
-        }
-      )
-      .then(response => {
-        this.setState({ singlePlayerTurnResult: response.data, hasFinishedTurnAnimation: false });
-      });
+    this.props.rollDie(this.props.userPlayer["id"], this.props.gameId);
   };
 
   finishPlayerTurn = (isUserTurn = false) => {
-    if (isUserTurn) {
-      this.queryPlayerMovements().then(response => {
-        this.setState({
-          isLoadingRoll: false,
-          isOpen: false,
-          playerTurnResults: response.data,
-          playerTurnIndex: (this.state.playerTurnIndex + 1) % this.state.players.length,
-          hasFinishedTurnAnimation: true
-        });
-      });
-    } else {
-      this.setState({
-        playerTurnIndex: (this.state.playerTurnIndex + 1) % this.state.players.length,
-        hasFinishedTurnAnimation: true
-      });
-    }
-  };
-
-  queryPlayerMovements = () => {
-    let id = this.props.match.params.id;
-    this.setState({ isLoadingRoll: true });
-    return axios.post(
-      `/game/single/${id}/start`,
-      {},
-      {
-        auth: {
-          username: "hta55",
-          password: "welcome1"
-        }
-      }
+    this.props.finishPlayerTurn(
+      isUserTurn,
+      this.props.gameId,
+      this.props.playerTurnIndex,
+      this.props.players
     );
   };
 
   findPlayerTurnResult = () => {
-    let playerNext = this.state.players[this.state.playerTurnIndex];
-    return this.state.playerTurnResults.filter(value => {
+    let playerNext = this.props.players[this.props.playerTurnIndex];
+    return this.props.playerTurnResults.filter(value => {
       if (value["playerId"] == playerNext["id"]) return value;
     })[0];
   };
 
   endGame = () => {
-    this.setState({ gameHasEnded: true });
+    this.props.endGame();
   };
 
   render() {
-    if (this.state.loading) {
+    if (this.props.loadingGameDetails || this.props.loadingUserDetails) {
       return <Spinner />;
-    }
-    if (this.state.gameHasEnded) {
+    } else if (this.props.gameHasEnded) {
       return <Redirect to={`/game/${this.props.match.params.id}/end`} />;
+    } else {
+      let currentPlayerId = this.props.players[this.props.playerTurnIndex]["id"];
+      let isSinglePlayerTurn = currentPlayerId == this.props.userPlayer["id"];
+      return (
+        <div style={{ display: "flex" }}>
+          <PlayerContext.Provider
+            value={{
+              players: this.props.players,
+              playerTurnIndex: this.props.playerTurnIndex,
+              isSinglePlayersTurn: isSinglePlayerTurn,
+              usersPlayerUpdated: this.props.singlePlayerTurnResult,
+              showEndTurnUpdate: this.props.showEndTurnUpdate
+            }}>
+            <DrawerController
+              {...this.props}
+              gameId={this.props.match.params.id}
+              rollDie={this.rollDie}
+              updatePlayerPositions={this.updatePlayerPositions}
+            />
+            <GameBoard
+              {...this.props}
+              players={this.props.players}
+              numberRounds={this.props.numberRounds}
+            />
+          </PlayerContext.Provider>
+          {isSinglePlayerTurn && (
+            <UserPlayerTurn
+              finishPlayerTurn={this.finishPlayerTurn}
+              updatePlayers={this.updatePlayers}
+              singlePlayerTurnResult={this.props.singlePlayerTurnResult}
+              player={this.props.players[this.props.playerTurnIndex]}
+              endGame={this.endGame}
+            />
+          )}
+          {!isSinglePlayerTurn && !this.props.isLoadingRoll && (
+            <PlayerTurnProgress
+              finishPlayerTurn={this.finishPlayerTurn}
+              player={this.props.players[this.props.playerTurnIndex]}
+              finalPlayerState={this.findPlayerTurnResult()}
+              updatePlayers={this.updatePlayers}
+              endGame={this.endGame}
+            />
+          )}
+        </div>
+      );
     }
-    let currentPlayerId = this.state.players[this.state.playerTurnIndex]["id"];
-    let isSinglePlayerTurn = currentPlayerId == this.state.userPlayerId;
-    return (
-      <div style={{ display: "flex" }}>
-        <PlayerContext.Provider
-          value={{
-            players: this.state.players,
-            playerTurnIndex: this.state.playerTurnIndex,
-            isSinglePlayersTurn: isSinglePlayerTurn,
-            usersPlayerUpdated: this.state.singlePlayerTurnResult,
-            hasFinishedTurnAnimation: this.state.hasFinishedTurnAnimation
-          }}>
-          <DrawerController
-            {...this.props}
-            gameId={this.props.match.params.id}
-            setUserPlayerID={this.setUserPlayerID}
-            rollDie={this.rollDie}
-            updatePlayerPositions={this.updatePlayerPositions}
-          />
-          <GameBoard
-            {...this.props}
-            players={this.state.players}
-            numberRounds={this.state.numberRounds}
-          />
-        </PlayerContext.Provider>
-        {isSinglePlayerTurn && (
-          <UserPlayerTurn
-            finishPlayerTurn={this.finishPlayerTurn}
-            updatePlayers={this.updatePlayers}
-            singlePlayerTurnResult={this.state.singlePlayerTurnResult}
-            player={this.state.players[this.state.playerTurnIndex]}
-            endGame={this.endGame}
-          />
-        )}
-        {!isSinglePlayerTurn && !this.state.isLoadingRoll && (
-          <PlayerTurnProgress
-            userPlayerId={this.state.userPlayerId}
-            finishPlayerTurn={this.finishPlayerTurn}
-            player={this.state.players[this.state.playerTurnIndex]}
-            finalPlayerState={this.findPlayerTurnResult()}
-            updatePlayers={this.updatePlayers}
-            endGame={this.endGame}
-          />
-        )}
-      </div>
-    );
   }
 }
+
+const mapStateToProps = state => ({
+  loadingGameDetails: state.game.loading,
+  loadingUserDetails: state.user.loading,
+  userPlayer: state.user.player,
+  players: state.game.players,
+  numberRounds: state.game.numberRounds,
+  playerTurnIndex: state.game.playerTurnIndex,
+  playerTurnResults: state.game.playerTurnResults,
+  gameId: state.game.gameId,
+  gameHasEnded: state.game.gameHasEnded,
+  showEndTurnUpdate: state.game.showEndTurnUpdate,
+  singlePlayerTurnResult: state.game.singlePlayerTurnResult
+});
+
+export default connect(
+  mapStateToProps,
+  {
+    fetchGameDetails,
+    updatePlayerModels,
+    startGame,
+    finishPlayerTurn,
+    rollDie,
+    endGame,
+    fetchUserPlayer
+  }
+)(SinglePlayerController);

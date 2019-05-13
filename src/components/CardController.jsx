@@ -25,30 +25,16 @@ export default class CardController extends React.Component {
         }
       )
       .then(() => {
-        // let player = this.props.userPlayer;
-        // player["op"] = [...player["op"], card];
-        // this.props.updatePlayerDrawer(player); //todo: hoist up
-        this.props.makeCardDecision();
+        this.props.makeCardDecision(true);
       });
   };
 
   declineCard = () => {
-    // this.setState({ loading: true });
-    // axios
-    //   .post(
-    //     `/player/${this.props.userPlayer["id"]}/add/opportunity/${card["id"]}`,
-    //     {},
-    //     {
-    //       auth: {
-    //         username: "hta55",
-    //         password: "welcome1"
-    //       }
-    //     }
-    //   )
-    //   .then(() => {
-    //     this.props.makeCardDecision();
-    //   });
-    this.props.makeCardDecision();
+    let player = this.state.userPlayer;
+    player["op"] = [...player["op"], this.state.card];
+    player["money"] = player["money"] + this.state.card["cost"];
+    this.props.updatePlayerDrawer(player);
+    this.props.makeCardDecision(false);
   };
 
   render() {

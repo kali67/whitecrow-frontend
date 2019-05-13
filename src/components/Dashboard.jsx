@@ -1,5 +1,12 @@
 import React from "react";
 import styled from "styled-components";
+import { connect } from "react-redux";
+import {
+  openDashboard,
+  closeDashboard,
+  showHelpModal,
+  closeHelpModal
+} from "../actions/dashboardActions";
 
 import hamburger from "../static/image/hamburger.png";
 import Slider from "react-slide-out";
@@ -30,15 +37,13 @@ const DrawerContainer = styled.div`
   overflow-y: scroll;
 `;
 
-export default class Dashboard extends React.Component {
+class Dashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isOpen: false,
       isLoadingRoll: false,
       playerTurn: 0,
-      userPlayer: null,
-      helpModalIsOpen: false
+      userPlayer: null
     };
   }
 
@@ -46,25 +51,8 @@ export default class Dashboard extends React.Component {
     this.setState({ userPlayer: this.props.userPlayer });
   }
 
-  updatePlayerDrawer = data => {
-    this.setState({ userPlayer: data });
-  };
-
-  closeDrawer = () => {
-    this.setState({ isOpen: false });
-  };
-
-  showHelpModal = () => {
-    this.setState({ helpModalIsOpen: true });
-    this.closeDrawer();
-  };
-
-  closeHelpModal = () => {
-    this.setState({ helpModalIsOpen: false, isOpen: true });
-  };
-
   rollDie = () => {
-    this.setState({ isOpen: false });
+    this.props.closeDashboard();
     this.props.rollDie();
   };
 
@@ -73,9 +61,9 @@ export default class Dashboard extends React.Component {
       <React.Fragment>
         <Slider
           foldWidth="60px"
-          isOpen={this.state.isOpen}
+          isOpen={this.props.isOpen}
           leftToRight={true}
-          onOutsideClick={() => this.setState({ isOpen: false })}>
+          onOutsideClick={() => this.props.closeDashboard()}>
           <DrawerContainer>
             <PlayerContext.Consumer>
               {({
@@ -83,11 +71,11 @@ export default class Dashboard extends React.Component {
                 playerTurnIndex,
                 isSinglePlayersTurn,
                 usersPlayerUpdated,
-                hasFinishedTurnAnimation
+                showEndTurnUpdate
               }) => {
                 return (
                   <PlayerControls
-                    hasFinishedTurnAnimation={hasFinishedTurnAnimation}
+                    showEndTurnUpdate={showEndTurnUpdate}
                     usersPlayerUpdated={usersPlayerUpdated}
                     isSinglePlayersTurn={isSinglePlayersTurn}
                     playerTurn={playerTurnIndex}
@@ -95,9 +83,9 @@ export default class Dashboard extends React.Component {
                     userPlayer={this.props.userPlayer}
                     isLoadingRoll={this.state.isLoadingRoll}
                     rollDie={this.rollDie}
-                    closeDrawer={this.closeDrawer}
-                    helpModalIsOpen={this.state.helpModalIsOpen}
-                    showHelpModal={this.showHelpModal}
+                    closeDrawer={() => this.props.closeDashboard()}
+                    helpModalIsOpen={this.props.helpModalIsOpen}
+                    showHelpModal={() => this.props.showHelpModal()}
                   />
                 );
               }}
@@ -106,13 +94,23 @@ export default class Dashboard extends React.Component {
           </DrawerContainer>
         </Slider>
         <ClosedDrawer>
-          <Hamburger
-            image={hamburger}
-            onClick={e => this.setState({ isOpen: !this.state.isOpen })}
-          />
+          <Hamburger image={hamburger} onClick={() => this.props.openDashboard()} />
         </ClosedDrawer>
-        <HelpModal isOpen={this.state.helpModalIsOpen} closeHelpModal={this.closeHelpModal} />
+        <HelpModal
+          isOpen={this.props.helpModalIsOpen}
+          closeHelpModal={() => this.props.closeHelpModal()}
+        />
       </React.Fragment>
     );
   }
 }
+
+const mapStateToProps = state => ({
+  isOpen: state.dashboard.isOpen,
+  helpModalIsOpen: state.dashboard.helpModalIsOpen
+});
+
+export default connect(
+  mapStateToProps,
+  { openDashboard, closeDashboard, showHelpModal, closeHelpModal }
+)(Dashboard);

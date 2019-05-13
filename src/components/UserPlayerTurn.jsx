@@ -3,7 +3,10 @@ import AnimateBoardMovement from "./AnimateBoardMovement";
 import TurnNotification from "./TurnNotification";
 import CardController from "./CardController";
 
-export default class UserPlayerTurn extends React.Component {
+import { connect } from "react-redux";
+import { updatePlayerCards, updatePlayerMoney, updatePlayerDay } from "../actions/userActions";
+
+class UserPlayerTurn extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -51,6 +54,7 @@ export default class UserPlayerTurn extends React.Component {
         setTimeout(() => {
           this.setState({ drewMail: false });
           this.props.finishPlayerTurn(true);
+          this.props.updatePlayerCards(result["mailCard"]);
         }, 5000);
       });
     } else if (result["opportunityCardResult"]) {
@@ -59,9 +63,13 @@ export default class UserPlayerTurn extends React.Component {
         drewMail: true,
         card: result["opportunityCardResult"]["card"]
       });
+      this.props.updatePlayerCards(result["opportunityCardResult"]["card"]);
     } else {
       this.props.finishPlayerTurn(true);
     }
+    console.log(result);
+    this.props.updatePlayerMoney(result["moneyDifference"]);
+    this.props.updatePlayerDay(result["currentDay"]);
   };
 
   render() {
@@ -92,3 +100,8 @@ export default class UserPlayerTurn extends React.Component {
     return null;
   }
 }
+
+export default connect(
+  null,
+  { updatePlayerCards, updatePlayerMoney, updatePlayerDay }
+)(UserPlayerTurn);

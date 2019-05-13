@@ -27,7 +27,6 @@ export default class PlayerTurnProgress extends React.Component {
   }
 
   updateComponentState = () => {
-    console.log(this.props.finalPlayerState);
     if (this.props.finalPlayerState) {
       this.setState(
         {

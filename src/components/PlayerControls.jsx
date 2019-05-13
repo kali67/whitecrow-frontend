@@ -58,11 +58,20 @@ export default class PlayerControls extends React.Component {
     }
   }
 
+  calculatePlayerDayFromTurn = () => {
+    if (!this.props.usersPlayerUpdated || !this.props.showEndTurnUpdate) {
+      return this.props.userPlayer.day;
+    }
+    if (this.props.showEndTurnUpdate) {
+      return this.props.usersPlayerUpdated["currentDay"];
+    }
+  };
+
   calculatePlayersMoneyFromTurn = () => {
-    if (!this.props.usersPlayerUpdated || !this.props.hasFinishedTurnAnimation) {
+    if (!this.props.usersPlayerUpdated || !this.props.showEndTurnUpdate) {
       return this.props.userPlayer.money;
     }
-    if (this.props.hasFinishedTurnAnimation) {
+    if (this.props.showEndTurnUpdate) {
       return this.props.userPlayer.money + this.props.usersPlayerUpdated["moneyDifference"];
     }
   };
@@ -80,8 +89,8 @@ export default class PlayerControls extends React.Component {
         </PlayerOrderWrapper>
         <PlayerInfoView
           username={this.props.userPlayer["username"]}
-          money={this.calculatePlayersMoneyFromTurn()}
-          day={this.props.userPlayer.day}
+          money={this.props.userPlayer["money"]}
+          day={this.props.userPlayer["day"]}
           rollDie={this.props.rollDie}
           rolledDisabled={this.state.rolledDisabled}
           isLoadingRoll={this.props.isLoadingRoll}
@@ -210,5 +219,6 @@ const tabs = props => {
 };
 
 export const CardHolder = props => {
+  console.log(props);
   return <Tabs tabs={tabs(props)} />;
 };
