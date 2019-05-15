@@ -19,8 +19,6 @@ import { fetchUserPlayer } from "../actions/userActions";
 
 import { connect } from "react-redux";
 
-export const PlayerContext = React.createContext([]);
-
 class SinglePlayerController extends React.Component {
   componentDidMount() {
     document.getElementById("root").style = "background: #1c2321;";
@@ -71,6 +69,12 @@ class SinglePlayerController extends React.Component {
     return currentPlayerId == this.props.userPlayer["id"];
   };
 
+  updatePlayerState = player => {
+    let players = this.props.players.slice();
+    players[this.props.playerTurnIndex] = player;
+    this.props.updatePlayerModels(players);
+  };
+
   render() {
     if (this.props.loadingGameDetails || this.props.loadingUserDetails) {
       return <Spinner />;
@@ -90,7 +94,6 @@ class SinglePlayerController extends React.Component {
           <UserPlayerTurn
             finishPlayerTurn={this.finishPlayerTurn}
             updatePlayers={this.updatePlayers}
-            player={this.props.players[this.props.playerTurnIndex]}
             endGame={this.endGame}
           />
         )}
@@ -101,6 +104,7 @@ class SinglePlayerController extends React.Component {
             finalPlayerState={this.findPlayerTurnResult()}
             updatePlayers={this.updatePlayers}
             endGame={this.endGame}
+            updatePlayerState={this.updatePlayerState}
           />
         )}
       </div>

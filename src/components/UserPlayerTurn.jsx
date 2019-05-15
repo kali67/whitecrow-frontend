@@ -4,38 +4,63 @@ import TurnNotification from "./TurnNotification";
 import CardController from "./CardController";
 
 import { connect } from "react-redux";
-import { updatePlayerCards, updatePlayerMoney, updatePlayerDay } from "../actions/userActions";
+import {
+  updatePlayerCards,
+  updatePlayerMoney,
+  updatePlayerDay,
+  playerHasFinishedGame
+} from "../actions/userActions";
+
+import {
+  dismissTurnNotification,
+  animatePlayerMovement,
+  stopPlayerTurnAnimation,
+  showDrawnCard,
+  dismissCardModal,
+  showDrawnOpportunityCard,
+  showTurnNotification
+} from "../actions/userTurnActions";
 
 class UserPlayerTurn extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      player: null,
-      showTurnNotification: true
-    };
+  componentDidMount() {
+    this.runCheck();
   }
 
-  componentDidMount() {
-    this.setState({ player: this.props.player }, () => {
+  runCheck = () => {
+    this.props.showTurnNotification();
+    if (this.playerHasFinishedGameBeforeTurn()) {
       setTimeout(() => {
-        this.setState({ showTurnNotification: false });
+        this.props.dismissTurnNotification();
+        this.props.finishPlayerTurn(true);
       }, 3000);
-    });
-  }
+    } else {
+      setTimeout(() => {
+        this.props.dismissTurnNotification();
+      }, 3000);
+    }
+  };
+
+  playerHasFinishedGameBeforeTurn = () => {
+    return this.props.playerStateBeforeTurn["hasFinishedGame"];
+  };
+
+  playerHasFinishedGameAfterTurn = () => {
+    return this.props.userTurnResult["hasFinishedGame"];
+  };
 
   componentDidUpdate(prevProps) {
-    if (prevProps.userTurnResult != this.props.userTurnResult) {
-      this.setState({
-        animateMovement: true,
-        finalPlayerState: this.props.userTurnResult
-      });
+    if (prevProps.userTurnResult !== this.props.userTurnResult) {
+      this.runCheck();
+      if (this.playerHasFinishedGameAfterTurn()) {
+        this.props.playerHasFinishedGame();
+      }
+      this.props.animatePlayerMovement();
     }
   }
 
   completeBoardMovement = () => {
-    this.setState({ animateMovement: false }, () => {
-      this.parseTurnResult();
-    });
+    this.props.stopPlayerTurnAnimation();
+    this.parseTurnResult();
   };
 
   updatePosition = newPosition => {
@@ -43,56 +68,53 @@ class UserPlayerTurn extends React.Component {
   };
 
   makeCardDecision = () => {
-    this.setState({ drewMail: false });
+    this.props.dismissCardModal();
     this.props.finishPlayerTurn(true);
   };
 
   parseTurnResult = () => {
-    let result = this.state.finalPlayerState;
-    if (result["mailCard"]) {
-      this.setState({ drewMail: true, card: result["mailCard"] }, () => {
-        setTimeout(() => {
-          this.setState({ drewMail: false });
-          this.props.finishPlayerTurn(true);
-          this.props.updatePlayerCards(result["mailCard"]);
-        }, 5000);
-      });
-    } else if (result["opportunityCardResult"]) {
-      this.setState({
-        drewOppourtunity: true,
-        drewMail: true,
-        card: result["opportunityCardResult"]["card"]
-      });
-      this.props.updatePlayerCards(result["opportunityCardResult"]["card"]);
+    let playerStateAfterTurn = this.props.userTurnResult;
+    let opportunityCardResult = playerStateAfterTurn["opportunityCardResult"];
+    if (playerStateAfterTurn["mailCard"]) {
+      this.props.showDrawnCard(playerStateAfterTurn["mailCard"]);
+      setTimeout(() => {
+        this.props.dismissCardModal();
+        this.props.finishPlayerTurn(true);
+        this.props.updatePlayerCards(playerStateAfterTurn["mailCard"]);
+      }, 5000);
+    } else if (opportunityCardResult) {
+      this.props.showDrawnOpportunityCard(opportunityCardResult["card"]);
+      this.props.updatePlayerCards(opportunityCardResult["card"]);
     } else {
       this.props.finishPlayerTurn(true);
     }
-    this.props.updatePlayerMoney(result["moneyDifference"]);
-    this.props.updatePlayerDay(result["currentDay"]);
+    this.props.updatePlayerMoney(playerStateAfterTurn["moneyDifference"]);
+    this.props.updatePlayerDay(playerStateAfterTurn["currentDay"]);
   };
 
   render() {
-    if (this.state.animateMovement) {
+    if (this.props.animateMovement) {
       return (
         <AnimateBoardMovement
-          playerId={this.state.player["playerId"]}
-          currentPosition={this.state.player["day"]}
-          targetPosition={this.state.finalPlayerState["currentDay"]}
+          playerId={this.props.playerStateBeforeTurn["playerId"]}
+          currentPosition={this.props.playerStateBeforeTurn["day"]}
+          targetPosition={this.props.userTurnResult["currentDay"]}
           completeBoardMovement={this.completeBoardMovement}
           updatePosition={this.updatePosition}
+          hasFinishedGame={this.props.userTurnResult["hasFinishedGame"]}
         />
       );
     }
-    if (this.state.showTurnNotification) {
+    if (this.props.shouldShowTurnNotificator) {
       return <TurnNotification username="Your Turn!" />;
     }
-    if (this.state.drewMail) {
+    if (this.props.cardDrawn) {
       return (
         <CardController
-          userPlayer={this.state.player}
+          userPlayer={this.props.playerStateBeforeTurn}
           makeCardDecision={this.makeCardDecision}
-          requiresDecision={this.state.drewOppourtunity}
-          card={this.state.card}
+          requiresDecision={this.props.isOpportunityCard}
+          card={this.props.card}
         />
       );
     }
@@ -101,10 +123,28 @@ class UserPlayerTurn extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  userTurnResult: state.game.userTurnResult
+  userTurnResult: state.game.userTurnResult,
+  playerStateBeforeTurn: state.user.player,
+  shouldShowTurnNotificator: state.userTurn.shouldShowTurnNotificator,
+  animateMovement: state.userTurn.animateMovement,
+  card: state.userTurn.card,
+  cardDrawn: state.userTurn.cardDrawn,
+  isOpportunityCard: state.userTurn.isOpportunityCard
 });
 
 export default connect(
   mapStateToProps,
-  { updatePlayerCards, updatePlayerMoney, updatePlayerDay }
+  {
+    updatePlayerCards,
+    updatePlayerMoney,
+    updatePlayerDay,
+    playerHasFinishedGame,
+    dismissTurnNotification,
+    animatePlayerMovement,
+    stopPlayerTurnAnimation,
+    showDrawnCard,
+    dismissCardModal,
+    showDrawnOpportunityCard,
+    showTurnNotification
+  }
 )(UserPlayerTurn);

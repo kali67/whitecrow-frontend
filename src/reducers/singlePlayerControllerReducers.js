@@ -17,8 +17,7 @@ const initialState = {
   playerTurnIndex: 0,
   AITurnResults: [],
   gameId: -1,
-  gameHasEnded: false,
-  showEndTurnUpdate: true
+  gameHasEnded: false
 };
 
 export default function(state = initialState, action) {
@@ -52,22 +51,19 @@ export default function(state = initialState, action) {
     case ROLL_DIE:
       return {
         ...state,
-        userTurnResult: action.userTurnResult,
-        showEndTurnUpdate: action.showEndTurnUpdate
+        userTurnResult: action.userTurnResult
       };
     case FINISH_USER_TURN:
       return {
         ...state,
         isLoadingRoll: action.isLoadingRoll,
         AITurnResults: action.AITurnResults,
-        playerTurnIndex: action.playerTurnIndex,
-        showEndTurnUpdate: action.showEndTurnUpdate
+        playerTurnIndex: action.playerTurnIndex
       };
     case FINISH_AI_TURN:
       return {
         ...state,
-        playerTurnIndex: action.playerTurnIndex,
-        showEndTurnUpdate: action.showEndTurnUpdate
+        playerTurnIndex: action.playerTurnIndex
       };
     case END_GAME:
       return {

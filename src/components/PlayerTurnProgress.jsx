@@ -28,6 +28,11 @@ export default class PlayerTurnProgress extends React.Component {
 
   updateComponentState = () => {
     if (this.props.finalPlayerState) {
+      if (this.props.finalPlayerState["hasFinishedGame"]) {
+        let player = this.props.player;
+        player["hasFinishedGame"] = true;
+        this.props.updatePlayerState(player);
+      }
       this.setState(
         {
           turnNotificator: true,
@@ -40,6 +45,20 @@ export default class PlayerTurnProgress extends React.Component {
           }, 3000);
         }
       );
+    } else {
+      if (this.props.player["hasFinishedGame"]) {
+        this.setState(
+          {
+            turnNotificator: true
+          },
+          () => {
+            setTimeout(() => {
+              this.setState({ turnNotificator: false });
+              this.props.finishPlayerTurn();
+            }, 3000);
+          }
+        );
+      }
     }
   };
 
@@ -108,6 +127,7 @@ export default class PlayerTurnProgress extends React.Component {
           currentPosition={this.state.player["day"]}
           targetPosition={this.state.finalPlayerState["currentDay"]}
           completeBoardMovement={this.completeBoardMovement}
+          hasFinishedGame={this.props.finalPlayerState["hasFinishedGame"]}
           updatePosition={this.updatePosition}
         />
       );

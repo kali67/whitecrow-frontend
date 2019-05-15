@@ -85,7 +85,6 @@ export const rollDie = (userPlayerId, gameId) => dispatch => {
       dispatch({
         type: ROLL_DIE,
         userTurnResult: response.data,
-        showEndTurnUpdate: false,
         loading: false
       });
     });
@@ -102,15 +101,13 @@ export const finishPlayerTurn = (
       dispatch({
         type: FINISH_USER_TURN,
         AITurnResults: response.data,
-        playerTurnIndex: (playerTurnIndex + 1) % players.length,
-        showEndTurnUpdate: true
+        playerTurnIndex: (playerTurnIndex + 1) % players.length
       });
     });
   } else {
     dispatch({
       type: FINISH_AI_TURN,
-      playerTurnIndex: (playerTurnIndex + 1) % players.length,
-      showEndTurnUpdate: true
+      playerTurnIndex: (playerTurnIndex + 1) % players.length
     });
   }
 };

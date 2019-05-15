@@ -66,38 +66,39 @@ const rows = players => {
 
 const TableWrapper = styled.div`
   max-width: 600px;
-  margin-top: 200px;
 `;
 
-const style = {
-  display: "flex",
-  flowDirection: "column",
-  justifyContent: "center",
-  alignItems: "center"
-};
+const EndGameScreenWrapper = styled.div`
+  margin-top: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 900px;
+`;
 
 const EndGameView = ({ gameData }) => (
-  <div style={style}>
-    <SectionMessage appearance="confirmation">
-      <p>From the angle of the mountain</p>
-      <p>To the sand on our island shore</p>
-      <p>I{"'"}ve been here before</p>
-    </SectionMessage>
-    <TableWrapper>
-      <h4>Leaderboard</h4>
-      <DynamicTable
-        head={createHead()}
-        rows={rows(gameData["leaderboard"])}
-        loadingSpinnerSize="large"
-        isLoading={false}
-        isFixedSize
-        defaultSortKey="term"
-        defaultSortOrder="ASC"
-        onSort={() => console.log("onSort")}
-        onSetPage={() => console.log("onSetPage")}
-      />
-    </TableWrapper>
-  </div>
+  <React.Fragment>
+      <SectionMessage appearance="confirmation">
+        <p>From the angle of the mountain</p>
+        <p>To the sand on our island shore</p>
+        <p>I{"'"}ve been here before</p>
+      </SectionMessage>
+      <TableWrapper>
+        <h4>Leaderboard</h4>
+        <DynamicTable
+          head={createHead()}
+          rows={rows(gameData["leaderboard"])}
+          loadingSpinnerSize="large"
+          isLoading={false}
+          isFixedSize
+          defaultSortKey="term"
+          defaultSortOrder="ASC"
+          onSort={() => console.log("onSort")}
+          onSetPage={() => console.log("onSetPage")}
+        />
+      </TableWrapper>
+  </React.Fragment>
 );
 
 export default EndGameView;
