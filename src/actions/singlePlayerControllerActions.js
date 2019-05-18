@@ -5,7 +5,6 @@ import {
   LOADING,
   UPDATE_PLAYER_TURN_RESULTS,
   ROLL_DIE,
-  END_GAME,
   FINISH_USER_TURN,
   FINISH_AI_TURN
 } from "./types";
@@ -97,24 +96,21 @@ export const finishPlayerTurn = (
   players
 ) => dispatch => {
   if (isUserTurn) {
-    queryPlayerTurns(gameId).then(response => {
-      dispatch({
-        type: FINISH_USER_TURN,
-        AITurnResults: response.data,
-        playerTurnIndex: (playerTurnIndex + 1) % players.length
+    queryPlayerTurns(gameId)
+      .then(response => {
+        dispatch({
+          type: FINISH_USER_TURN,
+          AITurnResults: response.data,
+          playerTurnIndex: (playerTurnIndex + 1) % players.length
+        });
+      })
+      .catch(error => {
+        console.log(error);
       });
-    });
   } else {
     dispatch({
       type: FINISH_AI_TURN,
       playerTurnIndex: (playerTurnIndex + 1) % players.length
     });
   }
-};
-
-export const endGame = () => dispatch => {
-  dispatch({
-    type: END_GAME,
-    gameHasEnded: true
-  });
 };

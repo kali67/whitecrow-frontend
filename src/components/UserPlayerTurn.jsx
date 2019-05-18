@@ -4,12 +4,7 @@ import TurnNotification from "./TurnNotification";
 import CardController from "./CardController";
 
 import { connect } from "react-redux";
-import {
-  updatePlayerCards,
-  updatePlayerMoney,
-  updatePlayerDay,
-  playerHasFinishedGame
-} from "../actions/userActions";
+import { updatePlayerCards, updatePlayerMoney, updatePlayerDay } from "../actions/userActions";
 
 import {
   dismissTurnNotification,
@@ -31,6 +26,7 @@ class UserPlayerTurn extends React.Component {
     if (this.playerHasFinishedGameBeforeTurn()) {
       setTimeout(() => {
         this.props.dismissTurnNotification();
+        this.notifyPlayerFinishedGame();
         this.props.finishPlayerTurn(true);
       }, 3000);
     } else {
@@ -38,6 +34,13 @@ class UserPlayerTurn extends React.Component {
         this.props.dismissTurnNotification();
       }, 3000);
     }
+  };
+
+  notifyPlayerFinishedGame = () => {
+    let player = this.props.playerStateBeforeTurn;
+    player["hasFinishedGame"] = true;
+    console.log(player + "test test");
+    this.props.updatePlayerState(player);
   };
 
   playerHasFinishedGameBeforeTurn = () => {
@@ -51,9 +54,6 @@ class UserPlayerTurn extends React.Component {
   componentDidUpdate(prevProps) {
     if (prevProps.userTurnResult !== this.props.userTurnResult) {
       this.runCheck();
-      if (this.playerHasFinishedGameAfterTurn()) {
-        this.props.playerHasFinishedGame();
-      }
       this.props.animatePlayerMovement();
     }
   }
@@ -64,7 +64,7 @@ class UserPlayerTurn extends React.Component {
   };
 
   updatePosition = newPosition => {
-    this.props.updatePlayers(newPosition);
+    this.props.updatePlayersPosition(newPosition);
   };
 
   makeCardDecision = () => {
@@ -86,6 +86,9 @@ class UserPlayerTurn extends React.Component {
       this.props.showDrawnOpportunityCard(opportunityCardResult["card"]);
       this.props.updatePlayerCards(opportunityCardResult["card"]);
     } else {
+      if (this.playerHasFinishedGameAfterTurn()) {
+        this.notifyPlayerFinishedGame();
+      }
       this.props.finishPlayerTurn(true);
     }
     this.props.updatePlayerMoney(playerStateAfterTurn["moneyDifference"]);
@@ -138,7 +141,6 @@ export default connect(
     updatePlayerCards,
     updatePlayerMoney,
     updatePlayerDay,
-    playerHasFinishedGame,
     dismissTurnNotification,
     animatePlayerMovement,
     stopPlayerTurnAnimation,

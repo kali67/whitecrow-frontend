@@ -5,8 +5,7 @@ import {
   UPDATE_PLAYER_TURN_RESULTS,
   ROLL_DIE,
   FINISH_USER_TURN,
-  FINISH_AI_TURN,
-  END_GAME
+  FINISH_AI_TURN
 } from "../actions/types";
 
 const initialState = {
@@ -16,8 +15,7 @@ const initialState = {
   numberRounds: 0,
   playerTurnIndex: 0,
   AITurnResults: [],
-  gameId: -1,
-  gameHasEnded: false
+  gameId: -1
 };
 
 export default function(state = initialState, action) {
@@ -64,11 +62,6 @@ export default function(state = initialState, action) {
       return {
         ...state,
         playerTurnIndex: action.playerTurnIndex
-      };
-    case END_GAME:
-      return {
-        ...state,
-        gameHasEnded: true
       };
     default:
       return state;

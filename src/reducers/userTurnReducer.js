@@ -32,6 +32,7 @@ export default function(state = initialState, action) {
     case STOP_ANIMATING_PLAYER_MOVEMENT:
       return {
         ...state,
+        shouldShowTurnNotificator: false,
         animateMovement: false
       };
     case SHOW_DRAWN_CARD:

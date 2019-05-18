@@ -11,8 +11,7 @@ import {
   updatePlayerModels,
   startGame,
   finishPlayerTurn,
-  rollDie,
-  endGame
+  rollDie
 } from "../actions/singlePlayerControllerActions";
 
 import { fetchUserPlayer } from "../actions/userActions";
@@ -32,7 +31,7 @@ class SinglePlayerController extends React.Component {
     }
   }
 
-  updatePlayers = updatedPosition => {
+  updatePlayersPosition = updatedPosition => {
     let players = this.props.players.slice();
     let updatedPlayer = this.props.players[this.props.playerTurnIndex];
     updatedPlayer["day"] = updatedPosition;
@@ -45,6 +44,7 @@ class SinglePlayerController extends React.Component {
   };
 
   finishPlayerTurn = (isUserTurn = false) => {
+    console.log("finished turn");
     this.props.finishPlayerTurn(
       isUserTurn,
       this.props.gameId,
@@ -60,10 +60,6 @@ class SinglePlayerController extends React.Component {
     })[0];
   };
 
-  endGame = () => {
-    this.props.endGame();
-  };
-
   isUsersTurn = () => {
     let currentPlayerId = this.props.players[this.props.playerTurnIndex]["id"];
     return currentPlayerId == this.props.userPlayer["id"];
@@ -75,11 +71,17 @@ class SinglePlayerController extends React.Component {
     this.props.updatePlayerModels(players);
   };
 
+  hasGameEnded = () => {
+    return this.props.players.every(player => {
+      return player["hasFinishedGame"];
+    });
+  };
+
   render() {
     if (this.props.loadingGameDetails || this.props.loadingUserDetails) {
       return <Spinner />;
     }
-    if (this.props.gameHasEnded) {
+    if (this.hasGameEnded()) {
       return <Redirect to={`/game/${this.props.gameId}/end`} />;
     }
     return (
@@ -93,8 +95,8 @@ class SinglePlayerController extends React.Component {
         {this.isUsersTurn() && (
           <UserPlayerTurn
             finishPlayerTurn={this.finishPlayerTurn}
-            updatePlayers={this.updatePlayers}
-            endGame={this.endGame}
+            updatePlayersPosition={this.updatePlayersPosition}
+            updatePlayerState={this.updatePlayerState}
           />
         )}
         {!this.isUsersTurn() && !this.props.isLoadingRoll && (
@@ -102,8 +104,7 @@ class SinglePlayerController extends React.Component {
             finishPlayerTurn={this.finishPlayerTurn}
             player={this.props.players[this.props.playerTurnIndex]}
             finalPlayerState={this.findPlayerTurnResult()}
-            updatePlayers={this.updatePlayers}
-            endGame={this.endGame}
+            updatePlayersPosition={this.updatePlayersPosition}
             updatePlayerState={this.updatePlayerState}
           />
         )}
@@ -121,7 +122,6 @@ const mapStateToProps = ({ game, user }) => ({
   playerTurnIndex: game.playerTurnIndex,
   AITurnResults: game.AITurnResults,
   gameId: game.gameId,
-  gameHasEnded: game.gameHasEnded,
   showEndTurnUpdate: game.showEndTurnUpdate,
   userTurnResult: game.userTurnResult
 });
@@ -134,7 +134,6 @@ export default connect(
     startGame,
     finishPlayerTurn,
     rollDie,
-    endGame,
     fetchUserPlayer
   }
 )(SinglePlayerController);

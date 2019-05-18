@@ -26,44 +26,45 @@ export default class PlayerTurnProgress extends React.Component {
     }
   }
 
+  hasPlayerFinishedGameAfterTurn = () => {
+    return this.props.finalPlayerState["hasFinishedGame"];
+  };
+
+  hasPlayerFinishedBeforeTurn = () => {
+    return this.props.player["hasFinishedGame"];
+  };
+
+  updatePlayerModel = () => {
+    let player = this.props.player;
+    player["hasFinishedGame"] = true;
+    this.props.updatePlayerState(player);
+  };
+
   updateComponentState = () => {
     if (this.props.finalPlayerState) {
-      if (this.props.finalPlayerState["hasFinishedGame"]) {
-        let player = this.props.player;
-        player["hasFinishedGame"] = true;
-        this.props.updatePlayerState(player);
-      }
-      this.setState(
-        {
-          turnNotificator: true,
-          player: this.props.player,
-          finalPlayerState: this.props.finalPlayerState
-        },
-        () => {
-          setTimeout(() => {
-            this.setState({ roll: true, turnNotificator: false });
-          }, 3000);
-        }
-      );
-    } else {
-      if (this.props.player["hasFinishedGame"]) {
+      if (this.hasPlayerFinishedBeforeTurn()) {
+        this.props.finishPlayerTurn();
+      } else {
         this.setState(
           {
-            turnNotificator: true
+            turnNotificator: true,
+            player: this.props.player,
+            finalPlayerState: this.props.finalPlayerState
           },
           () => {
             setTimeout(() => {
-              this.setState({ turnNotificator: false });
-              this.props.finishPlayerTurn();
+              this.setState({ roll: true, turnNotificator: false });
             }, 3000);
           }
         );
       }
+    } else {
+      this.props.finishPlayerTurn();
     }
   };
 
   updatePosition = newPosition => {
-    this.props.updatePlayers(newPosition);
+    this.props.updatePlayersPosition(newPosition);
   };
 
   completeBoardMovement = () => {
@@ -73,11 +74,10 @@ export default class PlayerTurnProgress extends React.Component {
   };
 
   finishTurn = () => {
-    if (this.state.finalPlayerState["gameEnding"] == true) {
-      this.props.endGame();
-    } else {
-      this.props.finishPlayerTurn();
+    if (this.hasPlayerFinishedGameAfterTurn()) {
+      this.updatePlayerModel();
     }
+    this.props.finishPlayerTurn();
   };
 
   checkCards = () => {

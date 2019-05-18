@@ -48,13 +48,7 @@ export default function(state = initialState, action) {
         ...state,
         player: playerUpdatedDay
       };
-    case UPDATE_PLAYER_GAME_STATUS:
-      let playerUpdatedFinished = Object.assign({}, state.player);
-      playerUpdatedFinished["hasGameFinished"] = action.hasGameFinished;
-      return {
-        ...state,
-        player: playerUpdatedFinished
-      };
+
     default:
       return state;
   }
