@@ -3,7 +3,10 @@ import axios from "axios";
 
 import CardModal from "./CardModal";
 
-export default class CardController extends React.Component {
+import { connect } from "react-redux";
+import { updatePlayerCards, updatePlayerMoney } from "../actions/userActions";
+
+class CardController extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -25,16 +28,14 @@ export default class CardController extends React.Component {
         }
       )
       .then(() => {
-        this.props.makeCardDecision(true);
+        this.props.updatePlayerCards(card);
+        this.props.updatePlayerMoney(-card["cost"]);
+        this.props.makeCardDecision();
       });
   };
 
   declineCard = () => {
-    let player = this.state.userPlayer;
-    player["op"] = [...player["op"], this.state.card];
-    player["money"] = player["money"] + this.state.card["cost"];
-    this.props.updatePlayerDrawer(player);
-    this.props.makeCardDecision(false);
+    this.props.makeCardDecision();
   };
 
   render() {
@@ -50,3 +51,8 @@ export default class CardController extends React.Component {
     );
   }
 }
+
+export default connect(
+  null,
+  { updatePlayerCards, updatePlayerMoney }
+)(CardController);

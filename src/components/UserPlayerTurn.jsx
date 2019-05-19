@@ -18,18 +18,24 @@ import {
 
 class UserPlayerTurn extends React.Component {
   componentDidMount() {
-    this.runCheck();
+    this.startPlayerTurn();
   }
 
-  runCheck = () => {
-    this.props.showTurnNotification();
+  componentDidUpdate(prevProps) {
+    if (prevProps.userTurnResult !== this.props.userTurnResult) {
+      this.startPlayerTurn();
+      this.props.animatePlayerMovement();
+    }
+  }
+
+  startPlayerTurn = () => {
     if (this.playerHasFinishedGameBeforeTurn()) {
       setTimeout(() => {
-        this.props.dismissTurnNotification();
         this.notifyPlayerFinishedGame();
         this.props.finishPlayerTurn(true);
       }, 3000);
     } else {
+      this.props.showTurnNotification();
       setTimeout(() => {
         this.props.dismissTurnNotification();
       }, 3000);
@@ -39,7 +45,7 @@ class UserPlayerTurn extends React.Component {
   notifyPlayerFinishedGame = () => {
     let player = this.props.playerStateBeforeTurn;
     player["hasFinishedGame"] = true;
-    console.log(player + "test test");
+    player["day"] = this.props.userTurnResult["currentDay"];
     this.props.updatePlayerState(player);
   };
 
@@ -51,16 +57,9 @@ class UserPlayerTurn extends React.Component {
     return this.props.userTurnResult["hasFinishedGame"];
   };
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.userTurnResult !== this.props.userTurnResult) {
-      this.runCheck();
-      this.props.animatePlayerMovement();
-    }
-  }
-
   completeBoardMovement = () => {
     this.props.stopPlayerTurnAnimation();
-    this.parseTurnResult();
+    this.handleCardActions();
   };
 
   updatePosition = newPosition => {
@@ -72,7 +71,7 @@ class UserPlayerTurn extends React.Component {
     this.props.finishPlayerTurn(true);
   };
 
-  parseTurnResult = () => {
+  handleCardActions = () => {
     let playerStateAfterTurn = this.props.userTurnResult;
     let opportunityCardResult = playerStateAfterTurn["opportunityCardResult"];
     if (playerStateAfterTurn["mailCard"]) {
@@ -84,7 +83,6 @@ class UserPlayerTurn extends React.Component {
       }, 5000);
     } else if (opportunityCardResult) {
       this.props.showDrawnOpportunityCard(opportunityCardResult["card"]);
-      this.props.updatePlayerCards(opportunityCardResult["card"]);
     } else {
       if (this.playerHasFinishedGameAfterTurn()) {
         this.notifyPlayerFinishedGame();
@@ -117,6 +115,7 @@ class UserPlayerTurn extends React.Component {
           userPlayer={this.props.playerStateBeforeTurn}
           makeCardDecision={this.makeCardDecision}
           requiresDecision={this.props.isOpportunityCard}
+          updatePlayerCards={this.props.updatePlayerCards}
           card={this.props.card}
         />
       );

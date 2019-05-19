@@ -219,6 +219,5 @@ const tabs = props => {
 };
 
 export const CardHolder = props => {
-  console.log(props);
   return <Tabs tabs={tabs(props)} />;
 };
