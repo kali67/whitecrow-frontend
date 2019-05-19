@@ -35,7 +35,21 @@ class CardController extends React.Component {
   };
 
   declineCard = () => {
-    this.props.makeCardDecision();
+    this.setState({ loading: true });
+    axios
+      .post(
+        `/game/${this.props.gameId}/end_turn`,
+        {},
+        {
+          auth: {
+            username: "hta55",
+            password: "welcome1"
+          }
+        }
+      )
+      .then(() => {
+        this.props.makeCardDecision();
+      });
   };
 
   render() {
@@ -52,7 +66,11 @@ class CardController extends React.Component {
   }
 }
 
+const mapStateToProps = state => ({
+  gameId: state.game.gameId
+});
+
 export default connect(
-  null,
+  mapStateToProps,
   { updatePlayerCards, updatePlayerMoney }
 )(CardController);
