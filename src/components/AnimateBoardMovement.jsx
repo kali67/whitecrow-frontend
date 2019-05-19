@@ -9,13 +9,9 @@ export default class AnimateBoardMovement extends React.Component {
   }
 
   componentDidMount() {
-    let targetPosition = this.props.targetPosition;
-    if (this.props.hasFinishedGame) {
-      targetPosition = 31;
-    }
     this.setState(
       {
-        targetPosition: targetPosition
+        targetPosition: this.props.targetPosition
       },
       () => {
         this.updatePosition(this.props.currentPosition);
