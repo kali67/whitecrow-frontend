@@ -159,8 +159,6 @@ export default class GameBoard extends React.Component {
           <Spinner />
         ) : (
           <Scrollable id="game">
-            {/* <PageTitle>{this.state.gameTitle}</PageTitle>
-            <PageDescription>{this.state.gameDescrition}</PageDescription> */}
             <BoardWrapper>
               <Padding />
               <Days days={this.state.days} />

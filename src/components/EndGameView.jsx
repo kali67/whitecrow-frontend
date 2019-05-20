@@ -2,8 +2,102 @@ import React from "react";
 import DynamicTable from "@atlaskit/dynamic-table";
 import styled from "styled-components";
 import Modal from "react-modal";
-import racepattern from "../static/image/racepattern.png";
+import Button from "@atlaskit/button";
+
+import whitecrow from "../static/image/whitecrow.png";
+
 Modal.setAppElement("#root");
+
+const CenteredCellText = styled.div`
+  text-align: center;
+`;
+
+const createContentKey = player => {
+  return player["id"] + player["username"];
+};
+
+const findPlayerRank = (allPlayersInGame, id) => {
+  for (var i = 0; i < allPlayersInGame.length; i++) {
+    if (allPlayersInGame[i]["id"] == id) {
+      return i + 1;
+    }
+  }
+};
+
+const HomeButtonStyle = {
+  justifyContent: "center",
+  background: "#36B37E",
+  height: "50px",
+  width: "100px",
+  alignSelf: "flex-end"
+};
+
+const calculatePlacing = rank => {
+  switch (rank) {
+    case 1:
+      return "1st";
+    case 2:
+      return "2nd";
+    case 3:
+      return "3rd";
+    case 4:
+      return "4th";
+    case 5:
+      return "5th";
+    case 6:
+      return "6th";
+  }
+};
+
+const EndGameView = ({ gameData, userPlayerId, goHome }) => {
+  let allPlayersInGame = gameData["players"];
+  allPlayersInGame.sort((a, b) => b.score - a.score);
+  let userRank = findPlayerRank(allPlayersInGame, userPlayerId);
+  return (
+    <Modal isOpen={true} style={customStyles}>
+      <ModalLeaderboardWrapper>
+        <Whitecrow image={whitecrow} />
+        <h2 style={{ fontWeight: "800" }}>
+          Congratulations, you placed {calculatePlacing(userRank)}!
+        </h2>
+        <DynamicTable
+          head={createHead(true)}
+          rows={rows(allPlayersInGame)}
+          loadingSpinnerSize="large"
+          isLoading={false}
+          isFixedSize
+          defaultSortKey="term"
+          defaultSortOrder="ASC"
+          onSort={() => console.log("onSort")}
+          onSetPage={() => console.log("onSetPage")}
+        />
+        <div>
+          <Button style={HomeButtonStyle} appearance="primary" onClick={() => goHome()}>
+            Home
+          </Button>
+        </div>
+      </ModalLeaderboardWrapper>
+    </Modal>
+  );
+};
+
+export default EndGameView;
+
+const Whitecrow = styled.div`
+  background-image: url(${props => props.image});
+  width: 16%;
+  height: 22%;
+  background-size: cover;
+`;
+
+const ModalLeaderboardWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  padding: 20px;
+`;
 
 const customStyles = {
   content: {
@@ -18,7 +112,7 @@ const customStyles = {
     justifyContent: "center",
     display: "flex",
     flexDirection: "column",
-    backgroundColor: "rgba(237,235,235, 1)",
+    backgroundColor: "rgba(255,255,255, 1)",
     borderWidth: "0px",
     padding: "0px",
     overflow: "hidden"
@@ -65,28 +159,16 @@ const createHead = withWidth => {
   };
 };
 
-const CenteredCellText = styled.div`
-  text-align: center;
-`;
-
-const createContentKey = player => {
-  return player["id"] + player["username"];
-};
-
-const findPlayerRank = (allPlayersInGame, player) => {
-  return allPlayersInGame.indexOf(player) + 1;
-};
-
-const rows = gameData => {
-  let allPlayersInGame = gameData["players"];
-  allPlayersInGame.sort((a, b) => b.score - a.score);
+const rows = allPlayersInGame => {
   return allPlayersInGame.map(player => {
     return {
       key: player["id"],
       cells: [
         {
           key: "test",
-          content: <CenteredCellText>{findPlayerRank(allPlayersInGame, player)}</CenteredCellText>
+          content: (
+            <CenteredCellText>{findPlayerRank(allPlayersInGame, player["id"])}</CenteredCellText>
+          )
         },
         {
           key: createContentKey(player),
@@ -108,70 +190,3 @@ const rows = gameData => {
     };
   });
 };
-
-const TableWrapper = styled.div`
-  display: flex;
-  height: 70%;
-  padding: 20px;
-`;
-
-const EndGameScreenWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-`;
-
-const PlacementHeader = styled.div`
-  height: 30%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const ModalLeaderboardWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  
-  flex-direction: column
-  height: 100%;
-`;
-
-const Banner = styled.div`
-  background-image: url(${props => props.image});
-  min-height: 45px;
-  width: 100%;
-  background-size: 255px 160px;
-  background-repeat: repeat-x;
-`;
-
-const EndGameView = ({ gameData }) => (
-  <Modal isOpen={true} style={customStyles}>
-    <ModalLeaderboardWrapper>
-      <EndGameScreenWrapper>
-        <Banner image={racepattern} />
-        <PlacementHeader>
-          <h1>Congratulations, you placed 1st!</h1>
-        </PlacementHeader>
-        <TableWrapper>
-          <DynamicTable
-            head={createHead(true)}
-            rows={rows(gameData)}
-            loadingSpinnerSize="large"
-            isLoading={false}
-            isFixedSize
-            defaultSortKey="term"
-            defaultSortOrder="ASC"
-            onSort={() => console.log("onSort")}
-            onSetPage={() => console.log("onSetPage")}
-          />
-        </TableWrapper>
-      </EndGameScreenWrapper>
-    </ModalLeaderboardWrapper>
-  </Modal>
-);
-
-export default EndGameView;

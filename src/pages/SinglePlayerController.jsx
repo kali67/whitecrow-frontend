@@ -4,7 +4,6 @@ import Spinner from "../components/Spinner";
 import DrawerController from "../components/DrawerController";
 import PlayerTurnProgress from "../components/PlayerTurnProgress";
 import UserPlayerTurn from "../components/UserPlayerTurn";
-import { Redirect } from "react-router";
 
 import {
   fetchGameDetails,
@@ -45,7 +44,6 @@ class SinglePlayerController extends React.Component {
   };
 
   finishPlayerTurn = (isUserTurn = false) => {
-    console.log("finished turn");
     this.props.finishPlayerTurn(
       isUserTurn,
       this.props.gameId,
