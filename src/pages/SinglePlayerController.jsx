@@ -17,6 +17,7 @@ import {
 import { fetchUserPlayer } from "../actions/userActions";
 
 import { connect } from "react-redux";
+import EndGameController from "../components/EndGameController";
 
 class SinglePlayerController extends React.Component {
   componentDidMount() {
@@ -82,15 +83,11 @@ class SinglePlayerController extends React.Component {
       return <Spinner />;
     }
     if (this.hasGameEnded()) {
-      return <Redirect to={`/game/${this.props.gameId}/end`} />;
+      return <EndGameController gameId={this.props.gameId} players={this.props.players} />;
     }
     return (
       <div style={{ display: "flex" }}>
-        <DrawerController
-          gameId={this.props.match.params.id}
-          rollDie={this.rollDie}
-          updatePlayerPositions={this.updatePlayerPositions}
-        />
+        <DrawerController gameId={this.props.match.params.id} rollDie={this.rollDie} />
         <GameBoard players={this.props.players} />
         {this.isUsersTurn() && (
           <UserPlayerTurn

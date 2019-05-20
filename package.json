@@ -78,7 +78,8 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
-    "storybook": "start-storybook"
+    "storybook": "start-storybook",
+    "flow": "flow"
   },
   "jest": {
     "collectCoverageFrom": [
@@ -133,5 +134,10 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-flow": "^6.23.0",
+    "flow-bin": "^0.98.1"
+  }
 }

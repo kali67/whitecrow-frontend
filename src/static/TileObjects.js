@@ -12,6 +12,8 @@ import whitecrow from "./image/whitecrowwhite.png";
 import whitecrowBlack from "./image/whitecrow.png";
 import hamburger from "./image/hamburger.png";
 
+
+
 const Day = styled.div`
   background: #3e2a70;
   height: 45px;
