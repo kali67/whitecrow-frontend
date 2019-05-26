@@ -8,7 +8,7 @@ import MainRouter from "./components/MainRouter";
 import { Provider } from "react-redux";
 import store from "./store";
 
-axios.defaults.baseURL = "https://whitecrow-backend.herokuapp.com";
+axios.defaults.baseURL = "http://localhost:8080";
 
 ReactDOM.render(
   <Provider store={store}>

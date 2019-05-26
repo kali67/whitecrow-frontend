@@ -24,9 +24,17 @@ class UserPlayerTurn extends React.Component {
   componentDidUpdate(prevProps) {
     if (prevProps.userTurnResult !== this.props.userTurnResult) {
       this.startPlayerTurn();
-      this.props.animatePlayerMovement();
+      this.animateMovement();
     }
   }
+
+  animateMovement = () => {
+    if (this.props.playerStateBeforeTurn["day"] > this.props.userTurnResult["currentDay"]) {
+      this.props.animatePlayerMovement();
+    } else {
+      this.props.animatePlayerMovement();
+    }
+  };
 
   startPlayerTurn = () => {
     if (this.playerHasFinishedGameBeforeTurn()) {

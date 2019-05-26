@@ -26,6 +26,12 @@ export default class AnimateBoardMovement extends React.Component {
       setTimeout(() => {
         this.updatePosition(currentPosition);
       }, 1000);
+    } else if (currentPosition > this.state.targetPosition) {
+      currentPosition--;
+      this.props.updatePosition(currentPosition);
+      setTimeout(() => {
+        this.updatePosition(currentPosition);
+      }, 1000);
     } else {
       this.props.completeBoardMovement();
     }
