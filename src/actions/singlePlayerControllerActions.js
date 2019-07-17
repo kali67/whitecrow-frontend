@@ -20,18 +20,24 @@ const compare = (a, b) => {
 };
 
 export const fetchGameDetails = gameId => dispatch => {
-  axios.get(`/game/details/${gameId}`).then(gameResponse => {
-    let mappedPlayers = gameResponse.data["players"];
-    mappedPlayers.sort(compare);
-    dispatch({
-      type: FETCH_GAME_DETAILS,
-      players: mappedPlayers,
-      numberRounds: gameResponse.data["numberRounds"],
-      playerTurnIndex: gameResponse.data["next"]["order"],
-      loading: false,
-      gameId: gameId
+  axios
+    .get(`/game/details/${gameId}`, {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("jwt")
+      }
+    })
+    .then(gameResponse => {
+      let mappedPlayers = gameResponse.data["players"];
+      mappedPlayers.sort(compare);
+      dispatch({
+        type: FETCH_GAME_DETAILS,
+        players: mappedPlayers,
+        numberRounds: gameResponse.data["numberRounds"],
+        playerTurnIndex: gameResponse.data["next"]["order"],
+        loading: false,
+        gameId: gameId
+      });
     });
-  });
 };
 
 const queryPlayerTurns = gameId => {
@@ -39,9 +45,8 @@ const queryPlayerTurns = gameId => {
     `/game/single/${gameId}/start`,
     {},
     {
-      auth: {
-        username: "hta55",
-        password: "welcome1"
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("jwt")
       }
     }
   );
@@ -68,40 +73,54 @@ export const updatePlayerModels = players => dispatch => {
   });
 };
 
-export const rollDie = (userPlayerId, gameId) => dispatch => {
-  axios
-    .post(
-      `player/${userPlayerId}/game/${gameId}/roll`,
-      {},
-      {
-        auth: {
-          username: "hta55",
-          password: "welcome1"
-        }
+const usePlayerTurn = (playerId, gameId) => {
+  return axios.post(
+    `player/${playerId}/game/${gameId}/roll`,
+    {},
+    {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("jwt")
       }
-    )
-    .then(response => {
-      dispatch({
-        type: ROLL_DIE,
-        userTurnResult: response.data,
-        loading: false
-      });
+    }
+  );
+};
+
+export const rollDie = (userPlayerId, gameId) => dispatch => {
+  usePlayerTurn(userPlayerId, gameId).then(response => {
+    dispatch({
+      type: ROLL_DIE,
+      userTurnResult: response.data,
+      loading: false
     });
+  });
 };
 
 export const finishPlayerTurn = (
   isUserTurn = false,
+  hasTriggeredSetBack = false,
   gameId,
   playerTurnIndex,
   players
 ) => dispatch => {
+  let currentPlayerTurnIndex = (playerTurnIndex + 1) % players.length;
+  if (hasTriggeredSetBack) {
+    let userId = players[playerTurnIndex].id;
+    usePlayerTurn(userId, gameId).then(response => {
+      dispatch({
+        type: FINISH_USER_TURN,
+        AITurnResults: response.data,
+        playerTurnIndex: currentPlayerTurnIndex
+      });
+    });
+    console.log("has triggered set back");
+  }
   if (isUserTurn) {
     queryPlayerTurns(gameId)
       .then(response => {
         dispatch({
           type: FINISH_USER_TURN,
           AITurnResults: response.data,
-          playerTurnIndex: (playerTurnIndex + 1) % players.length
+          playerTurnIndex: currentPlayerTurnIndex
         });
       })
       .catch(error => {
@@ -110,7 +129,7 @@ export const finishPlayerTurn = (
   } else {
     dispatch({
       type: FINISH_AI_TURN,
-      playerTurnIndex: (playerTurnIndex + 1) % players.length
+      playerTurnIndex: currentPlayerTurnIndex
     });
   }
 };

@@ -11,9 +11,8 @@ import axios from "axios";
 export const fetchUserPlayer = gameId => dispatch => {
   axios
     .get(`/game/${gameId}/player`, {
-      auth: {
-        username: "hta55",
-        password: "welcome1"
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("jwt")
       }
     })
     .then(response => {

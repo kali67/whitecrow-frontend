@@ -1,10 +1,4 @@
-import {
-  OPEN_DASHBOARD,
-  CLOSE_DASHBOARD,
-  SHOW_HELPMODAL,
-  CLOSE_HELPMODAL,
-  FETCH_USER_PLAYER
-} from "../actions/types";
+import { OPEN_DASHBOARD, CLOSE_DASHBOARD, SHOW_HELPMODAL, CLOSE_HELPMODAL } from "../actions/types";
 
 const initialState = {
   isOpen: false,

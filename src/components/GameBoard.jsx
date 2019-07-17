@@ -16,15 +16,6 @@ import {
 import Spinner from "./Spinner";
 import BoardTile from "./BoardTile";
 
-const PageTitle = styled.h2`
-  color: white;
-  text-align: center;
-`;
-
-const PageDescription = styled.h6`
-  color: white;
-  text-align: center;
-`;
 const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
@@ -82,7 +73,11 @@ export default class GameBoard extends React.Component {
 
   componentDidMount() {
     axios
-      .get("/board?lang=en")
+      .get("/board?lang=en", {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("jwt")
+        }
+      })
       .then(response => {
         response = this.mapImageToTile(response.data);
         this.stripTitles(response);

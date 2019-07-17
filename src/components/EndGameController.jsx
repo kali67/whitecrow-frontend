@@ -21,9 +21,8 @@ class EndGameController extends React.Component {
         `/game/${this.props.gameId}/end`,
         {},
         {
-          auth: {
-            username: "hta55",
-            password: "welcome1"
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("jwt")
           }
         }
       )

@@ -1,11 +1,5 @@
 import React from "react";
-import TableTree, {
-  Headers,
-  Header,
-  Rows,
-  Row,
-  Cell
-} from "@atlaskit/table-tree";
+import TableTree, { Headers, Header, Rows, Row, Cell } from "@atlaskit/table-tree";
 import axios from "axios";
 
 export default class GameBrowserTable extends React.Component {
@@ -19,9 +13,8 @@ export default class GameBrowserTable extends React.Component {
   componentDidMount() {
     axios
       .get("/game", {
-        auth: {
-          username: "hta55",
-          password: "welcome1"
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("jwt")
         }
       })
       .then(response => {
@@ -68,9 +61,7 @@ export default class GameBrowserTable extends React.Component {
                 <Cell>{rounds}</Cell>
                 <Cell>{players}</Cell>
                 <Cell>
-                  <button
-                    className="btn-success float-right"
-                    onClick={e => joinGame(e, id)}>
+                  <button className="btn-success float-right" onClick={e => joinGame(e, id)}>
                     Join
                   </button>
                 </Cell>

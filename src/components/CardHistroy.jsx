@@ -27,7 +27,6 @@ const Content = styled.div`
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  font-size: 4em;
   font-weight: 500;
   justify-content: center;
   margin-bottom: ${gridSize}px;
@@ -58,9 +57,9 @@ export default class CardHistory extends React.Component {
       return (
         <Content>
           <h4>Nothing to display!</h4>
-          <h6>{`The ${
+          <p>{`The ${
             this.props.isMail ? "mail" : "oppourtunity"
-          } cards that you have collected are shown here.`}</h6>
+          } cards that you have collected are shown here.`}</p>
         </Content>
       );
     }

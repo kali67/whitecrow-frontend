@@ -47,8 +47,9 @@ export const showDrawnOpportunityCard = card => dispatch => {
   });
 };
 
-export const showTurnNotification = () => dispatch => {
+export const showFullScreenNotification = textToDisplay => dispatch => {
   dispatch({
-    type: SHOW_TURN_NOTIFCATION
+    type: SHOW_TURN_NOTIFCATION,
+    notificationText: textToDisplay
   });
 };

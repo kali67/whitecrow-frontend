@@ -21,9 +21,8 @@ class CardController extends React.Component {
         `/player/${this.props.userPlayer["id"]}/add/opportunity/${card["id"]}`,
         {},
         {
-          auth: {
-            username: "hta55",
-            password: "welcome1"
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("jwt")
           }
         }
       )
@@ -41,9 +40,8 @@ class CardController extends React.Component {
         `/game/${this.props.gameId}/end_turn`,
         {},
         {
-          auth: {
-            username: "hta55",
-            password: "welcome1"
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("jwt")
           }
         }
       )

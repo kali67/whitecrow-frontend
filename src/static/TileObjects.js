@@ -11,8 +11,7 @@ import briefCase from "./image/briefcase.png";
 import whitecrow from "./image/whitecrowwhite.png";
 import whitecrowBlack from "./image/whitecrow.png";
 import hamburger from "./image/hamburger.png";
-
-
+import logout from "./image/logout.png";
 
 const Day = styled.div`
   background: #3e2a70;
@@ -38,6 +37,13 @@ const MediumImage = styled.div`
   background-size: cover;
 `;
 
+const SmallImage = styled.div`
+  background-image: url(${props => props.image});
+  height: 20px;
+  width: 23px;
+  background-size: cover;
+`;
+
 export const MailImage = <MediumImage image={mail} />;
 export const BeachImage = <LargeImage image={beach} />;
 export const SunImage = <LargeImage image={img} />;
@@ -48,6 +54,7 @@ export const WhitecrowImage = <MediumImage image={whitecrow} />;
 export const WhitecrowBlack = <MediumImage image={whitecrowBlack} />;
 export const HamburgerImage = <MediumImage image={hamburger} />;
 export const PiggyBankImage = <LargeImage image={piggyBank} />;
+export const LogoutImage = <SmallImage image={logout} />;
 
 const DayFlex = styled.div`
   display: flex;

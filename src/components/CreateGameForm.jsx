@@ -42,9 +42,8 @@ export default class CreateGameForm extends React.Component {
             numberRounds: this.state.numberRounds.value,
             maxPlayers: this.state.numberPlayers.value
           },
-          auth: {
-            username: "hta55",
-            password: "welcome1"
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("jwt")
           }
         }).then(response => {
           this.setState({ loadingCreateGame: false }, () =>
@@ -111,10 +110,7 @@ const CreateForm = props => {
             </div>
             <div className="col">
               <h6>No. Players</h6>
-              <Select
-                options={numberOfPlayers}
-                onChange={props.onPlayerCountChange}
-              />
+              <Select options={numberOfPlayers} onChange={props.onPlayerCountChange} />
             </div>
             <div className="col">
               <h6>No. Rounds</h6>

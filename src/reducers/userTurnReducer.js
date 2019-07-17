@@ -13,7 +13,8 @@ const initialState = {
   animateMovement: false,
   card: null,
   cardDrawn: false,
-  isOpportunityCard: false
+  isOpportunityCard: false,
+  notificationText: ""
 };
 
 export default function(state = initialState, action) {
@@ -57,7 +58,8 @@ export default function(state = initialState, action) {
     case SHOW_TURN_NOTIFCATION:
       return {
         ...state,
-        shouldShowTurnNotificator: true
+        shouldShowTurnNotificator: true,
+        notificationText: action.notificationText
       };
     default:
       return state;

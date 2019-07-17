@@ -4,7 +4,6 @@ body {
   font-family: "Karla", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  transition: all 1s;
 }
 
 html,
@@ -44,22 +43,27 @@ div {
 } */
 /*  */
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
 @-webkit-keyframes glow {
   from {
-    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e68200,
-      0 0 40px #e68200, 0 0 50px #e68200, 0 0 60px #e68200, 0 0 70px #e68200;
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e68200, 0 0 40px #e68200, 0 0 50px #e68200,
+      0 0 60px #e68200, 0 0 70px #e68200;
   }
 
   to {
-    text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6,
-      0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
+    text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6, 0 0 50px #ff4da6,
+      0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
   }
 }
 
+input {
+  height: 35px !important;
+}
+button {
+  outline: none !important;
+}
 /* @media screen and (max-width: 1000px) {
   body {
     font-size: 0.5em;
