@@ -13,7 +13,7 @@ import {
   showDrawnCard,
   dismissCardModal,
   showDrawnOpportunityCard,
-  showTurnNotification
+  showFullScreenNotification
 } from "../actions/userTurnActions";
 
 class UserPlayerTurn extends React.Component {
@@ -43,7 +43,7 @@ class UserPlayerTurn extends React.Component {
         this.props.finishPlayerTurn(true);
       }, 3000);
     } else {
-      this.props.showTurnNotification();
+      this.props.showFullScreenNotification("Your Turn!");
       setTimeout(() => {
         this.props.dismissTurnNotification();
       }, 3000);
@@ -115,7 +115,7 @@ class UserPlayerTurn extends React.Component {
       );
     }
     if (this.props.shouldShowTurnNotificator) {
-      return <TurnNotification username="Your Turn!" />;
+      return <TurnNotification username={this.props.notificationText} />;
     }
     if (this.props.cardDrawn) {
       return (
@@ -139,7 +139,8 @@ const mapStateToProps = state => ({
   animateMovement: state.userTurn.animateMovement,
   card: state.userTurn.card,
   cardDrawn: state.userTurn.cardDrawn,
-  isOpportunityCard: state.userTurn.isOpportunityCard
+  isOpportunityCard: state.userTurn.isOpportunityCard,
+  notificationText: state.userTurn.notificationText
 });
 
 export default connect(
@@ -154,6 +155,6 @@ export default connect(
     showDrawnCard,
     dismissCardModal,
     showDrawnOpportunityCard,
-    showTurnNotification
+    showFullScreenNotification
   }
 )(UserPlayerTurn);
