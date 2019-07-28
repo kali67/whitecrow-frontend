@@ -21,41 +21,29 @@ class Localization extends React.Component {
     };
   }
 
-  componentDidUpdate(prevProps) {
-    if (
-      this.props.languages.length > 0 &&
-      JSON.stringify(prevProps.languages) != JSON.stringify(this.props.languages)
-    ) {
-      axios
-        .get("/user", {
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("jwt")
-          }
-        })
-        .then(response => {
-          this.setState({ loading: false }, () => {
-            this.props.setActiveLanguage(response.data["languageCode"]);
-          });
-        })
-        .catch(() => {
-          this.setState({ loading: false });
+  componentDidMount() {
+    axios
+      .get("/user", {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("jwt")
+        }
+      })
+      .then(response => {
+        this.setState({ loading: false }, () => {
+          this.props.setActiveLanguage(response.data["languageCode"]);
         });
-    }
+      })
+      .catch(() => {
+        this.setState({ loading: false });
+      });
   }
 
   render() {
-    if (this.state.loading) {
+    if (this.state.loading || this.props.languages == 0) {
       return <SpinnerFullCircle />;
     }
     return <MainRouter {...this.props} />;
   }
 }
 
-const mapPropsToState = state => ({
-  languages: state.localize.languages
-});
-
-export default connect(
-  mapPropsToState,
-  {}
-)(withLocalize(Localization));
+export default connect()(withLocalize(Localization));
