@@ -14,14 +14,14 @@ class Localization extends React.Component {
     this.state = {
       loading: true
     };
+  }
+
+  componentDidMount() {
     this.props.initialize({
       languages: [{ name: "English", code: "EN" }, { name: "Español", code: "ES" }],
       translation: globalTranslations,
       options: { renderToStaticMarkup }
     });
-  }
-
-  componentDidMount() {
     axios
       .get("/user", {
         headers: {

@@ -72,7 +72,6 @@ class AccountInfoContainer extends React.Component {
     if (this.state.loading) {
       return <SpinnerFullCircle />;
     }
-    console.log(this.state.userDetails["username"]);
     return (
       <React.Fragment>
         <Divider />
