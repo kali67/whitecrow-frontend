@@ -1,0 +1,39 @@
+{
+  "numRounds": ["No. Rounds", "Rondas No."],
+  "numPlayers": ["No. Players", "No jugadores"],
+  "gameType": ["Game Type", "Tipo de juego"],
+  "create": ["Create", "Crear"],
+  "language": ["Choose a language...", "Elige un idioma..."],
+  "logo": ["Whitecrow", "Cuervo blanco"],
+  "logout": ["Log Out", "Cerrar sesión"],
+  "account": ["My Account", "Mi cuenta"],
+  "password": ["Password", "Contraseña"],
+  "password-description": [
+    "To update your password, you must provide your old password. Please make sure your password is at least 8 characters.",
+    "Para actualizar su contraseña, debe proporcionar su contraseña anterior. Asegúrese de que su contraseña tenga al menos 8 caracteres."
+  ],
+  "update-password": ["Update Password", "Actualiza contraseña"],
+  "profile": ["Profile", "Perfil"],
+  "profile-description": [
+    "You can use the inline editor to update your username. Click your username to update it.",
+    "Puede utilizar el editor en línea para actualizar su nombre de usuario. Haga clic en su nombre de usuario para actualizarlo."
+  ],
+  "language-title": ["Language", "Idioma"],
+  "language-description": [
+    "Use this setting to update the systems language.",
+    "Use esta configuración para actualizar el idioma del sistema."
+  ],
+  "update-language": ["Update Language", "Actualizar idioma"],
+  "old-password": ["Old Password", "Contraseña anterior"],
+  "confirm-password": ["Confirm New Password", "Confirmar nueva contraseña"],
+  "new-password": ["New Password", "Nueva contraseña"],
+  "username": ["Username", "Nombre de usuario"],
+  "game-type": ["Type", "Tipo"],
+  "game-status": ["Status", "Estado"],
+  "game-rounds": ["No. Rounds", "Rondas No."],
+  "game-players": ["No. Players", "No jugadores"],
+  "game-browser": ["Game Browser", "Navegador de juegos"],
+  "select": ["Select...", "Seleccionar..."],
+  "oppourtunity-tab": ["Oppourtunities", "Las oportunidades"],
+  "mail-tab": ["Mail Cards", "Tarjetas de correo"]
+}
