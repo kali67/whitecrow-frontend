@@ -10,7 +10,7 @@ import store from "./store";
 import "@atlaskit/css-reset";
 import Localization from "./components/Localization";
 
-axios.defaults.baseURL = "https://whitecrow-frontend.herokuapp.com";
+axios.defaults.baseURL = "https://whitecrow-backend.herokuapp.com";
 
 ReactDOM.render(
   <Provider store={store}>
