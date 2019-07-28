@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
+import axios from "axios";
 
 import { LoginSignUpView } from "../components/LoginWidget";
 import whitecrow from "../static/image/whitecrowwhite.png";
@@ -41,9 +42,25 @@ const Whitecrow = styled.div`
 `;
 
 class LoginPage extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
   componentDidMount() {
     localStorage.removeItem("jwt");
   }
+
+  authenticate = (username, password) => {
+    axios
+      .post("/authenticate", {
+        userName: username,
+        password: password
+      })
+      .then(response => {
+        this.props.authenticate(response.data["jwtToken"]);
+        this.props.history.push("/home");
+      });
+  };
 
   showLogin = () => {
     this.props.showLogin();
@@ -66,12 +83,11 @@ class LoginPage extends React.Component {
         </SplashArea>
         <LoginWidgetWrapper>
           <LoginSignUpView
-            history={this.props.history}
             isShowingLogin={this.props.showLoginView}
             showLogin={this.showLogin}
             showSignUp={this.showSignUp}
             login={this.login}
-            authenticate={this.props.authenticate}
+            authenticate={this.authenticate}
           />
         </LoginWidgetWrapper>
       </LoginWrapper>

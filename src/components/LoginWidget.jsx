@@ -5,31 +5,19 @@ import Button, { ButtonGroup } from "@atlaskit/button";
 import Form, { Field, FormFooter, HelperMessage, ErrorMessage, ValidMessage } from "@atlaskit/form";
 import axios from "axios";
 
-export const LoginSignUpView = ({
-  history,
-  isShowingLogin,
-  showLogin,
-  showSignUp,
-  login,
-  authenticate
-}) => {
+export const LoginSignUpView = ({ isShowingLogin, showLogin, showSignUp, login, authenticate }) => {
   return (
     <React.Fragment>
       {isShowingLogin ? (
-        <LoginForm
-          showSignUp={showSignUp}
-          login={login}
-          history={history}
-          authenticate={authenticate}
-        />
+        <LoginForm showSignUp={showSignUp} login={login} authenticate={authenticate} />
       ) : (
-        <SignUpForm showLogin={showLogin} history={history} login={login} />
+        <SignUpForm authenticate={authenticate} showLogin={showLogin} login={login} />
       )}
     </React.Fragment>
   );
 };
 
-const LoginForm = ({ showSignUp, history, authenticate }) => {
+const LoginForm = ({ showSignUp, authenticate }) => {
   return (
     <React.Fragment>
       <div
@@ -51,15 +39,7 @@ const LoginForm = ({ showSignUp, history, authenticate }) => {
           }}>
           <Form
             onSubmit={data => {
-              return axios
-                .post("/authenticate", {
-                  userName: data.username,
-                  password: data.password
-                })
-                .then(response => {
-                  authenticate(response.data["jwtToken"]);
-                  history.push("/home");
-                });
+              return authenticate(data.username, data.password);
             }}>
             {({ formProps, submitting }) => (
               <form {...formProps}>
@@ -91,7 +71,7 @@ const LoginForm = ({ showSignUp, history, authenticate }) => {
   );
 };
 
-const SignUpForm = ({ showLogin, history }) => {
+const SignUpForm = ({ showLogin, authenticate }) => {
   return (
     <React.Fragment>
       <div
@@ -114,12 +94,12 @@ const SignUpForm = ({ showLogin, history }) => {
           <Form
             onSubmit={data => {
               return axios
-                .post("/user", {
+                .post("/user/create", {
                   userName: data.username,
                   password: data.password
                 })
                 .then(() => {
-                  history.push("/home");
+                  authenticate(data.username, data.password);
                 })
                 .catch(() => {
                   return { username: "IN_USE" };
