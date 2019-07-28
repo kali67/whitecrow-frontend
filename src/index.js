@@ -9,12 +9,24 @@ import { Provider } from "react-redux";
 import store from "./store";
 import "@atlaskit/css-reset";
 import Localization from "./components/Localization";
+import { renderToStaticMarkup } from "react-dom/server";
+import globalTranslations from "./static/translations/global.json";
 
 axios.defaults.baseURL = "https://whitecrow-backend.herokuapp.com";
 
 ReactDOM.render(
   <Provider store={store}>
-    <LocalizeProvider>
+    <LocalizeProvider
+      initialize={{
+        languages: [{ name: "English", code: "EN" }, { name: "Español", code: "ES" }],
+        translation: globalTranslations,
+        options: {
+          renderToStaticMarkup,
+          renderInnerHtml: true,
+          defaultLanguage: "es"
+        }
+      }}
+      store={store}>
       <Localization />
     </LocalizeProvider>
   </Provider>,

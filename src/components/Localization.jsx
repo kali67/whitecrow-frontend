@@ -1,20 +1,15 @@
 import React from "react";
 import { withLocalize } from "react-localize-redux";
-import { renderToStaticMarkup } from "react-dom/server";
+
 import MainRouter from "./MainRouter";
 import axios from "axios";
 
-import globalTranslations from "../static/translations/global.json";
 import { SpinnerFullCircle } from "./Spinner";
 
 class Localization extends React.Component {
   constructor(props) {
     super(props);
-    this.props.initialize({
-      languages: [{ name: "English", code: "EN" }, { name: "Español", code: "ES" }],
-      translation: globalTranslations,
-      options: { renderToStaticMarkup }
-    });
+
     this.state = {
       loading: true
     };
