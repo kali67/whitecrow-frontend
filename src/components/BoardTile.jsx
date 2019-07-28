@@ -25,7 +25,7 @@ export default class BoardTile extends React.Component {
     let date = this.props.date;
     let playerPositions = this.state.players.map(el => el.day);
     let playersOnTile = [];
-    for (var i = 0; i < playerPositions.length; i++) {
+    for (let i = 0; i < playerPositions.length; i++) {
       if (date === playerPositions[i] % (NUMBER_DAYS_MONTH + 1)) {
         playersOnTile.push(this.state.players[i]);
       }

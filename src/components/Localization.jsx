@@ -32,6 +32,9 @@ class Localization extends React.Component {
         this.setState({ loading: false }, () => {
           this.props.setActiveLanguage(response.data["languageCode"]);
         });
+      })
+      .catch(() => {
+        this.setState({ loading: false });
       });
   }
 

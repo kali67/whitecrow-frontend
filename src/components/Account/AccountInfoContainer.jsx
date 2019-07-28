@@ -62,7 +62,9 @@ class AccountInfoContainer extends React.Component {
         }
       )
       .then(() => {
-        this.setState({ ...this.state.userDetails, username: username });
+        this.setState(prevState => ({
+          userDetails: { ...prevState.userDetails, username: username }
+        }));
       });
   };
 
