@@ -1,7 +1,6 @@
 import React from "react";
 
 import { Translate } from "react-localize-redux";
-
 import Button from "@atlaskit/button";
 import Form, { Field, FormFooter, HelperMessage, ErrorMessage, ValidMessage } from "@atlaskit/form";
 import TextField from "@atlaskit/textfield";

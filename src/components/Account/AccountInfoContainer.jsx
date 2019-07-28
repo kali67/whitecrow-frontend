@@ -6,7 +6,6 @@ import { SpinnerFullCircle } from "../Spinner";
 import AccountLanguageForm from "./AccountLanguageForm";
 import AccountPasswordForm from "./AccountPasswordForm";
 import AccountProfileForm from "./AccountProfileForm";
-import { setApplicationLanguage } from "../../actions/localizationActions";
 
 import { Divider } from "./AccountInfoStyles";
 
@@ -43,7 +42,7 @@ class AccountInfoContainer extends React.Component {
         }
       )
       .then(() => {
-        this.props.setApplicationLanguage(languageCode);
+        this.props.setActiveLanguage(languageCode);
         this.setState({ ...this.state.userDetails, languageCode: languageCode });
       });
   };
@@ -97,10 +96,10 @@ class AccountInfoContainer extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  languages: state.localization.languages
+  languages: state.localize.languages
 });
 
 export default connect(
   mapStateToProps,
-  { setApplicationLanguage }
+  {}
 )(AccountInfoContainer);

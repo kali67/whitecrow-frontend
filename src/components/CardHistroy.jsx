@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { borderRadius, colors, gridSize, math, themed } from "@atlaskit/theme";
+import { Translate } from "react-localize-redux";
 
 import Card from "./Card";
 
@@ -56,10 +57,16 @@ export default class CardHistory extends React.Component {
     if (this.state.cards.length == 0) {
       return (
         <Content>
-          <h4>Nothing to display!</h4>
-          <p>{`The ${
-            this.props.isMail ? "mail" : "oppourtunity"
-          } cards that you have collected are shown here.`}</p>
+          <h4>
+            <Translate id="empty-display" />
+          </h4>
+          <p>
+            {this.props.isMail ? (
+              <Translate id="empty-info-tab-mail" />
+            ) : (
+              <Translate id="empty-info-tab-op" />
+            )}
+          </p>
         </Content>
       );
     }

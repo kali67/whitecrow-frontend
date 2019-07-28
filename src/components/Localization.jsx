@@ -3,38 +3,44 @@ import { withLocalize } from "react-localize-redux";
 import { renderToStaticMarkup } from "react-dom/server";
 import MainRouter from "./MainRouter";
 import { connect } from "react-redux";
+import axios from "axios";
 
-import { setApplicationLanguage } from "../actions/localizationActions";
 import globalTranslations from "../static/translations/global.json";
+import { SpinnerFullCircle } from "./Spinner";
 
 class Localization extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      loading: true
+    };
     this.props.initialize({
-      languages: this.props.languages,
+      languages: [{ name: "English", code: "EN" }, { name: "Español", code: "ES" }],
       translation: globalTranslations,
       options: { renderToStaticMarkup }
     });
-    this.props.setActiveLanguage(this.props.applicationLanguage);
   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.applicationLanguage != this.props.applicationLanguage) {
-      this.props.setActiveLanguage(this.props.applicationLanguage);
-    }
+  componentDidMount() {
+    axios
+      .get("/user", {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("jwt")
+        }
+      })
+      .then(response => {
+        this.setState({ loading: false }, () => {
+          this.props.setActiveLanguage(response.data["languageCode"]);
+        });
+      });
   }
 
   render() {
+    if (this.state.loading) {
+      return <SpinnerFullCircle />;
+    }
     return <MainRouter {...this.props} />;
   }
 }
 
-const mapStateToProps = state => ({
-  languages: state.localization.languages,
-  applicationLanguage: state.localization.activeLanguage
-});
-
-export default connect(
-  mapStateToProps,
-  { setApplicationLanguage }
-)(withLocalize(Localization));
+export default connect()(withLocalize(Localization));

@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import axios from "axios";
+import { connect } from "react-redux";
 
 import {
   Days,
@@ -45,7 +46,7 @@ const Scrollable = styled.div`
   display: flex;
 `;
 
-export default class GameBoard extends React.Component {
+class GameBoard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -73,7 +74,7 @@ export default class GameBoard extends React.Component {
 
   componentDidMount() {
     axios
-      .get("/board?lang=en", {
+      .get(`/board?lang=${this.props.activeLanguage}`, {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("jwt")
         }
@@ -166,3 +167,14 @@ export default class GameBoard extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  activeLanguage: state.localize.languages.filter(value => {
+    return value.active;
+  })[0].code
+});
+
+export default connect(
+  mapStateToProps,
+  {}
+)(GameBoard);

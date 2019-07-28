@@ -35,5 +35,17 @@
   "game-browser": ["Game Browser", "Navegador de juegos"],
   "select": ["Select...", "Seleccionar..."],
   "oppourtunity-tab": ["Oppourtunities", "Las oportunidades"],
-  "mail-tab": ["Mail Cards", "Tarjetas de correo"]
+  "mail-tab": ["Mail Cards", "Tarjetas de correo"],
+  "empty-display": ["Nothing to display!", "¡Nada que mostrar!"],
+  "empty-info-tab-mail": [
+    "The mail cards that you have collected are shown here.",
+    "Las tarjetas de correo que ha recogido se muestran aquí."
+  ],
+  "empty-info-tab-op": [
+    "The opportunity cards that you have collected are shown here.",
+    "Las tarjetas de oportunidad que ha recogido se muestran aquí."
+  ],
+  "day": ["Day ${day}", "Día ${day}"],
+  "roll-die": ["Roll Dice", "Tirar el dado"],
+  "play-order": ["Player Order", "Orden del jugador"]
 }

@@ -5,7 +5,6 @@ import { Translate } from "react-localize-redux";
 import Button from "@atlaskit/button";
 import Tabs from "@atlaskit/tabs";
 import CardHistroy from "./CardHistroy";
-import InvestmentHistory from "./InvestmentHistory";
 import PlayerTurnTracker from "./PlayerTurnTracker";
 import coin from "../static/image/coin.png";
 import calendar from "../static/image/calendar.png";
@@ -81,7 +80,9 @@ export default class PlayerControls extends React.Component {
     return (
       <PlayerControlContainer>
         <PlayerOrderWrapper>
-          <b style={{ marginBottom: "15%", textDecoration: "underline" }}>Player Order</b>
+          <b style={{ marginBottom: "15%", textDecoration: "underline" }}>
+            <Translate id="play-order" />
+          </b>
           <PlayerTurnTracker
             userPlayerId={this.props.userPlayer.id}
             players={this.props.players}
@@ -159,15 +160,7 @@ const getMoneyTextColor = money => {
   return "#FF8B00";
 };
 
-const PlayerInfoView = ({
-  username,
-  money,
-  day,
-  rollDie,
-  rolledDisabled,
-  isLoadingRoll,
-  showHelpModal
-}) => {
+const PlayerInfoView = ({ money, day, rollDie, rolledDisabled, isLoadingRoll, showHelpModal }) => {
   return (
     <PlayerInfoContainer>
       <HelpIconWrapper>
@@ -189,7 +182,7 @@ const PlayerInfoView = ({
         <TextWrapper>
           <LargeIcon image={calendar} />
           <IconText color="black">
-            <h4>Day {day}</h4>
+            <Translate>{({ translate }) => <h4>{translate("day", { day: day })}</h4>}</Translate>
           </IconText>
         </TextWrapper>
       </div>
@@ -201,7 +194,7 @@ const PlayerInfoView = ({
           appearance="primary"
           isDisabled={rolledDisabled}
           isLoading={isLoadingRoll}>
-          Roll Dice
+          <Translate id="roll-die" />
         </Button>
       </RollDiceBtnWrapper>
     </PlayerInfoContainer>
