@@ -16,29 +16,32 @@ class Localization extends React.Component {
       translation: globalTranslations,
       options: { renderToStaticMarkup }
     });
+    console.log("init");
     this.state = {
-      loading: false
+      loading: true
     };
   }
 
   componentDidMount() {
-    // axios
-    //   .get("/user", {
-    //     headers: {
-    //       Authorization: "Bearer " + localStorage.getItem("jwt")
-    //     }
-    //   })
-    //   .then(response => {
-    //     this.setState({ loading: false }, () => {
-    //       this.props.setActiveLanguage(response.data["languageCode"]);
-    //     });
-    //   })
-    //   .catch(() => {
-    //     this.setState({ loading: false });
-    //   });
+    console.log("mounted");
+    axios
+      .get("/user", {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("jwt")
+        }
+      })
+      .then(response => {
+        this.setState({ loading: false }, () => {
+          this.props.setActiveLanguage(response.data["languageCode"]);
+        });
+      })
+      .catch(() => {
+        this.setState({ loading: false });
+      });
   }
 
   render() {
+    console.log("rendered");
     if (this.state.loading) {
       return <SpinnerFullCircle />;
     }
