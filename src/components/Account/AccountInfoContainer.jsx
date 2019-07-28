@@ -19,6 +19,7 @@ class AccountInfoContainer extends React.Component {
   }
 
   componentDidMount() {
+    console.log(this.props);
     axios
       .get("/user", {
         headers: {
