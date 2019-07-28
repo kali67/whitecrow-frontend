@@ -39,7 +39,7 @@ class Localization extends React.Component {
   }
 
   render() {
-    if (this.state.loading || this.props.languages == 0) {
+    if (this.state.loading || this.props.languages.length === 0) {
       return <SpinnerFullCircle />;
     }
     return <MainRouter {...this.props} />;
