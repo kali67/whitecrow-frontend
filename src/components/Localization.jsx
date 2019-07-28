@@ -11,31 +11,31 @@ import { SpinnerFullCircle } from "./Spinner";
 class Localization extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      loading: true
-    };
-  }
-
-  componentDidMount() {
     this.props.initialize({
       languages: [{ name: "English", code: "EN" }, { name: "Español", code: "ES" }],
       translation: globalTranslations,
       options: { renderToStaticMarkup }
     });
-    axios
-      .get("/user", {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("jwt")
-        }
-      })
-      .then(response => {
-        this.setState({ loading: false }, () => {
-          this.props.setActiveLanguage(response.data["languageCode"]);
-        });
-      })
-      .catch(() => {
-        this.setState({ loading: false });
-      });
+    this.state = {
+      loading: false
+    };
+  }
+
+  componentDidMount() {
+    // axios
+    //   .get("/user", {
+    //     headers: {
+    //       Authorization: "Bearer " + localStorage.getItem("jwt")
+    //     }
+    //   })
+    //   .then(response => {
+    //     this.setState({ loading: false }, () => {
+    //       this.props.setActiveLanguage(response.data["languageCode"]);
+    //     });
+    //   })
+    //   .catch(() => {
+    //     this.setState({ loading: false });
+    //   });
   }
 
   render() {
