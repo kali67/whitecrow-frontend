@@ -16,32 +16,34 @@ class Localization extends React.Component {
       translation: globalTranslations,
       options: { renderToStaticMarkup }
     });
-    console.log("init");
     this.state = {
       loading: true
     };
   }
 
-  componentDidMount() {
-    console.log("mounted");
-    axios
-      .get("/user", {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("jwt")
-        }
-      })
-      .then(response => {
-        this.setState({ loading: false }, () => {
-          this.props.setActiveLanguage(response.data["languageCode"]);
+  componentDidUpdate(prevProps) {
+    if (
+      this.props.languages.length > 0 &&
+      JSON.stringify(prevProps.languages) != JSON.stringify(this.props.languages)
+    ) {
+      axios
+        .get("/user", {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("jwt")
+          }
+        })
+        .then(response => {
+          this.setState({ loading: false }, () => {
+            this.props.setActiveLanguage(response.data["languageCode"]);
+          });
+        })
+        .catch(() => {
+          this.setState({ loading: false });
         });
-      })
-      .catch(() => {
-        this.setState({ loading: false });
-      });
+    }
   }
 
   render() {
-    console.log("rendered");
     if (this.state.loading) {
       return <SpinnerFullCircle />;
     }
@@ -49,4 +51,11 @@ class Localization extends React.Component {
   }
 }
 
-export default connect()(withLocalize(Localization));
+const mapPropsToState = state => ({
+  languages: state.localize.languages
+});
+
+export default connect(
+  mapPropsToState,
+  {}
+)(withLocalize(Localization));
