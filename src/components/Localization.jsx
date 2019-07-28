@@ -2,7 +2,6 @@ import React from "react";
 import { withLocalize } from "react-localize-redux";
 import { renderToStaticMarkup } from "react-dom/server";
 import MainRouter from "./MainRouter";
-import { connect } from "react-redux";
 import axios from "axios";
 
 import globalTranslations from "../static/translations/global.json";
@@ -39,6 +38,7 @@ class Localization extends React.Component {
   }
 
   render() {
+    console.log(this.props.languages);
     if (this.state.loading || this.props.languages.length === 0) {
       return <SpinnerFullCircle />;
     }
@@ -46,4 +46,4 @@ class Localization extends React.Component {
   }
 }
 
-export default connect()(withLocalize(Localization));
+export default withLocalize(Localization);
