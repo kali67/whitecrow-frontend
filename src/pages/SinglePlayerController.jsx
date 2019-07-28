@@ -5,8 +5,6 @@ import DrawerController from "../components/DrawerController";
 import PlayerTurnProgress from "../components/PlayerTurnProgress";
 import UserPlayerTurn from "../components/UserPlayerTurn";
 
-import PropTypes from "prop-types";
-
 import {
   fetchGameDetails,
   updatePlayerModels,
@@ -122,12 +120,6 @@ const mapStateToProps = ({ game, user }) => ({
   showEndTurnUpdate: game.showEndTurnUpdate,
   userTurnResult: game.userTurnResult
 });
-
-// SinglePlayerController.propTypes = {
-//   loadingGameDetails: PropTypes.bool,
-//   loadingUserDetails: PropTypes.bool,
-//   userPlayer:
-// };
 
 export default connect(
   mapStateToProps,

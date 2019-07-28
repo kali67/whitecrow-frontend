@@ -3,32 +3,28 @@ import styled from "styled-components";
 
 const CardWrapper = styled.div`
   z-index: 1;
-  min-height: 70%;
+  height: 100%;
   width: 100%;
   background-color: #f4f4f4;
-  padding: 2.5px;
-  &:hover {
-    border-style: solid;
-    border-width: 2.5px;
-    border-color: red;
-    padding: 0;
-  }
+  border: 0.25px solid #e1e1e1;
   flex-direction: row;
   display: flex;
+  padding-right: 10%;
 `;
 
-const CardWrapperSmallStyle = { minHeight: "100%" };
-
 const CategoryColumn = styled.div`
+  padding: 0.25px;
   transform: rotate(-180deg);
   writing-mode: tb-rl;
   align-self: stretch;
-  width: 12%;
-  background-color: green;
-  justify-content: center;
-  color: white;
-  border: 1px solid green;
-  padding-top: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 15%;
+  font-weight: 900;
+  background-color: ${props => props.color};
+  color: black;
+  padding-bottom: 5%;
 `;
 
 const ContentWrapper = styled.div`
@@ -36,6 +32,8 @@ const ContentWrapper = styled.div`
   flex-direction: column;
   padding-left: 10px;
   width: 100%;
+
+  padding-bottom: 10%;
 `;
 const Title = styled.h4`
   color: black;
@@ -85,9 +83,9 @@ const ColumnFontSmall = {
 
 const Card = props => {
   return (
-    <CardWrapper style={props.small ? CardWrapperSmallStyle : null}>
-      <CategoryColumn style={props.small ? ColumnFontSmall : null}>
-        {props.card["category"]}
+    <CardWrapper>
+      <CategoryColumn color={props.card["color"]} style={props.small ? ColumnFontSmall : null}>
+        {props.card["categoryDescription"]}
       </CategoryColumn>
       <ContentWrapper>
         <Title style={props.small ? TitleFontSmall : null}>{props.card["title"]}</Title>

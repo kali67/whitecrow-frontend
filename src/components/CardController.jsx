@@ -15,10 +15,11 @@ class CardController extends React.Component {
   }
 
   addOpportunityCard = card => {
+    console.log(card);
     this.setState({ loading: true });
     axios
       .post(
-        `/player/${this.props.userPlayer["id"]}/add/opportunity/${card["id"]}`,
+        `/player/${this.props.userPlayer["id"]}/add/opportunity/${card["id"]["cardId"]}`,
         {},
         {
           headers: {

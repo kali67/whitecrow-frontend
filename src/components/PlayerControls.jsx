@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Translate } from "react-localize-redux";
 
 import Button from "@atlaskit/button";
 import Tabs from "@atlaskit/tabs";
@@ -209,12 +210,11 @@ const PlayerInfoView = ({
 
 const tabs = props => {
   return [
-    { label: "Mail Cards", content: <CardHistroy {...props} isMail={true} /> },
+    { label: <Translate id="mail-tab" />, content: <CardHistroy {...props} isMail={true} /> },
     {
-      label: "Oppourtunities Taken",
+      label: <Translate id="oppourtunity-tab" />,
       content: <CardHistroy {...props} isMail={false} />
-    },
-    { label: "Cashflows", content: <InvestmentHistory {...props} /> }
+    }
   ];
 };
 

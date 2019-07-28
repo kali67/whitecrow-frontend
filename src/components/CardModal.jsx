@@ -49,10 +49,7 @@ export default class CardModal extends React.Component {
       return <Spinner />;
     }
     return (
-      <Modal
-        isOpen={true}
-        onAfterOpen={this.afterOpenModal}
-        style={customStyles}>
+      <Modal isOpen={true} onAfterOpen={this.afterOpenModal} style={customStyles}>
         <ModalCardWrapper>
           <Card card={this.state.card} />
           {this.props.requiresDecision ? (
@@ -62,9 +59,7 @@ export default class CardModal extends React.Component {
               declineCard={this.props.declineCard}
             />
           ) : null}
-          {this.props.decision ? (
-            <CardDecisionOutcome decision={this.props.decision} />
-          ) : null}
+          {this.props.decision ? <CardDecisionOutcome decision={this.props.decision} /> : null}
         </ModalCardWrapper>
       </Modal>
     );
@@ -78,7 +73,7 @@ const ModalCardWrapper = styled.div`
   min-width: 55%;
   max-width: 300px;
   flex-direction: column
-  height: 100%;
+  min-height: 400px;
 `;
 const ButtonWrapper = styled.div`
   display: flex;

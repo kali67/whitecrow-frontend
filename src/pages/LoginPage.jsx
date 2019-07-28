@@ -1,7 +1,6 @@
-import React, { Fragment } from "react";
+import React from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
-import axios from "axios";
 
 import { LoginSignUpView } from "../components/LoginWidget";
 import whitecrow from "../static/image/whitecrowwhite.png";
@@ -42,6 +41,10 @@ const Whitecrow = styled.div`
 `;
 
 class LoginPage extends React.Component {
+  componentDidMount() {
+    localStorage.removeItem("jwt");
+  }
+
   showLogin = () => {
     this.props.showLogin();
   };

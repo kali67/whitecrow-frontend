@@ -97,23 +97,11 @@ export const rollDie = (userPlayerId, gameId) => dispatch => {
 
 export const finishPlayerTurn = (
   isUserTurn = false,
-  hasTriggeredSetBack = false,
   gameId,
   playerTurnIndex,
   players
 ) => dispatch => {
   let currentPlayerTurnIndex = (playerTurnIndex + 1) % players.length;
-  if (hasTriggeredSetBack) {
-    let userId = players[playerTurnIndex].id;
-    usePlayerTurn(userId, gameId).then(response => {
-      dispatch({
-        type: FINISH_USER_TURN,
-        AITurnResults: response.data,
-        playerTurnIndex: currentPlayerTurnIndex
-      });
-    });
-    console.log("has triggered set back");
-  }
   if (isUserTurn) {
     queryPlayerTurns(gameId)
       .then(response => {

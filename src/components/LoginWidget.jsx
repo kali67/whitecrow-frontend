@@ -114,7 +114,7 @@ const SignUpForm = ({ showLogin, history }) => {
           <Form
             onSubmit={data => {
               return axios
-                .post("/user/create", {
+                .post("/user", {
                   userName: data.username,
                   password: data.password
                 })

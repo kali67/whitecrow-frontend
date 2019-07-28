@@ -16,7 +16,7 @@ const CardContainer = styled.div`
 const CardSizeWrapper = styled.div`
   width: 200px;
   margin: 2%
-  height: 250px;
+  height: auto;
 `;
 
 const Content = styled.div`

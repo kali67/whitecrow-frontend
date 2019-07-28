@@ -7,11 +7,13 @@ import EndGameController from "./EndGameController";
 import LoginPage from "../pages/LoginPage";
 import requiresAuthentication from "../components/RequiresAuthentication";
 import Page from "./Page";
+import AccountInfoContainer from "./Account/AccountInfoContainer";
 
 const SinglePlayerControllerAuth = requiresAuthentication(SinglePlayerController);
 const HomePageAuth = requiresAuthentication(HomePage);
+const AccountPageAuth = requiresAuthentication(AccountInfoContainer);
 
-export default class MainRouter extends React.Component {
+class MainRouter extends React.Component {
   render() {
     return (
       <BrowserRouter>
@@ -20,7 +22,7 @@ export default class MainRouter extends React.Component {
             exact
             path="/home"
             render={({ history }) => (
-              <Page>
+              <Page history={history}>
                 <HomePageAuth history={history} />
               </Page>
             )}
@@ -32,8 +34,19 @@ export default class MainRouter extends React.Component {
           />
           <Route exact path="/game/:id/end" render={props => <EndGameController {...props} />} />
           <Route exact path="/login" render={({ history }) => <LoginPage history={history} />} />
+          <Route
+            exact
+            path="/account"
+            render={({ history }) => (
+              <Page history={history}>
+                <AccountPageAuth history={history} {...this.props} />
+              </Page>
+            )}
+          />
         </Switch>
       </BrowserRouter>
     );
   }
 }
+
+export default MainRouter;

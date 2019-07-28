@@ -1,6 +1,7 @@
 import React from "react";
 import TableTree, { Headers, Header, Rows, Row, Cell } from "@atlaskit/table-tree";
 import axios from "axios";
+import { Translate } from "react-localize-redux";
 
 export default class GameBrowserTable extends React.Component {
   constructor(props) {
@@ -43,13 +44,23 @@ export default class GameBrowserTable extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <h1>Game Browser</h1>
+        <h1>
+          <Translate id="game-browser" />
+        </h1>
         <TableTree>
           <Headers>
-            <Header width={350}>Type</Header>
-            <Header width={350}>Status</Header>
-            <Header width={250}>No. Rounds</Header>
-            <Header width={250}>No. Players</Header>
+            <Header width={350}>
+              <Translate id="game-type" />
+            </Header>
+            <Header width={350}>
+              <Translate id="game-status" />
+            </Header>
+            <Header width={250}>
+              <Translate id="game-rounds" />
+            </Header>
+            <Header width={250}>
+              <Translate id="game-players" />
+            </Header>
             <Header width={100} />
           </Headers>
           <Rows

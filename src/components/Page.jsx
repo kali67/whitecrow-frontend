@@ -1,31 +1,40 @@
 import React from "react";
 import styled from "styled-components";
 import Avatar from "./Avatar";
-import DropdownMenu, { DropdownItemGroup, DropdownItem } from "@atlaskit/dropdown-menu";
 
 import { WhitecrowBlack } from "../static/TileObjects";
 import { LogoutImage } from "../static/TileObjects";
+import { Translate } from "react-localize-redux";
 
 const Page = props => {
   return (
     <React.Fragment>
       <Navbar>
-        <Brand>
+        <Brand onClick={() => props.history.push("/home")}>
           <BrandIcon>{WhitecrowBlack}</BrandIcon>
           <BrandText>
-            <h3>Whitecrow PM</h3>
+            <h3>
+              <Translate id="logo" />
+            </h3>
           </BrandText>
         </Brand>
         <AccountInfo>
-          <DropdownMenu appearance="tall" position="bottom right" trigger={<Avatar />}>
-            <DropdownItemGroup>
-              <DropdownItem>My Account</DropdownItem>
-              <DropdownItem description="test">History</DropdownItem>
-              <DropdownItem title="test" href="/login" elemAfter={LogoutImage}>
-                Log Out
-              </DropdownItem>
-            </DropdownItemGroup>
-          </DropdownMenu>
+          <AccountBtn onClick={() => props.history.push("/account")}>
+            <TextWrapperBtn>
+              <h6>
+                <Translate id="account" />
+              </h6>
+            </TextWrapperBtn>
+            <Avatar />
+          </AccountBtn>
+          <AccountBtn onClick={() => props.history.push("/login")}>
+            <TextWrapperBtn>
+              <h6>
+                <Translate id="logout" />
+              </h6>
+            </TextWrapperBtn>
+            <div style={{ cursor: "pointer" }}>{LogoutImage}</div>
+          </AccountBtn>
         </AccountInfo>
       </Navbar>
       <PageWrapper>{props.children}</PageWrapper>
@@ -35,14 +44,31 @@ const Page = props => {
 
 export default Page;
 
+const TextWrapperBtn = styled.div`
+  display: flex;
+  cursor: pointer;
+  margin-right: 5px;
+`;
+
+const AccountBtn = styled.div`
+  display: flex;
+  width: auto;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  height: 30px;
+  margin-left: 20px;
+  cursor: pointer;
+`;
+
 const PageWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-item: center;
-  justify-content: center;
   margin-right: 10%;
   margin-left: 10%;
   margin-top: 5%;
+  height: 100vh;
 `;
 
 const Navbar = styled.nav`
@@ -56,6 +82,8 @@ const Brand = styled.div`
   flex-direction: row;
   width: auto;
   padding: 0.5%;
+  padding-left: 2%;
+  cursor: pointer;
 `;
 
 const BrandText = styled.div`
@@ -63,13 +91,17 @@ const BrandText = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  padding-left: 5%;
+  white-space: nowrap;
+  cursor: pointer;
 `;
 
 const BrandIcon = styled.div``;
 const AccountInfo = styled.div`
   display: flex;
-  width: 50%;
+  width: auto;
   align-items: center;
   justify-content: flex-end;
   margin-right: 1%;
+  white-space: nowrap;
 `;

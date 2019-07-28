@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import Spinner from "@atlaskit/spinner";
 
 import Loading from "../static/image/test.gif";
 
@@ -22,7 +23,7 @@ const WhiteText = styled.h6`
   color: white;
 `;
 
-const Spinner = () => {
+const SpinnerSemiCircle = () => {
   return (
     <LoadingGifContainer>
       <div>
@@ -33,4 +34,16 @@ const Spinner = () => {
   );
 };
 
-export default Spinner;
+export const SpinnerFullCircle = () => (
+  <div
+    style={{
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      height: "100%"
+    }}>
+    <Spinner size="large" />
+  </div>
+);
+
+export default SpinnerSemiCircle;

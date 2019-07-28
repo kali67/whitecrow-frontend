@@ -1,19 +1,22 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import axios from "axios";
+import { LocalizeProvider } from "react-localize-redux";
 
 import "./index.css";
 import "react-slide-out/lib/index.css";
-import MainRouter from "./components/MainRouter";
 import { Provider } from "react-redux";
 import store from "./store";
 import "@atlaskit/css-reset";
+import Localization from "./components/Localization";
 
-axios.defaults.baseURL = "http://localhost:8080";
+axios.defaults.baseURL = "https://whitecrow-frontend.herokuapp.com";
 
 ReactDOM.render(
   <Provider store={store}>
-    <MainRouter />
+    <LocalizeProvider>
+      <Localization />
+    </LocalizeProvider>
   </Provider>,
   document.getElementById("root")
 );

@@ -1,20 +1,10 @@
 import React from "react";
+import { Translate } from "react-localize-redux";
 
 import Button from "@atlaskit/button";
 import styled from "styled-components";
 import Select from "react-select";
 import axios from "axios";
-
-const ButtonWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  margin-top: 10px;
-`;
-
-const CreateFormWrapper = styled.div`
-  margin-bottom: 20px;
-`;
 
 export default class CreateGameForm extends React.Component {
   constructor(props) {
@@ -100,34 +90,61 @@ const numberOfRounds = [
 
 const CreateForm = props => {
   return (
-    <React.Fragment>
-      <CreateFormWrapper>
-        <form>
-          <div className="row">
-            <div className="col">
-              <h6>Game Type</h6>
-              <Select options={gameTypeOptions} onChange={props.onTypeChange} />
-            </div>
-            <div className="col">
-              <h6>No. Players</h6>
-              <Select options={numberOfPlayers} onChange={props.onPlayerCountChange} />
-            </div>
-            <div className="col">
-              <h6>No. Rounds</h6>
-              <Select options={numberOfRounds} onChange={props.onRoundChange} />
-            </div>
+    <CreateFormWrapper>
+      <form>
+        <div className="row">
+          <div className="col">
+            <h6>
+              <Translate id="gameType" />
+            </h6>
+            <Select
+              placeholder={<Translate id="select" />}
+              options={gameTypeOptions}
+              onChange={props.onTypeChange}
+            />
           </div>
-        </form>
-        <ButtonWrapper>
-          <Button
-            isLoading={props.loadingCreateGame}
-            appearance="primary"
-            onClick={e => props.joinGame(e)}
-            role="button">
-            Create
-          </Button>
-        </ButtonWrapper>
-      </CreateFormWrapper>
-    </React.Fragment>
+          <div className="col">
+            <h6>
+              <Translate id="numPlayers" />
+            </h6>
+            <Select
+              options={numberOfPlayers}
+              onChange={props.onPlayerCountChange}
+              placeholder={<Translate id="select" />}
+            />
+          </div>
+          <div className="col">
+            <h6>
+              <Translate id="numRounds" />
+            </h6>
+            <Select
+              options={numberOfRounds}
+              onChange={props.onRoundChange}
+              placeholder={<Translate id="select" />}
+            />
+          </div>
+        </div>
+      </form>
+      <ButtonWrapper>
+        <Button
+          isLoading={props.loadingCreateGame}
+          appearance="primary"
+          onClick={e => props.joinGame(e)}
+          role="button">
+          <Translate id="create" />
+        </Button>
+      </ButtonWrapper>
+    </CreateFormWrapper>
   );
 };
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-top: 10px;
+`;
+
+const CreateFormWrapper = styled.div`
+  margin-bottom: 20px;
+`;

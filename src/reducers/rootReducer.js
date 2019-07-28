@@ -6,6 +6,7 @@ import userTurnReducer from "./userTurnReducer";
 import loginReducer from "./loginReducer";
 import { routerReducer } from "react-router-redux";
 import authReducer from "./authReducer";
+import localizationReducer from "./localizationReducer";
 
 export default combineReducers({
   dashboard: dashboardReducers,
@@ -14,5 +15,6 @@ export default combineReducers({
   userTurn: userTurnReducer,
   login: loginReducer,
   routing: routerReducer,
-  auth: authReducer
+  auth: authReducer,
+  localization: localizationReducer
 });

@@ -28,3 +28,6 @@ export const SHOW_SIGNUP = "SHOW_SIGNUP";
 export const LOGIN = "LOGIN";
 
 export const AUTHENTICATE = "AUTHENTICATE";
+
+export const SET_ACTIVE_LANGUAGE = "SET_ACTIVE_LANGUAGE";
+export const SET_USER_USERNAME = "SET_USER_USERNAME";

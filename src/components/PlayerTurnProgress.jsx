@@ -17,6 +17,7 @@ export default class PlayerTurnProgress extends React.Component {
   }
 
   componentDidMount() {
+    console.log("sflksaf");
     this.updateComponentState();
   }
 
@@ -58,7 +59,7 @@ export default class PlayerTurnProgress extends React.Component {
           }
         );
       }
-    } else {
+    } else if (this.hasPlayerFinishedBeforeTurn()) {
       this.props.finishPlayerTurn();
     }
   };
