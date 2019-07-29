@@ -3,7 +3,7 @@ import Modal from "react-modal";
 import styled from "styled-components";
 
 import Card from "./Card";
-import Spinner from "./Spinner";
+import { SpinnerFullCircle } from "./Spinner";
 import { Button } from "@atlaskit/button/components/Button";
 
 Modal.setAppElement("#root");
@@ -46,7 +46,7 @@ export default class CardModal extends React.Component {
 
   render() {
     if (this.state.loading) {
-      return <Spinner />;
+      return <SpinnerFullCircle />;
     }
     return (
       <Modal isOpen={true} onAfterOpen={this.afterOpenModal} style={customStyles}>

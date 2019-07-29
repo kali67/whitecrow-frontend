@@ -14,7 +14,7 @@ import {
   BeachImage,
   MoonImage
 } from "../static/TileObjects";
-import Spinner from "./Spinner";
+import Spinner, { SpinnerFullCircle } from "./Spinner";
 import BoardTile from "./BoardTile";
 
 const Wrapper = styled.div`
@@ -149,21 +149,18 @@ class GameBoard extends React.Component {
   };
 
   render() {
+    if (this.state.loading) {
+      return <SpinnerFullCircle />;
+    }
     return (
-      <React.Fragment>
-        {this.state.loading ? (
-          <Spinner />
-        ) : (
-          <Scrollable id="game">
-            <BoardWrapper>
-              <Padding />
-              <Days days={this.state.days} />
-              <Padding />
-              {this.buildTiles()}
-            </BoardWrapper>
-          </Scrollable>
-        )}
-      </React.Fragment>
+      <Scrollable id="game">
+        <BoardWrapper>
+          <Padding />
+          <Days days={this.state.days} />
+          <Padding />
+          {this.buildTiles()}
+        </BoardWrapper>
+      </Scrollable>
     );
   }
 }

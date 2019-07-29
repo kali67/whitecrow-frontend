@@ -47,5 +47,6 @@
   ],
   "day": ["Day ${day}", "Día ${day}"],
   "roll-die": ["Roll Dice", "Tirar el dado"],
-  "play-order": ["Player Order", "Orden del jugador"]
+  "play-order": ["Player Order", "Orden del jugador"],
+  "your-turn": ["Your Turn!", "¡Tu turno!"]
 }

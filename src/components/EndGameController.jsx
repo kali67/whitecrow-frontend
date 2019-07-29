@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import Spinner from "./Spinner";
+import { SpinnerFullCircle } from "./Spinner";
 import EndGameView from "./EndGameView";
 import GameBoard from "./GameBoard";
 import { connect } from "react-redux";
@@ -36,7 +36,7 @@ class EndGameController extends React.Component {
 
   render() {
     if (this.state.loading) {
-      return <Spinner />;
+      return <SpinnerFullCircle />;
     }
     if (this.state.shouldRedirectHome) {
       return <Redirect to={"/home"} />;

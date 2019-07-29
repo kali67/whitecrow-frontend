@@ -2,7 +2,7 @@ import React from "react";
 import AnimateBoardMovement from "./AnimateBoardMovement";
 import TurnNotification from "./TurnNotification";
 import CardController from "./CardController";
-
+import { Translate } from "react-localize-redux";
 import { connect } from "react-redux";
 import { updatePlayerCards, updatePlayerMoney, updatePlayerDay } from "../actions/userActions";
 
@@ -43,7 +43,7 @@ class UserPlayerTurn extends React.Component {
         this.props.finishPlayerTurn(true);
       }, 3000);
     } else {
-      this.props.showFullScreenNotification("Your Turn!");
+      this.props.showFullScreenNotification(<Translate id="your-turn" />);
       setTimeout(() => {
         this.props.dismissTurnNotification();
       }, 3000);

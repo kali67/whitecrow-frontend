@@ -1,6 +1,6 @@
 import React from "react";
 import GameBoard from "../components/GameBoard";
-import Spinner from "../components/Spinner";
+import { SpinnerFullCircle } from "../components/Spinner";
 import DrawerController from "../components/DrawerController";
 import PlayerTurnProgress from "../components/PlayerTurnProgress";
 import UserPlayerTurn from "../components/UserPlayerTurn";
@@ -78,7 +78,7 @@ class SinglePlayerController extends React.Component {
 
   render() {
     if (this.props.loadingGameDetails || this.props.loadingUserDetails) {
-      return <Spinner />;
+      return <SpinnerFullCircle />;
     }
     if (this.hasGameEnded()) {
       return <EndGameController gameId={this.props.gameId} players={this.props.players} />;
