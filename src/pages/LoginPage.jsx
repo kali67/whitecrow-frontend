@@ -42,9 +42,6 @@ const Whitecrow = styled.div`
 `;
 
 class LoginPage extends React.Component {
-  constructor(props) {
-    super(props);
-  }
 
   componentDidMount() {
     localStorage.removeItem("jwt");

@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React  from "react";
 import { connect } from "react-redux";
 import axios from "axios";
 
@@ -19,7 +19,6 @@ class AccountInfoContainer extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.props);
     axios
       .get("/user", {
         headers: {
@@ -86,7 +85,7 @@ class AccountInfoContainer extends React.Component {
         <AccountLanguageForm
           currentLanguage={
             this.props.languages.filter(value => {
-              return value.code == this.state.userDetails["languageCode"];
+              return value.code === this.state.userDetails["languageCode"];
             })[0]
           }
           saveLanguage={this.saveLanguage}

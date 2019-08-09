@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Tile, {IndicatedTileWrapper} from "./Tile";
+import Tile, { IndicatedTileWrapper } from "./Tile";
 
 const Counter = styled.div`
   align-items: center;
@@ -48,12 +48,21 @@ export default class PlayerPositionTile extends React.Component {
   render() {
     if (!this.state.showingDetails) {
       return (
-        <IndicatedTileWrapper onClick={e => this.onClick(e)} inputColor={this.props.color}>
+        <IndicatedTileWrapper
+          onClick={e => this.onClick(e)}
+          inputColor={this.props.color}
+        >
           <CounterContainer>{this.playerCounters()}</CounterContainer>
         </IndicatedTileWrapper>
       );
     } else {
-      return <Tile {...this.props} onClick={e => this.onClick(e)} isPlayerTile={true} />; //override onclick
+      return (
+        <Tile
+          {...this.props}
+          onClick={e => this.onClick(e)}
+          isPlayerTile={true}
+        />
+      ); //override onclick
     }
   }
 }

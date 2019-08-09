@@ -61,7 +61,8 @@ class Dashboard extends React.Component {
           foldWidth="60px"
           isOpen={this.props.isOpen}
           leftToRight={true}
-          onOutsideClick={() => this.props.closeDashboard()}>
+          onOutsideClick={() => this.props.closeDashboard()}
+        >
           <DrawerContainer>
             <PlayerControls
               usersPlayerUpdated={this.props.userPlayerUpdated}
@@ -79,7 +80,10 @@ class Dashboard extends React.Component {
           </DrawerContainer>
         </Slider>
         <ClosedDrawer>
-          <Hamburger image={hamburger} onClick={() => this.props.openDashboard()} />
+          <Hamburger
+            image={hamburger}
+            onClick={() => this.props.openDashboard()}
+          />
         </ClosedDrawer>
         <HelpModal
           isOpen={this.props.helpModalIsOpen}
@@ -96,7 +100,8 @@ const mapStateToProps = state => ({
   players: state.game.players,
   playerTurnIndex: state.game.playerTurnIndex,
   isSinglePlayersTurn:
-    state.game.players[state.game.playerTurnIndex]["id"] == state.user.player["id"],
+    state.game.players[state.game.playerTurnIndex]["id"] ===
+    state.user.player["id"],
   userPlayerUpdated: state.game.userTurnResult,
   userPlayer: state.user.player
 });

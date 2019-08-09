@@ -12,7 +12,7 @@ import Localization from "./components/Localization";
 import { renderToStaticMarkup } from "react-dom/server";
 import globalTranslations from "./static/translations/global.json";
 
-axios.defaults.baseURL = "https://whitecrow-backend.herokuapp.com";
+axios.defaults.baseURL = "http://localhost:8080";
 
 ReactDOM.render(
   <Provider store={store}>
@@ -23,7 +23,7 @@ ReactDOM.render(
         options: {
           renderToStaticMarkup,
           renderInnerHtml: true,
-          defaultLanguage: "es"
+          defaultLanguage: "ES"
         }
       }}
       store={store}>

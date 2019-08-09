@@ -30,7 +30,7 @@ class CardController extends React.Component {
       .then(() => {
         this.props.updatePlayerCards(card);
         this.props.updatePlayerMoney(-card["cost"]);
-        this.props.makeCardDecision();
+        this.declineCard()
       });
   };
 

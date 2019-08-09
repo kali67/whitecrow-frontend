@@ -100,7 +100,9 @@ export default class PlayerTurnProgress extends React.Component {
       this.setState(
         {
           showCards: true,
-          decision: this.state.finalPlayerState["opportunityCardResult"]["decision"],
+          decision: this.state.finalPlayerState["opportunityCardResult"][
+            "decision"
+          ],
           card: this.state.finalPlayerState["opportunityCardResult"]["card"]
         },
         () => {
@@ -134,7 +136,11 @@ export default class PlayerTurnProgress extends React.Component {
       );
     }
     if (this.state.turnNotificator) {
-      return <TurnNotification username={this.state.player["username"].toUpperCase()} />;
+      return (
+        <TurnNotification
+          username={this.state.player["username"].toUpperCase()}
+        />
+      );
     }
     if (this.state.showCards) {
       return (
@@ -150,7 +156,9 @@ export default class PlayerTurnProgress extends React.Component {
       return (
         <DieAnimation
           callback={this.dieRollFinished}
-          number={this.state.finalPlayerState["currentDay"] - this.state.player["day"]}
+          number={
+            this.state.finalPlayerState["currentDay"] - this.state.player["day"]
+          }
         />
       );
     }

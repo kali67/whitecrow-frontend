@@ -10,7 +10,7 @@ Modal.setAppElement("#root");
 
 const customStyles = {
   content: {
-    height: "80%",
+    height: "100%",
     width: "40%",
     top: "50%",
     left: "52%",
@@ -49,18 +49,20 @@ export default class CardModal extends React.Component {
       return <SpinnerFullCircle />;
     }
     return (
-      <Modal isOpen={true} onAfterOpen={this.afterOpenModal} style={customStyles}>
+      <Modal isOpen={true} style={customStyles}>
         <ModalCardWrapper>
           <Card card={this.state.card} />
-          {this.props.requiresDecision ? (
-            <CardDecisionControls
-              accept={() => this.props.addOpportunityCard(this.state.card)}
-              loading={this.props.loadingAdd}
-              declineCard={this.props.declineCard}
-            />
-          ) : null}
-          {this.props.decision ? <CardDecisionOutcome decision={this.props.decision} /> : null}
         </ModalCardWrapper>
+        {this.props.decision ? (
+          <CardDecisionOutcome decision={this.props.decision} />
+        ) : null}
+        {this.props.requiresDecision ? (
+          <CardDecisionControls
+            accept={() => this.props.addOpportunityCard(this.state.card)}
+            loading={this.props.loadingAdd}
+            declineCard={this.props.declineCard}
+          />
+        ) : null}
       </Modal>
     );
   }
@@ -80,7 +82,8 @@ const ButtonWrapper = styled.div`
   flex-direction: row;
   justify-content: space-between;
   margin: 5%;
-  width: 100%;
+  min-width: 55%;
+  max-width: 300px;
 `;
 
 const CardDecisionControls = props => {
@@ -94,7 +97,8 @@ const CardDecisionControls = props => {
         }}
         onClick={() => {
           props.declineCard();
-        }}>
+        }}
+      >
         Decline
       </Button>
       <Button
@@ -107,7 +111,8 @@ const CardDecisionControls = props => {
           background: "green",
           width: "110px",
           justifyContent: "center"
-        }}>
+        }}
+      >
         Accept
       </Button>
     </ButtonWrapper>
@@ -115,6 +120,6 @@ const CardDecisionControls = props => {
 };
 
 const CardDecisionOutcome = props => {
-  let decisionTextColor = props.decision == "ACCEPTED" ? "lime" : "red";
+  let decisionTextColor = props.decision === "ACCEPTED" ? "lime" : "red";
   return <h1 style={{ color: decisionTextColor }}>{props.decision}</h1>;
 };

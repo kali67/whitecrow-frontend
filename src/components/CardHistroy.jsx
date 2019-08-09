@@ -39,7 +39,9 @@ export default class CardHistory extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      cards: this.props.isMail ? this.props.userPlayer.mail : this.props.userPlayer.opportunity
+      cards: this.props.isMail
+        ? this.props.userPlayer.mail
+        : this.props.userPlayer.opportunity
     };
   }
 

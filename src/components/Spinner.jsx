@@ -41,7 +41,8 @@ export const SpinnerFullCircle = () => (
       justifyContent: "center",
       alignItems: "center",
       height: "100%"
-    }}>
+    }}
+  >
     <Spinner size="large" />
   </div>
 );

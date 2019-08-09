@@ -4,7 +4,11 @@ import TurnNotification from "./TurnNotification";
 import CardController from "./CardController";
 import { Translate } from "react-localize-redux";
 import { connect } from "react-redux";
-import { updatePlayerCards, updatePlayerMoney, updatePlayerDay } from "../actions/userActions";
+import {
+  updatePlayerCards,
+  updatePlayerMoney,
+  updatePlayerDay
+} from "../actions/userActions";
 
 import {
   dismissTurnNotification,
@@ -29,7 +33,10 @@ class UserPlayerTurn extends React.Component {
   }
 
   animateMovement = () => {
-    if (this.props.playerStateBeforeTurn["day"] > this.props.userTurnResult["currentDay"]) {
+    if (
+      this.props.playerStateBeforeTurn["day"] >
+      this.props.userTurnResult["currentDay"]
+    ) {
       this.props.animatePlayerMovement();
     } else {
       this.props.animatePlayerMovement();

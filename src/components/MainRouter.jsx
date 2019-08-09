@@ -9,7 +9,9 @@ import requiresAuthentication from "../components/RequiresAuthentication";
 import Page from "./Page";
 import AccountInfoContainer from "./Account/AccountInfoContainer";
 
-const SinglePlayerControllerAuth = requiresAuthentication(SinglePlayerController);
+const SinglePlayerControllerAuth = requiresAuthentication(
+  SinglePlayerController
+);
 const HomePageAuth = requiresAuthentication(HomePage);
 const AccountPageAuth = requiresAuthentication(AccountInfoContainer);
 
@@ -32,8 +34,16 @@ class MainRouter extends React.Component {
             path="/game/:id"
             render={props => <SinglePlayerControllerAuth {...props} />}
           />
-          <Route exact path="/game/:id/end" render={props => <EndGameController {...props} />} />
-          <Route exact path="/login" render={({ history }) => <LoginPage history={history} />} />
+          <Route
+            exact
+            path="/game/:id/end"
+            render={props => <EndGameController {...props} />}
+          />
+          <Route
+            exact
+            path="/login"
+            render={({ history }) => <LoginPage history={history} />}
+          />
           <Route
             exact
             path="/account"

@@ -2,16 +2,36 @@ import React, { Fragment } from "react";
 
 import TextField from "@atlaskit/textfield";
 import Button, { ButtonGroup } from "@atlaskit/button";
-import Form, { Field, FormFooter, HelperMessage, ErrorMessage, ValidMessage } from "@atlaskit/form";
+import Form, {
+  Field,
+  FormFooter,
+  HelperMessage,
+  ErrorMessage,
+  ValidMessage
+} from "@atlaskit/form";
 import axios from "axios";
 
-export const LoginSignUpView = ({ isShowingLogin, showLogin, showSignUp, login, authenticate }) => {
+export const LoginSignUpView = ({
+  isShowingLogin,
+  showLogin,
+  showSignUp,
+  login,
+  authenticate
+}) => {
   return (
     <React.Fragment>
       {isShowingLogin ? (
-        <LoginForm showSignUp={showSignUp} login={login} authenticate={authenticate} />
+        <LoginForm
+          showSignUp={showSignUp}
+          login={login}
+          authenticate={authenticate}
+        />
       ) : (
-        <SignUpForm authenticate={authenticate} showLogin={showLogin} login={login} />
+        <SignUpForm
+          authenticate={authenticate}
+          showLogin={showLogin}
+          login={login}
+        />
       )}
     </React.Fragment>
   );
@@ -27,7 +47,8 @@ const LoginForm = ({ showSignUp, authenticate }) => {
           alignItems: "center",
           justifyContent: "space-evenly",
           height: "50%"
-        }}>
+        }}
+      >
         <h1>SIGN IN TO WHITECROW</h1>
         <div
           style={{
@@ -36,24 +57,46 @@ const LoginForm = ({ showSignUp, authenticate }) => {
             maxWidth: "100%",
             margin: "0 auto",
             flexDirection: "column"
-          }}>
+          }}
+        >
           <Form
             onSubmit={data => {
               return authenticate(data.username, data.password);
-            }}>
+            }}
+          >
             {({ formProps, submitting }) => (
               <form {...formProps}>
-                <Field name="username" label="User name" isRequired defaultValue="">
-                  {({ fieldProps }) => <TextField autoComplete="off" {...fieldProps} />}
-                </Field>
-                <Field name="password" label="Password" isRequired defaultValue="">
+                <Field
+                  name="username"
+                  label="User name"
+                  isRequired
+                  defaultValue=""
+                >
                   {({ fieldProps }) => (
-                    <TextField type="password" autoComplete="off" {...fieldProps} />
+                    <TextField autoComplete="off" {...fieldProps} />
+                  )}
+                </Field>
+                <Field
+                  name="password"
+                  label="Password"
+                  isRequired
+                  defaultValue=""
+                >
+                  {({ fieldProps }) => (
+                    <TextField
+                      type="password"
+                      autoComplete="off"
+                      {...fieldProps}
+                    />
                   )}
                 </Field>
                 <FormFooter>
                   <ButtonGroup>
-                    <Button type="submit" appearance="primary" isLoading={submitting}>
+                    <Button
+                      type="submit"
+                      appearance="primary"
+                      isLoading={submitting}
+                    >
                       Login
                     </Button>
                   </ButtonGroup>
@@ -81,7 +124,8 @@ const SignUpForm = ({ showLogin, authenticate }) => {
           alignItems: "center",
           justifyContent: "space-evenly",
           height: "50%"
-        }}>
+        }}
+      >
         <h1>SIGN UP TO WHITECROW</h1>
         <div
           style={{
@@ -90,7 +134,8 @@ const SignUpForm = ({ showLogin, authenticate }) => {
             maxWidth: "100%",
             margin: "0 auto",
             flexDirection: "column"
-          }}>
+          }}
+        >
           <Form
             onSubmit={data => {
               return axios
@@ -104,15 +149,23 @@ const SignUpForm = ({ showLogin, authenticate }) => {
                 .catch(() => {
                   return { username: "IN_USE" };
                 });
-            }}>
+            }}
+          >
             {({ formProps, submitting }) => (
               <form {...formProps}>
-                <Field name="username" label="User name" isRequired defaultValue="">
+                <Field
+                  name="username"
+                  label="User name"
+                  isRequired
+                  defaultValue=""
+                >
                   {({ fieldProps, error }) => (
                     <Fragment>
                       <TextField autoComplete="off" {...fieldProps} />
                       {!error && (
-                        <HelperMessage>You can use letters, numbers & periods.</HelperMessage>
+                        <HelperMessage>
+                          You can use letters, numbers & periods.
+                        </HelperMessage>
                       )}
                       {error && (
                         <ErrorMessage>
@@ -127,17 +180,23 @@ const SignUpForm = ({ showLogin, authenticate }) => {
                   label="Password"
                   isRequired
                   defaultValue=""
-                  validate={value => (value.length < 8 ? "TOO_SHORT" : undefined)}>
+                  validate={value =>
+                    value.length < 8 ? "TOO_SHORT" : undefined
+                  }
+                >
                   {({ fieldProps, error, valid }) => (
                     <Fragment>
                       <TextField type="password" {...fieldProps} />
                       {!error && !valid && (
                         <HelperMessage>
-                          Use 8 or more characters with a mix of letters, numbers & symbols.
+                          Use 8 or more characters with a mix of letters,
+                          numbers & symbols.
                         </HelperMessage>
                       )}
                       {error && (
-                        <ErrorMessage>Password needs to be more than 8 characters.</ErrorMessage>
+                        <ErrorMessage>
+                          Password needs to be more than 8 characters.
+                        </ErrorMessage>
                       )}
                       {valid && <ValidMessage>Awesome password!</ValidMessage>}
                     </Fragment>
@@ -145,7 +204,11 @@ const SignUpForm = ({ showLogin, authenticate }) => {
                 </Field>
                 <FormFooter>
                   <ButtonGroup>
-                    <Button type="submit" appearance="primary" isLoading={submitting}>
+                    <Button
+                      type="submit"
+                      appearance="primary"
+                      isLoading={submitting}
+                    >
                       Sign Up
                     </Button>
                   </ButtonGroup>

@@ -112,7 +112,9 @@ class GameBoard extends React.Component {
           date={this.state.response["tiles"][j - 1].date}
           dateColor={this.state.response["tiles"][j - 1].dateColor}
           dateTextColor={this.state.response["tiles"][j - 1].dateTextColor}
-          descriptionColor={this.state.response["tiles"][j - 1].descriptionColor}
+          descriptionColor={
+            this.state.response["tiles"][j - 1].descriptionColor
+          }
           image={this.state.response["tiles"][j - 1].image}
         />
       );

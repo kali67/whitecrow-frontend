@@ -18,7 +18,9 @@ export default function(ComposedComponent) {
     }
 
     render() {
-      return <React.Fragment>{<ComposedComponent {...this.props} />}</React.Fragment>;
+      return (
+        <React.Fragment>{<ComposedComponent {...this.props} />}</React.Fragment>
+      );
     }
   };
 }

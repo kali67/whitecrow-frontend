@@ -53,7 +53,7 @@ export default class PlayerControls extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.isSinglePlayersTurn != this.props.isSinglePlayersTurn) {
+    if (prevProps.isSinglePlayersTurn !== this.props.isSinglePlayersTurn) {
       this.setState({ rolledDisabled: prevProps.isSinglePlayersTurn });
     }
   }
@@ -64,15 +64,6 @@ export default class PlayerControls extends React.Component {
     }
     if (this.props.showEndTurnUpdate) {
       return this.props.usersPlayerUpdated["currentDay"];
-    }
-  };
-
-  calculatePlayersMoneyFromTurn = () => {
-    if (!this.props.usersPlayerUpdated || !this.props.showEndTurnUpdate) {
-      return this.props.userPlayer.money;
-    }
-    if (this.props.showEndTurnUpdate) {
-      return this.props.userPlayer.money + this.props.usersPlayerUpdated["moneyDifference"];
     }
   };
 
@@ -149,7 +140,11 @@ const ActiveRollButtonStyle = {
   justifyContent: "center",
   background: "#36B37E"
 };
-const DisabledRollButtonStyle = { height: "22%", width: "100%", justifyContent: "center" };
+const DisabledRollButtonStyle = {
+  height: "22%",
+  width: "100%",
+  justifyContent: "center"
+};
 
 const getMoneyTextColor = money => {
   if (money > 800) {
@@ -160,19 +155,33 @@ const getMoneyTextColor = money => {
   return "#FF8B00";
 };
 
-const PlayerInfoView = ({ money, day, rollDie, rolledDisabled, isLoadingRoll, showHelpModal }) => {
+const PlayerInfoView = ({
+  money,
+  day,
+  rollDie,
+  rolledDisabled,
+  isLoadingRoll,
+  showHelpModal
+}) => {
   return (
     <PlayerInfoContainer>
       <HelpIconWrapper>
         <HelpIcon
           onClick={e => {
             showHelpModal();
-          }}>
+          }}
+        >
           ?
         </HelpIcon>
       </HelpIconWrapper>
 
-      <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-evenly" }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-evenly"
+        }}
+      >
         <TextWrapper>
           <LargeIcon image={coin} />
           <IconText color={getMoneyTextColor(money)}>
@@ -182,18 +191,23 @@ const PlayerInfoView = ({ money, day, rollDie, rolledDisabled, isLoadingRoll, sh
         <TextWrapper>
           <LargeIcon image={calendar} />
           <IconText color="black">
-            <Translate>{({ translate }) => <h4>{translate("day", { day: day })}</h4>}</Translate>
+            <Translate>
+              {({ translate }) => <h4>{translate("day", { day: day })}</h4>}
+            </Translate>
           </IconText>
         </TextWrapper>
       </div>
 
       <RollDiceBtnWrapper>
         <Button
-          style={rolledDisabled ? DisabledRollButtonStyle : ActiveRollButtonStyle}
+          style={
+            rolledDisabled ? DisabledRollButtonStyle : ActiveRollButtonStyle
+          }
           onClick={e => rollDie()}
           appearance="primary"
           isDisabled={rolledDisabled}
-          isLoading={isLoadingRoll}>
+          isLoading={isLoadingRoll}
+        >
           <Translate id="roll-die" />
         </Button>
       </RollDiceBtnWrapper>
@@ -203,7 +217,10 @@ const PlayerInfoView = ({ money, day, rollDie, rolledDisabled, isLoadingRoll, sh
 
 const tabs = props => {
   return [
-    { label: <Translate id="mail-tab" />, content: <CardHistroy {...props} isMail={true} /> },
+    {
+      label: <Translate id="mail-tab" />,
+      content: <CardHistroy {...props} isMail={true} />
+    },
     {
       label: <Translate id="oppourtunity-tab" />,
       content: <CardHistroy {...props} isMail={false} />

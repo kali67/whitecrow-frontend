@@ -55,7 +55,8 @@ export default class HelpModal extends React.Component {
       <Modal
         isOpen={this.props.isOpen}
         onRequestClose={this.props.closeHelpModal}
-        style={customStyles}>
+        style={customStyles}
+      >
         <ModalBody>
           <ModalHeader>
             <h1>Rules of White Crow</h1>
