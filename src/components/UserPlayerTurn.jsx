@@ -6,54 +6,53 @@ import { Translate } from "react-localize-redux";
 import { connect } from "react-redux";
 import {
   updatePlayerCards,
-  updatePlayerMoney,
-  updatePlayerDay
+  updatePlayerDay,
+  updatePlayerMoney
 } from "../actions/userActions";
 
 import {
-  dismissTurnNotification,
   animatePlayerMovement,
-  stopPlayerTurnAnimation,
-  showDrawnCard,
   dismissCardModal,
+  dismissTurnNotification,
+  showDrawnCard,
   showDrawnOpportunityCard,
-  showFullScreenNotification
+  showFullScreenNotification,
+  stopPlayerTurnAnimation
 } from "../actions/userTurnActions";
 
+import { updateCurrentUserTurnResult } from "../actions/singlePlayerControllerActions";
+
+import DieAnimation from "./DieAnimation";
+
+const NOTIFICATION_DISPLAY_TIME_MS = 3000;
+
 class UserPlayerTurn extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showingDieAnimation: false
+    };
+  }
+
   componentDidMount() {
     this.startPlayerTurn();
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps.userTurnResult !== this.props.userTurnResult) {
-      this.startPlayerTurn();
-      this.animateMovement();
+      this.setState({ showingDieAnimation: true });
     }
   }
 
-  animateMovement = () => {
-    if (
-      this.props.playerStateBeforeTurn["day"] >
-      this.props.userTurnResult["currentDay"]
-    ) {
-      this.props.animatePlayerMovement();
-    } else {
-      this.props.animatePlayerMovement();
-    }
-  };
-
   startPlayerTurn = () => {
     if (this.playerHasFinishedGameBeforeTurn()) {
-      setTimeout(() => {
-        this.notifyPlayerFinishedGame();
-        this.props.finishPlayerTurn(true);
-      }, 3000);
+      this.notifyPlayerFinishedGame();
+      this.props.finishPlayerTurn(true);
     } else {
       this.props.showFullScreenNotification(<Translate id="your-turn" />);
       setTimeout(() => {
         this.props.dismissTurnNotification();
-      }, 3000);
+      }, NOTIFICATION_DISPLAY_TIME_MS);
     }
   };
 
@@ -86,6 +85,28 @@ class UserPlayerTurn extends React.Component {
     this.props.finishPlayerTurn(true);
   };
 
+  finishTurn = () => {
+    if (!this.props.userTurnResult["turnResult"]) {
+      this.props.finishPlayerTurn(true);
+    } else {
+      if (this.props.userTurnResult["hasTriggeredSetBack"]) {
+        this.props.showFullScreenNotification(
+          "Uh, Oh! You have been set back!"
+        );
+        setTimeout(() => {
+          this.props.dismissTurnNotification();
+          this.props.updateCurrentUserTurnResult(
+            this.props.userTurnResult["turnResult"]
+          );
+        }, NOTIFICATION_DISPLAY_TIME_MS);
+      } else {
+        this.props.updateCurrentUserTurnResult(
+          this.props.userTurnResult["turnResult"]
+        );
+      }
+    }
+  };
+
   handleCardActions = () => {
     let playerStateAfterTurn = this.props.userTurnResult;
     let opportunityCardResult = playerStateAfterTurn["opportunityCardResult"];
@@ -93,7 +114,7 @@ class UserPlayerTurn extends React.Component {
       this.props.showDrawnCard(playerStateAfterTurn["mailCard"]);
       setTimeout(() => {
         this.props.dismissCardModal();
-        this.props.finishPlayerTurn(true);
+        this.finishTurn();
         this.props.updatePlayerCards(playerStateAfterTurn["mailCard"]);
       }, 5000);
     } else if (opportunityCardResult) {
@@ -102,13 +123,31 @@ class UserPlayerTurn extends React.Component {
       if (this.playerHasFinishedGameAfterTurn()) {
         this.notifyPlayerFinishedGame();
       }
-      this.props.finishPlayerTurn(true);
+      this.finishTurn();
     }
     this.props.updatePlayerMoney(playerStateAfterTurn["moneyDifference"]);
     this.props.updatePlayerDay(playerStateAfterTurn["currentDay"]);
   };
 
+  dieRollFinished = () => {
+    this.setState({ showingDieAnimation: false }, () =>
+      this.props.animatePlayerMovement()
+    );
+  };
+
   render() {
+    if (this.state.showingDieAnimation) {
+      console.log("die animation");
+      return (
+        <DieAnimation
+          callback={this.dieRollFinished}
+          number={
+            this.props.userTurnResult["currentDay"] -
+            this.props.playerStateBeforeTurn["day"]
+          }
+        />
+      );
+    }
     if (this.props.animateMovement) {
       return (
         <AnimateBoardMovement
@@ -162,6 +201,7 @@ export default connect(
     showDrawnCard,
     dismissCardModal,
     showDrawnOpportunityCard,
-    showFullScreenNotification
+    showFullScreenNotification,
+    updateCurrentUserTurnResult
   }
 )(UserPlayerTurn);

@@ -1,12 +1,14 @@
 import axios from "axios";
 import {
   FETCH_GAME_DETAILS,
-  UPDATE_PLAYER_POSITION,
-  LOADING,
-  UPDATE_PLAYER_TURN_RESULTS,
-  ROLL_DIE,
+  FINISH_AI_TURN,
   FINISH_USER_TURN,
-  FINISH_AI_TURN
+  LOADING,
+  ROLL_DIE,
+  UPDATE_CURRENT_USER_TURN_RESULT,
+  UPDATE_PLAYER_POSITION,
+  UPDATE_PLAYER_TURN_RESULTS,
+  UPDATE_AI_TURN_RESULTS
 } from "./types";
 
 const compare = (a, b) => {
@@ -120,4 +122,18 @@ export const finishPlayerTurn = (
       playerTurnIndex: currentPlayerTurnIndex
     });
   }
+};
+
+export const updateCurrentUserTurnResult = userTurnResult => dispatch => {
+  dispatch({
+    type: UPDATE_CURRENT_USER_TURN_RESULT,
+    userTurnResult: userTurnResult
+  });
+};
+
+export const updatePlayerTurnResult = aiTurnResults => dispatch => {
+  dispatch({
+    type: UPDATE_AI_TURN_RESULTS,
+    aiTurnResults: aiTurnResults
+  });
 };

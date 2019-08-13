@@ -1,11 +1,13 @@
 import {
   FETCH_GAME_DETAILS,
-  UPDATE_PLAYER_POSITION,
-  LOADING,
-  UPDATE_PLAYER_TURN_RESULTS,
-  ROLL_DIE,
+  FINISH_AI_TURN,
   FINISH_USER_TURN,
-  FINISH_AI_TURN
+  LOADING,
+  ROLL_DIE,
+  UPDATE_CURRENT_USER_TURN_RESULT,
+  UPDATE_PLAYER_POSITION,
+  UPDATE_PLAYER_TURN_RESULTS,
+  UPDATE_AI_TURN_RESULTS
 } from "../actions/types";
 
 const initialState = {
@@ -15,7 +17,9 @@ const initialState = {
   numberRounds: 0,
   playerTurnIndex: 0,
   AITurnResults: [],
-  gameId: -1
+  gameId: -1,
+  userTurnResult: null,
+  isInSetBackState: false
 };
 
 export default function(state = initialState, action) {
@@ -62,6 +66,16 @@ export default function(state = initialState, action) {
       return {
         ...state,
         playerTurnIndex: action.playerTurnIndex
+      };
+    case UPDATE_CURRENT_USER_TURN_RESULT:
+      return {
+        ...state,
+        userTurnResult: action.userTurnResult
+      };
+    case UPDATE_AI_TURN_RESULTS:
+      return {
+        ...state,
+        AITurnResults: action.aiTurnResults
       };
     default:
       return state;

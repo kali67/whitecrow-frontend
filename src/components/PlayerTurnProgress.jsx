@@ -4,6 +4,8 @@ import CardController from "./CardController";
 import DieAnimation from "./DieAnimation";
 import TurnNotification from "./TurnNotification";
 
+const NOTIFICATION_DISPLAY_TIME_MS = 3000;
+
 export default class PlayerTurnProgress extends React.Component {
   constructor(props) {
     super(props);
@@ -17,12 +19,16 @@ export default class PlayerTurnProgress extends React.Component {
   }
 
   componentDidMount() {
-    console.log("sflksaf");
     this.updateComponentState();
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.player != this.props.player) {
+    if (
+      prevProps.player !== this.props.player ||
+      prevProps.finalPlayerState["turnResultIdentifier"] !==
+        this.props.finalPlayerState["turnResultIdentifier"]
+    ) {
+      //will need to different check here
       this.updateComponentState();
     }
   }
@@ -78,7 +84,28 @@ export default class PlayerTurnProgress extends React.Component {
     if (this.hasPlayerFinishedGameAfterTurn()) {
       this.updatePlayerModel();
     }
-    this.props.finishPlayerTurn();
+
+    let nestedTurnResult = this.state.finalPlayerState["turnResult"];
+    // check if no other turn was made
+    if (!nestedTurnResult) {
+      this.props.finishPlayerTurn();
+    } else {
+      //if triggered set back we want to animate that turn also
+      if (this.state.finalPlayerState["hasTriggeredSetBack"]) {
+        this.setState({
+          turnNotificator: true,
+          notificationText: "Uh, Oh! You have been set back!"
+        });
+        setTimeout(() => {
+          this.setState({
+            turnNotificator: false
+          });
+          this.props.updatePlayerTurnResult(nestedTurnResult);
+        }, NOTIFICATION_DISPLAY_TIME_MS);
+      } else {
+        this.props.updatePlayerTurnResult(nestedTurnResult);
+      }
+    }
   };
 
   checkCards = () => {

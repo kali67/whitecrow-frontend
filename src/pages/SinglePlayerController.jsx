@@ -10,7 +10,8 @@ import {
   updatePlayerModels,
   startGame,
   finishPlayerTurn,
-  rollDie
+  rollDie,
+  updatePlayerTurnResult
 } from "../actions/singlePlayerControllerActions";
 
 import { fetchUserPlayer } from "../actions/userActions";
@@ -26,7 +27,7 @@ class SinglePlayerController extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.gameId != this.props.gameId) {
+    if (prevProps.gameId !== this.props.gameId) {
       this.props.startGame(this.props.gameId);
     }
   }
@@ -54,14 +55,25 @@ class SinglePlayerController extends React.Component {
 
   findPlayerTurnResult = () => {
     let playerNext = this.props.players[this.props.playerTurnIndex];
-    return this.props.AITurnResults.filter(value => {
-      if (value["playerId"] == playerNext["id"]) return value;
-    })[0];
+    console.log(this.props.AITurnResults);
+    return this.props.AITurnResults.filter(value => value["playerId"] === playerNext["id"])[0];
+  };
+
+  // Used to keep the players turn but just animate a nested turn result i.e. set back
+  updatePlayerTurnResult = playerTurnResult => {
+    let currentPlayer = this.props.players[this.props.playerTurnIndex];
+    let newAITurnResults = this.props.AITurnResults.map(x => {
+      if (x["playerId"] === currentPlayer["id"]) {
+        return playerTurnResult;
+      }
+      return x;
+    });
+    this.props.updatePlayerTurnResult(newAITurnResults)
   };
 
   isUsersTurn = () => {
     let currentPlayerId = this.props.players[this.props.playerTurnIndex]["id"];
-    return currentPlayerId == this.props.userPlayer["id"];
+    return currentPlayerId === this.props.userPlayer["id"];
   };
 
   updatePlayerState = player => {
@@ -81,11 +93,19 @@ class SinglePlayerController extends React.Component {
       return <SpinnerFullCircle />;
     }
     if (this.hasGameEnded()) {
-      return <EndGameController gameId={this.props.gameId} players={this.props.players} />;
+      return (
+        <EndGameController
+          gameId={this.props.gameId}
+          players={this.props.players}
+        />
+      );
     }
     return (
       <div style={{ display: "flex" }}>
-        <DrawerController gameId={this.props.match.params.id} rollDie={this.rollDie} />
+        <DrawerController
+          gameId={this.props.match.params.id}
+          rollDie={this.rollDie}
+        />
         <GameBoard players={this.props.players} />
         {this.isUsersTurn() && (
           <UserPlayerTurn
@@ -101,6 +121,7 @@ class SinglePlayerController extends React.Component {
             finalPlayerState={this.findPlayerTurnResult()}
             updatePlayersPosition={this.updatePlayersPosition}
             updatePlayerState={this.updatePlayerState}
+            updatePlayerTurnResult={this.updatePlayerTurnResult}
           />
         )}
       </div>
@@ -129,6 +150,7 @@ export default connect(
     startGame,
     finishPlayerTurn,
     rollDie,
-    fetchUserPlayer
+    fetchUserPlayer,
+    updatePlayerTurnResult
   }
 )(SinglePlayerController);

@@ -73,7 +73,12 @@ export default class DieAnimation extends React.Component {
       return (
         <Modal isOpen={true} style={customStyles}>
           <ModalBody>
-            <ModalText>... rolled a {this.props.number}</ModalText>
+            {this.props.number < 0 ? (
+              <ModalText>Going Back 1 Step!</ModalText>
+            ) : (
+              <ModalText>Rolled {this.props.number}</ModalText>
+            )}
+
             {/* <ReactDice
               faceColor="#ffffff"
               dotColor="#000000"
