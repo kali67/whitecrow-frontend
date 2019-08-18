@@ -23,12 +23,10 @@ export default class PlayerTurnProgress extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (
-      prevProps.player !== this.props.player ||
-      prevProps.finalPlayerState["turnResultIdentifier"] !==
-        this.props.finalPlayerState["turnResultIdentifier"]
-    ) {
-      //will need to different check here
+    if (prevProps.player !== this.props.player ||
+        prevProps.finalPlayerState["turnResultIdentifier"] !== this.props.finalPlayerState["turnResultIdentifier"]) {
+      console.log("testejstsklgja;sldagj;ldgsd");
+      console.log(prevProps);
       this.updateComponentState();
     }
   }
@@ -48,7 +46,7 @@ export default class PlayerTurnProgress extends React.Component {
   };
 
   updateComponentState = () => {
-    if (this.props.finalPlayerState) {
+    if (this.props.finalPlayerState) { // we have found a turn result from server for this player
       if (this.hasPlayerFinishedBeforeTurn()) {
         this.props.finishPlayerTurn();
       } else {
@@ -92,6 +90,7 @@ export default class PlayerTurnProgress extends React.Component {
     } else {
       //if triggered set back we want to animate that turn also
       if (this.state.finalPlayerState["hasTriggeredSetBack"]) {
+        this.props.flagSetBackRotation(true);
         this.setState({
           turnNotificator: true,
           notificationText: "Uh, Oh! You have been set back!"

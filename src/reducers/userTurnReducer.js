@@ -5,7 +5,8 @@ import {
     SHOW_DRAWN_CARD,
     SHOW_DRAWN_OPPOURTUNITY_CARD,
     SHOW_TURN_NOTIFCATION,
-    STOP_ANIMATING_PLAYER_MOVEMENT
+    STOP_ANIMATING_PLAYER_MOVEMENT,
+    FLAG_AS_SET_BACK
 } from "../actions/types";
 
 const initialState = {
@@ -14,7 +15,8 @@ const initialState = {
     card: null,
     cardDrawn: false,
     isOpportunityCard: false,
-    notificationText: ""
+    notificationText: "",
+    isSetBackTurnResult: false
 };
 
 export default function (state = initialState, action) {
@@ -60,6 +62,11 @@ export default function (state = initialState, action) {
                 ...state,
                 shouldShowTurnNotificator: true,
                 notificationText: action.notificationText
+            };
+        case FLAG_AS_SET_BACK:
+            return {
+                ...state,
+                isSetBackTurnResult: action.setbackTurnResult
             };
         default:
             return state;

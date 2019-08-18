@@ -5,8 +5,10 @@ import {
   SHOW_DRAWN_CARD,
   DISMISS_CARD_MODAL,
   SHOW_DRAWN_OPPOURTUNITY_CARD,
-  SHOW_TURN_NOTIFCATION
+  SHOW_TURN_NOTIFCATION, END_TURN,
+  FLAG_AS_SET_BACK
 } from "./types";
+import axios from "axios";
 
 export const dismissTurnNotification = () => dispatch => {
   dispatch({
@@ -53,4 +55,29 @@ export const showFullScreenNotification = textToDisplay => dispatch => {
     type: SHOW_TURN_NOTIFCATION,
     notificationText: textToDisplay
   });
+};
+
+export const flagAsSetBackTurn = flag => dispatch => {
+  dispatch({
+    type: FLAG_AS_SET_BACK,
+    setbackTurnResult: flag
+  });
+};
+
+export const endTurn = gameId => dispatch => {
+  axios
+    .post(
+      `/game/${gameId}/end_turn`,
+      {},
+      {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("jwt")
+        }
+      }
+    )
+    .then(() => {
+      dispatch({
+        type: END_TURN
+      });
+    });
 };

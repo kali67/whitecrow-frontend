@@ -8,7 +8,8 @@ import {
   UPDATE_CURRENT_USER_TURN_RESULT,
   UPDATE_PLAYER_POSITION,
   UPDATE_PLAYER_TURN_RESULTS,
-  UPDATE_AI_TURN_RESULTS
+  UPDATE_AI_TURN_RESULTS,
+  SET_SET_BACK_ROTATION_FLAG
 } from "./types";
 
 const compare = (a, b) => {
@@ -136,4 +137,11 @@ export const updatePlayerTurnResult = aiTurnResults => dispatch => {
     type: UPDATE_AI_TURN_RESULTS,
     aiTurnResults: aiTurnResults
   });
+};
+
+export const flagSetBackRotation = flag => dispatch => {
+  dispatch({
+    type: SET_SET_BACK_ROTATION_FLAG,
+    flag: flag
+  })
 };

@@ -15,7 +15,6 @@ class CardController extends React.Component {
   }
 
   addOpportunityCard = card => {
-    console.log(card);
     this.setState({ loading: true });
     axios
       .post(
@@ -30,11 +29,17 @@ class CardController extends React.Component {
       .then(() => {
         this.props.updatePlayerCards(card);
         this.props.updatePlayerMoney(-card["cost"]);
-        this.declineCard()
+        if (!this.props.isSetBackTurnResult) {
+          console.log("turn ended");
+          this.endTurn();
+        } else {
+          console.log("just decision");
+          this.props.makeCardDecision();
+        }
       });
   };
 
-  declineCard = () => {
+  endTurn = () => {
     this.setState({ loading: true });
     axios
       .post(
@@ -54,7 +59,7 @@ class CardController extends React.Component {
   render() {
     return (
       <CardModal
-        declineCard={this.declineCard}
+        declineCard={this.endTurn}
         decision={this.props.decision}
         requiresDecision={this.props.requiresDecision}
         card={this.props.card}

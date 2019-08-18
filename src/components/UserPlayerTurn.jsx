@@ -17,12 +17,14 @@ import {
   showDrawnCard,
   showDrawnOpportunityCard,
   showFullScreenNotification,
-  stopPlayerTurnAnimation
+  stopPlayerTurnAnimation,
+  flagAsSetBackTurn
 } from "../actions/userTurnActions";
 
 import { updateCurrentUserTurnResult } from "../actions/singlePlayerControllerActions";
 
 import DieAnimation from "./DieAnimation";
+import axios from "axios";
 
 const NOTIFICATION_DISPLAY_TIME_MS = 3000;
 
@@ -40,20 +42,51 @@ class UserPlayerTurn extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.userTurnResult !== this.props.userTurnResult) {
+      this.startPlayerTurn();
+      this.animateMovement();
       this.setState({ showingDieAnimation: true });
     }
   }
 
+  animateMovement = () => {
+    let isSetBackTurnResult = this.props.playerStateBeforeTurn["day"] > this.props.userTurnResult["currentDay"];
+    this.props.flagAsSetBackTurn(isSetBackTurnResult);
+    if (
+      this.props.playerStateBeforeTurn["day"] >
+      this.props.userTurnResult["currentDay"]
+    ) {
+      this.props.animatePlayerMovement();
+    } else {
+      this.props.animatePlayerMovement();
+    }
+  };
+
   startPlayerTurn = () => {
     if (this.playerHasFinishedGameBeforeTurn()) {
-      this.notifyPlayerFinishedGame();
-      this.props.finishPlayerTurn(true);
+      console.log("finished before turn");
+      this.endTurn();
     } else {
       this.props.showFullScreenNotification(<Translate id="your-turn" />);
       setTimeout(() => {
         this.props.dismissTurnNotification();
       }, NOTIFICATION_DISPLAY_TIME_MS);
     }
+  };
+
+  endTurn = () => {
+    axios
+      .post(
+        `/game/${this.props.gameId}/end_turn`,
+        {},
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("jwt")
+          }
+        }
+      )
+      .then(() => {
+        this.props.finishPlayerTurn(true);
+      });
   };
 
   notifyPlayerFinishedGame = () => {
@@ -82,7 +115,7 @@ class UserPlayerTurn extends React.Component {
 
   makeCardDecision = () => {
     this.props.dismissCardModal();
-    this.props.finishPlayerTurn(true);
+    this.finishTurn();
   };
 
   finishTurn = () => {
@@ -90,6 +123,7 @@ class UserPlayerTurn extends React.Component {
       this.props.finishPlayerTurn(true);
     } else {
       if (this.props.userTurnResult["hasTriggeredSetBack"]) {
+        this.props.flagSetBackRotation(true);
         this.props.showFullScreenNotification(
           "Uh, Oh! You have been set back!"
         );
@@ -170,6 +204,7 @@ class UserPlayerTurn extends React.Component {
           makeCardDecision={this.makeCardDecision}
           requiresDecision={this.props.isOpportunityCard}
           updatePlayerCards={this.props.updatePlayerCards}
+          isSetBackTurnResult={this.props.isSetBackTurnResult}
           card={this.props.card}
         />
       );
@@ -186,7 +221,10 @@ const mapStateToProps = state => ({
   card: state.userTurn.card,
   cardDrawn: state.userTurn.cardDrawn,
   isOpportunityCard: state.userTurn.isOpportunityCard,
-  notificationText: state.userTurn.notificationText
+  notificationText: state.userTurn.notificationText,
+  isInSetBackState: state.game.isInSetBackState,
+  gameId: state.game.gameId,
+  isSetBackTurnResult: state.userTurn.isSetBackTurnResult
 });
 
 export default connect(
@@ -202,6 +240,7 @@ export default connect(
     dismissCardModal,
     showDrawnOpportunityCard,
     showFullScreenNotification,
-    updateCurrentUserTurnResult
+    updateCurrentUserTurnResult,
+    flagAsSetBackTurn
   }
 )(UserPlayerTurn);

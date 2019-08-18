@@ -11,7 +11,8 @@ import {
   startGame,
   finishPlayerTurn,
   rollDie,
-  updatePlayerTurnResult
+  updatePlayerTurnResult,
+  flagSetBackRotation
 } from "../actions/singlePlayerControllerActions";
 
 import { fetchUserPlayer } from "../actions/userActions";
@@ -88,6 +89,10 @@ class SinglePlayerController extends React.Component {
     });
   };
 
+  flagSetBackRotation = (flag) => {
+    this.props.flagSetBackRotation(flag)
+  };
+
   render() {
     if (this.props.loadingGameDetails || this.props.loadingUserDetails) {
       return <SpinnerFullCircle />;
@@ -112,6 +117,7 @@ class SinglePlayerController extends React.Component {
             finishPlayerTurn={this.finishPlayerTurn}
             updatePlayersPosition={this.updatePlayersPosition}
             updatePlayerState={this.updatePlayerState}
+            flagSetBackRotation={this.flagSetBackRotation}
           />
         )}
         {!this.isUsersTurn() && !this.props.isLoadingRoll && (
@@ -122,6 +128,7 @@ class SinglePlayerController extends React.Component {
             updatePlayersPosition={this.updatePlayersPosition}
             updatePlayerState={this.updatePlayerState}
             updatePlayerTurnResult={this.updatePlayerTurnResult}
+            flagSetBackRotation={this.flagSetBackRotation}
           />
         )}
       </div>
@@ -151,6 +158,7 @@ export default connect(
     finishPlayerTurn,
     rollDie,
     fetchUserPlayer,
-    updatePlayerTurnResult
+    updatePlayerTurnResult,
+    flagSetBackRotation
   }
 )(SinglePlayerController);

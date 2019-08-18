@@ -7,7 +7,8 @@ import {
   UPDATE_CURRENT_USER_TURN_RESULT,
   UPDATE_PLAYER_POSITION,
   UPDATE_PLAYER_TURN_RESULTS,
-  UPDATE_AI_TURN_RESULTS
+  UPDATE_AI_TURN_RESULTS,
+  SET_SET_BACK_ROTATION_FLAG
 } from "../actions/types";
 
 const initialState = {
@@ -76,6 +77,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         AITurnResults: action.aiTurnResults
+      };
+    case SET_SET_BACK_ROTATION_FLAG:
+      return {
+        ...state,
+        isInSetBackState: action.flag
       };
     default:
       return state;
