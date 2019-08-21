@@ -48,7 +48,7 @@ class LoginPage extends React.Component {
   }
 
   authenticate = (username, password) => {
-    axios
+    return axios
       .post("/authenticate", {
         userName: username,
         password: password
