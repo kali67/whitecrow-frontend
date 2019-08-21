@@ -23,10 +23,11 @@ export default class PlayerTurnProgress extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.player !== this.props.player ||
-        prevProps.finalPlayerState["turnResultIdentifier"] !== this.props.finalPlayerState["turnResultIdentifier"]) {
-      console.log("testejstsklgja;sldagj;ldgsd");
-      console.log(prevProps);
+    if (
+      prevProps.player !== this.props.player ||
+      prevProps.finalPlayerState["turnResultIdentifier"] !==
+        this.props.finalPlayerState["turnResultIdentifier"]
+    ) {
       this.updateComponentState();
     }
   }
@@ -46,7 +47,8 @@ export default class PlayerTurnProgress extends React.Component {
   };
 
   updateComponentState = () => {
-    if (this.props.finalPlayerState) { // we have found a turn result from server for this player
+    if (this.props.finalPlayerState) {
+      // we have found a turn result from server for this player
       if (this.hasPlayerFinishedBeforeTurn()) {
         this.props.finishPlayerTurn();
       } else {
@@ -109,39 +111,27 @@ export default class PlayerTurnProgress extends React.Component {
 
   checkCards = () => {
     if (this.state.finalPlayerState["mailCard"]) {
-      this.setState(
-        {
-          showCards: true,
-          card: this.state.finalPlayerState["mailCard"]
-        },
-        () => {
-          setTimeout(() => {
-            this.setState({ showCards: false }, () => {
-              this.finishTurn();
-            });
-          }, 5000);
-        }
-      );
+      this.setState({
+        showCards: true,
+        card: this.state.finalPlayerState["mailCard"]
+      });
     } else if (this.state.finalPlayerState["opportunityCardResult"]) {
-      this.setState(
-        {
-          showCards: true,
-          decision: this.state.finalPlayerState["opportunityCardResult"][
-            "decision"
-          ],
-          card: this.state.finalPlayerState["opportunityCardResult"]["card"]
-        },
-        () => {
-          setTimeout(() => {
-            this.setState({ showCards: false, decision: null }, () => {
-              this.finishTurn();
-            });
-          }, 5000);
-        }
-      );
+      this.setState({
+        showCards: true,
+        decision: this.state.finalPlayerState["opportunityCardResult"][
+          "decision"
+        ],
+        card: this.state.finalPlayerState["opportunityCardResult"]["card"]
+      });
     } else {
       this.finishTurn();
     }
+  };
+
+  finishReadingCard = () => {
+    this.setState({ showCards: false, decision: null }, () => {
+      this.finishTurn();
+    });
   };
 
   dieRollFinished = () => {
@@ -175,6 +165,7 @@ export default class PlayerTurnProgress extends React.Component {
           onClose={e => e.preventDefault()}
           readOnly={true}
           card={this.state.card}
+          dismissCardModel={this.finishReadingCard}
         />
       );
     }

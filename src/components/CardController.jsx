@@ -30,10 +30,8 @@ class CardController extends React.Component {
         this.props.updatePlayerCards(card);
         this.props.updatePlayerMoney(-card["cost"]);
         if (!this.props.isSetBackTurnResult) {
-          console.log("turn ended");
           this.endTurn();
         } else {
-          console.log("just decision");
           this.props.makeCardDecision();
         }
       });
@@ -65,6 +63,7 @@ class CardController extends React.Component {
         card={this.props.card}
         addOpportunityCard={this.addOpportunityCard}
         loadingAdd={this.state.loading}
+        dismissCardModel={this.props.dismissCardModel}
       />
     );
   }

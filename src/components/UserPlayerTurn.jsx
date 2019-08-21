@@ -42,28 +42,12 @@ class UserPlayerTurn extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.userTurnResult !== this.props.userTurnResult) {
-      this.startPlayerTurn();
-      this.animateMovement();
       this.setState({ showingDieAnimation: true });
     }
   }
 
-  animateMovement = () => {
-    let isSetBackTurnResult = this.props.playerStateBeforeTurn["day"] > this.props.userTurnResult["currentDay"];
-    this.props.flagAsSetBackTurn(isSetBackTurnResult);
-    if (
-      this.props.playerStateBeforeTurn["day"] >
-      this.props.userTurnResult["currentDay"]
-    ) {
-      this.props.animatePlayerMovement();
-    } else {
-      this.props.animatePlayerMovement();
-    }
-  };
-
   startPlayerTurn = () => {
     if (this.playerHasFinishedGameBeforeTurn()) {
-      console.log("finished before turn");
       this.endTurn();
     } else {
       this.props.showFullScreenNotification(<Translate id="your-turn" />);
@@ -141,16 +125,18 @@ class UserPlayerTurn extends React.Component {
     }
   };
 
+  dismissCardModel = () => {
+    let playerStateAfterTurn = this.props.userTurnResult;
+    this.props.dismissCardModal();
+    this.finishTurn();
+    this.props.updatePlayerCards(playerStateAfterTurn["mailCard"]);
+  };
+
   handleCardActions = () => {
     let playerStateAfterTurn = this.props.userTurnResult;
     let opportunityCardResult = playerStateAfterTurn["opportunityCardResult"];
     if (playerStateAfterTurn["mailCard"]) {
       this.props.showDrawnCard(playerStateAfterTurn["mailCard"]);
-      setTimeout(() => {
-        this.props.dismissCardModal();
-        this.finishTurn();
-        this.props.updatePlayerCards(playerStateAfterTurn["mailCard"]);
-      }, 5000);
     } else if (opportunityCardResult) {
       this.props.showDrawnOpportunityCard(opportunityCardResult["card"]);
     } else {
@@ -164,14 +150,17 @@ class UserPlayerTurn extends React.Component {
   };
 
   dieRollFinished = () => {
-    this.setState({ showingDieAnimation: false }, () =>
+    this.setState({ showingDieAnimation: false }, () => {
+      let isSetBackTurnResult =
+        this.props.playerStateBeforeTurn["day"] >
+        this.props.userTurnResult["currentDay"];
+      this.props.flagAsSetBackTurn(isSetBackTurnResult);
       this.props.animatePlayerMovement()
-    );
+    });
   };
 
   render() {
     if (this.state.showingDieAnimation) {
-      console.log("die animation");
       return (
         <DieAnimation
           callback={this.dieRollFinished}
@@ -206,6 +195,7 @@ class UserPlayerTurn extends React.Component {
           updatePlayerCards={this.props.updatePlayerCards}
           isSetBackTurnResult={this.props.isSetBackTurnResult}
           card={this.props.card}
+          dismissCardModel={this.dismissCardModel}
         />
       );
     }

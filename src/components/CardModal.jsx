@@ -50,19 +50,21 @@ export default class CardModal extends React.Component {
     }
     return (
       <Modal isOpen={true} style={customStyles}>
-        <ModalCardWrapper>
-          <Card card={this.state.card} />
-        </ModalCardWrapper>
-        {this.props.decision ? (
-          <CardDecisionOutcome decision={this.props.decision} />
-        ) : null}
-        {this.props.requiresDecision ? (
-          <CardDecisionControls
-            accept={() => this.props.addOpportunityCard(this.state.card)}
-            loading={this.props.loadingAdd}
-            declineCard={this.props.declineCard}
-          />
-        ) : null}
+          <ModalCardWrapper>
+              {!this.props.requiresDecision ? <NotifyFinishedRead dismissCardModel={this.props.dismissCardModel} />: null}
+              <Card card={this.state.card} />
+          </ModalCardWrapper>
+          {this.props.decision ? (
+              <CardDecisionOutcome decision={this.props.decision} />
+          ) : null}
+          {this.props.requiresDecision ? (
+              <CardDecisionControls
+                  accept={() => this.props.addOpportunityCard(this.state.card)}
+                  loading={this.props.loadingAdd}
+                  declineCard={this.props.declineCard}
+              />
+          ) : null}
+
       </Modal>
     );
   }
@@ -75,7 +77,7 @@ const ModalCardWrapper = styled.div`
   min-width: 55%;
   max-width: 300px;
   flex-direction: column
-  min-height: 400px;
+  min-height: 500px;
 `;
 const ButtonWrapper = styled.div`
   display: flex;
@@ -116,6 +118,27 @@ const CardDecisionControls = props => {
         Accept
       </Button>
     </ButtonWrapper>
+  );
+};
+
+const NotifyFinishedRead = props => {
+  return (
+      <Button
+          onClick={() => props.dismissCardModel()}
+          style={{
+              marginBottom: "50px",
+              background: "#36B37E",
+              // minWidth: "61%",
+              // maxWidth: "350px",
+              width:"100%",
+              height: "50px",
+              justifyContent: "center"
+          }}
+          appearance="primary"
+      >
+          Finished Reading!
+      </Button>
+
   );
 };
 
