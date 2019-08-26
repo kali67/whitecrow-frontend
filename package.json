@@ -62,7 +62,7 @@
     "react": "^16.8.4",
     "react-app-polyfill": "^0.2.2",
     "react-dev-utils": "^8.0.0",
-    "react-dice-complete": "^1.0.2",
+    "react-dice-complete": "^1.2.0",
     "react-dom": "^16.8.4",
     "react-localize-redux": "^3.5.3",
     "react-modal": "^3.8.1",

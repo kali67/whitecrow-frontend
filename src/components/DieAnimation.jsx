@@ -47,51 +47,52 @@ const ModalBody = styled.div`
 export default class DieAnimation extends React.Component {
   constructor(props) {
     super(props);
+    this.reactDice = React.createRef();
     this.state = {
-      isRolling: true
-    };
+      isOpen: true
+    }
   }
 
   componentDidMount() {
-    setTimeout(() => {
-      this.setState({ isRolling: false }, () => {
-        this.props.callback();
-      });
-    }, 3000);
+    if (this.props.number > 0) {
+      setTimeout(() => {
+        this.reactDice.rollAll([this.props.number]);
+      }, 500);
+    } else {
+      setTimeout(() => {
+       this.setState({isOpen: false}, () => {
+         this.props.callback();
+       })
+      }, 5000);
+    }
   }
-  //   componentDidUpdate() {
-  //     this.reactDice.rollAll();
-  //   }
 
-  //   rollDoneCallback(num) {
-  //     // this.setState({ isRolling: false });
-  //     // this.props.callback();
-  //   }
+  rollDoneCallback = () => {
+    setTimeout(() => {
+      this.props.callback();
+    }, 2000);
+  };
 
   render() {
-    if (this.state.isRolling) {
-      return (
-        <Modal isOpen={true} style={customStyles}>
-          <ModalBody>
-            {this.props.number < 0 ? (
-              <ModalText>Going Back 1 Step!</ModalText>
-            ) : (
-              <ModalText>Rolled {this.props.number}</ModalText>
-            )}
-
-            {/* <ReactDice
+    return (
+      <Modal isOpen={this.state.isOpen} style={customStyles}>
+        <ModalBody>
+          {this.props.number < 0 ? (
+            <ModalText>The project has been set back! Go back 1 day.</ModalText>
+          ) : (
+            <ReactDice
               faceColor="#ffffff"
               dotColor="#000000"
               dieSize={120}
               numDice={1}
-              rollTime={2}
-              rollDone={this.rollDoneCallback}
+              rollDone={() => {
+                this.rollDoneCallback();
+              }}
               ref={dice => (this.reactDice = dice)}
-            /> */}
-          </ModalBody>
-        </Modal>
-      );
-    }
-    return null;
+            />
+          )}
+        </ModalBody>
+      </Modal>
+    );
   }
 }
