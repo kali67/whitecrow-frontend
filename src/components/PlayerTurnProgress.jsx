@@ -65,7 +65,7 @@ export default class PlayerTurnProgress extends React.Component {
           () => {
             setTimeout(() => {
               this.setState({ roll: true, turnNotificator: false });
-            }, 3000);
+            }, NOTIFICATION_DISPLAY_TIME_MS);
           }
         );
       }
