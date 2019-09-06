@@ -50,21 +50,27 @@ export default class CardModal extends React.Component {
     }
     return (
       <Modal isOpen={true} style={customStyles}>
-          <ModalCardWrapper>
-              {!this.props.requiresDecision ? <NotifyFinishedRead dismissCardModel={this.props.dismissCardModel} />: <Padding />}
-              <Card card={this.state.card} />
-          </ModalCardWrapper>
-          {this.props.decision ? (
-              <CardDecisionOutcome decision={this.props.decision} />
-          ) : null}
-          {this.props.requiresDecision ? (
-              <CardDecisionControls
-                  accept={() => this.props.addOpportunityCard(this.state.card)}
-                  loading={this.props.loadingAdd}
-                  declineCard={this.props.declineCard}
-              />
-          ) : null}
-
+        <ModalCardWrapper>
+          {!this.props.requiresDecision ? (
+            <NotifyFinishedRead
+              dismissCardModel={this.props.dismissCardModel}
+            />
+          ) : (
+            <Padding />
+          )}
+          <Card card={this.state.card} />
+        </ModalCardWrapper>
+        {this.props.decision ? (
+          <CardDecisionOutcome decision={this.props.decision} />
+        ) : null}
+        {this.props.requiresDecision ? (
+          <CardDecisionControls
+            accept={() => this.props.addOpportunityCard(this.state.card)}
+            loadingAdd={this.props.loadingAdd}
+            loadingDecline={this.props.loadingDecline}
+            declineCard={this.props.declineCard}
+          />
+        ) : null}
       </Modal>
     );
   }
@@ -92,6 +98,7 @@ const CardDecisionControls = props => {
   return (
     <ButtonWrapper>
       <Button
+        isLoading={props.loadingDecline}
         appearance="danger"
         style={{
           width: "110px",
@@ -104,7 +111,7 @@ const CardDecisionControls = props => {
         Decline
       </Button>
       <Button
-        loading={props.loading}
+        isLoading={props.loadingAdd}
         appearance="primary"
         onClick={() => {
           props.accept();
@@ -123,28 +130,27 @@ const CardDecisionControls = props => {
 
 const NotifyFinishedRead = props => {
   return (
-      <Button
-          onClick={() => props.dismissCardModel()}
-          style={{
-              marginBottom: "50px",
-              background: "#36B37E",
-              // minWidth: "61%",
-              // maxWidth: "350px",
-              width:"100%",
-              height: "50px",
-              justifyContent: "center"
-          }}
-          appearance="primary"
-      >
-          Finished Reading!
-      </Button>
-
+    <Button
+      onClick={() => props.dismissCardModel()}
+      style={{
+        marginBottom: "50px",
+        background: "#36B37E",
+        // minWidth: "61%",
+        // maxWidth: "350px",
+        width: "100%",
+        height: "50px",
+        justifyContent: "center"
+      }}
+      appearance="primary"
+    >
+      Finished Reading!
+    </Button>
   );
 };
 
 const Padding = styled.div`
-    height: 70px;
-    width: 100%
+  height: 70px;
+  width: 100%;
 `;
 
 const CardDecisionOutcome = props => {

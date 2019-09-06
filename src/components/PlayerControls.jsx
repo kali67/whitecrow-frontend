@@ -227,7 +227,22 @@ const tabs = props => {
     }
   ];
 };
+export class CardHolder extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      mail: this.props.mail,
+      opportunity: this.props.opportunity
+    };
+  }
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextProps.mail.length !== this.props.mail.length ||
+        nextProps.opportunity.length !== this.props.opportunity.length;
+  }
 
-export const CardHolder = props => {
-  return <Tabs tabs={tabs(props)} />;
-};
+  componentDidUpdate(prevProps, prevState, snapshot) {}
+
+  render() {
+    return <Tabs tabs={tabs(this.state)} />;
+  }
+}

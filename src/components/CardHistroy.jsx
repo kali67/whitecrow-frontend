@@ -39,24 +39,22 @@ export default class CardHistory extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      cards: this.props.isMail
-        ? this.props.userPlayer.mail
-        : this.props.userPlayer.opportunity
+      cards: this.props.isMail ? this.props.mail : this.props.opportunity
     };
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps != this.props) {
+    if (nextProps !== this.props) {
       if (nextProps.isMail) {
-        this.setState({ cards: nextProps.userPlayer.mail });
+        this.setState({ cards: nextProps.mail });
       } else {
-        this.setState({ cards: nextProps.userPlayer.opportunity });
+        this.setState({ cards: nextProps.opportunity });
       }
     }
   }
 
   render() {
-    if (this.state.cards.length == 0) {
+    if (this.state.cards.length === 0) {
       return (
         <Content>
           <h4>
@@ -76,8 +74,8 @@ export default class CardHistory extends React.Component {
       <CardContainer>
         {this.state.cards.map((card, index) => {
           return (
-            <CardSizeWrapper>
-              <Card card={card} key={index} small={true} />
+            <CardSizeWrapper key={index + card["title"]}>
+              <Card card={card} key={card["title"] + index} small={true} />
             </CardSizeWrapper>
           );
         })}

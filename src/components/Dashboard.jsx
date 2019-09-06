@@ -76,7 +76,8 @@ class Dashboard extends React.Component {
               helpModalIsOpen={this.props.helpModalIsOpen}
               showHelpModal={() => this.props.showHelpModal()}
             />
-            <CardHolder {...this.props} />
+
+            <CardHolder mail={this.props.userPlayer.mail} opportunity={this.props.userPlayer.opportunity}/>
           </DrawerContainer>
         </Slider>
         <ClosedDrawer>

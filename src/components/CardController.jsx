@@ -9,13 +9,10 @@ import { updatePlayerCards, updatePlayerMoney } from "../actions/userActions";
 class CardController extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      loading: false
-    };
   }
 
   addOpportunityCard = card => {
-    this.setState({ loading: true });
+    this.setState({ loadingAdd: true });
     axios
       .post(
         `/player/${this.props.userPlayer["id"]}/add/opportunity/${card["id"]["cardId"]}`,
@@ -34,12 +31,12 @@ class CardController extends React.Component {
         } else {
           this.props.makeCardDecision();
         }
-        this.setState({ loading: false });
+        this.setState({ loadingAdd: false });
       });
   };
 
   endTurn = () => {
-    this.setState({ loading: true });
+    this.setState({ loadingDecline: true });
     axios
       .post(
         `/game/${this.props.gameId}/end_turn`,
@@ -51,7 +48,7 @@ class CardController extends React.Component {
         }
       )
       .then(() => {
-        this.setState({ loading: false });
+        this.setState({ loadingDecline: false });
         this.props.makeCardDecision();
       });
   };
@@ -64,7 +61,8 @@ class CardController extends React.Component {
         requiresDecision={this.props.requiresDecision}
         card={this.props.card}
         addOpportunityCard={this.addOpportunityCard}
-        loadingAdd={this.state.loading}
+        loadingAdd={this.state.loadingAdd}
+        loadingDecline={this.state.loadingDecline}
         dismissCardModel={this.props.dismissCardModel}
       />
     );
