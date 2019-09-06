@@ -79,7 +79,8 @@ export default class GameBrowserTable extends React.Component {
                 <Cell>{players}</Cell>
                 <Cell>
                   <button
-                    className="btn-success float-right"
+                    disabled={true}
+                    className="btn-disabled float-right"
                     onClick={e => joinGame(e, id)}
                   >
                     Join
