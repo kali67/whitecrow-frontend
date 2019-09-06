@@ -40,9 +40,6 @@ const DrawerContainer = styled.div`
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      isLoadingRoll: false
-    };
   }
 
   componentDidMount() {
@@ -50,7 +47,6 @@ class Dashboard extends React.Component {
   }
 
   rollDie = () => {
-    this.props.closeDashboard();
     this.props.rollDie();
   };
 
@@ -70,7 +66,7 @@ class Dashboard extends React.Component {
               playerTurn={this.props.playerTurnIndex}
               players={this.props.players}
               userPlayer={this.props.userPlayer}
-              isLoadingRoll={this.state.isLoadingRoll}
+              isLoadingRoll={this.props.isLoadingQueryPlayerTurns}
               rollDie={this.rollDie}
               closeDrawer={() => this.props.closeDashboard()}
               helpModalIsOpen={this.props.helpModalIsOpen}
@@ -104,7 +100,8 @@ const mapStateToProps = state => ({
     state.game.players[state.game.playerTurnIndex]["id"] ===
     state.user.player["id"],
   userPlayerUpdated: state.game.userTurnResult,
-  userPlayer: state.user.player
+  userPlayer: state.user.player,
+  isLoadingQueryPlayerTurns: state.game.isLoadingQueryPlayerTurns
 });
 
 export default connect(

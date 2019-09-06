@@ -20,7 +20,8 @@ const initialState = {
   AITurnResults: [],
   gameId: -1,
   userTurnResult: null,
-  isInSetBackState: false
+  isInSetBackState: false,
+  isLoadingQueryPlayerTurns: false
 };
 
 export default function(state = initialState, action) {
@@ -43,18 +44,21 @@ export default function(state = initialState, action) {
     case LOADING:
       return {
         ...state,
-        loading: action.loading
+        loading: action.loading,
+        isLoadingQueryPlayerTurns: action.isLoadingQueryPlayerTurns
       };
     case UPDATE_PLAYER_TURN_RESULTS:
       return {
         ...state,
         loading: action.loading,
-        AITurnResults: action.AITurnResults
+        AITurnResults: action.AITurnResults,
+        isLoadingQueryPlayerTurns: false
       };
     case ROLL_DIE:
       return {
         ...state,
-        userTurnResult: action.userTurnResult
+        userTurnResult: action.userTurnResult,
+        isLoadingQueryPlayerTurns: false
       };
     case FINISH_USER_TURN:
       return {
@@ -76,7 +80,8 @@ export default function(state = initialState, action) {
     case UPDATE_AI_TURN_RESULTS:
       return {
         ...state,
-        AITurnResults: action.aiTurnResults
+        AITurnResults: action.aiTurnResults,
+        isLoadingQueryPlayerTurns: false
       };
     case SET_SET_BACK_ROTATION_FLAG:
       return {

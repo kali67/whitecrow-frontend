@@ -9,6 +9,10 @@ import { updatePlayerCards, updatePlayerMoney } from "../actions/userActions";
 class CardController extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      loadingAdd: false,
+      loadingDecline: false
+    };
   }
 
   addOpportunityCard = card => {

@@ -9,7 +9,7 @@ import {
   UPDATE_PLAYER_POSITION,
   UPDATE_PLAYER_TURN_RESULTS,
   UPDATE_AI_TURN_RESULTS,
-  SET_SET_BACK_ROTATION_FLAG, ACCESS_DENIED
+  SET_SET_BACK_ROTATION_FLAG, ACCESS_DENIED, CLOSE_DASHBOARD
 } from "./types";
 
 const compare = (a, b) => {
@@ -67,7 +67,8 @@ const queryPlayerTurns = gameId => {
 export const startGame = gameId => dispatch => {
   dispatch({
     type: LOADING,
-    loading: true
+    loading: true,
+    isLoadingQueryPlayerTurns: true
   });
   queryPlayerTurns(gameId).then(response => {
     dispatch({
@@ -98,11 +99,19 @@ const usePlayerTurn = (playerId, gameId) => {
 };
 
 export const rollDie = (userPlayerId, gameId) => dispatch => {
+  dispatch({
+    type: LOADING,
+    isLoadingQueryPlayerTurns: true
+  });
   usePlayerTurn(userPlayerId, gameId).then(response => {
     dispatch({
       type: ROLL_DIE,
       userTurnResult: response.data,
       loading: false
+    });
+    dispatch({
+      type: CLOSE_DASHBOARD,
+      isOpen: false
     });
   });
 };
