@@ -26,9 +26,15 @@ export default class PlayerTurnProgress extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (
-      prevProps.player !== this.props.player ||
+      prevProps.finalPlayerState["playerId"] !==
+      this.props.finalPlayerState["playerId"]
+    ) {
+      this.setState({ isNestedTurnResult: false });
+      this.updateComponentState();
+    }
+    if (
       prevProps.finalPlayerState["turnResultIdentifier"] !==
-        this.props.finalPlayerState["turnResultIdentifier"]
+      this.props.finalPlayerState["turnResultIdentifier"]
     ) {
       this.updateComponentState();
     }
@@ -45,7 +51,6 @@ export default class PlayerTurnProgress extends React.Component {
   updatePlayerModel = () => {
     let player = this.props.player;
     player["hasFinishedGame"] = true;
-    this.setState({ isNestedTurnResult: false });
     this.props.updatePlayerState(player);
   };
 
@@ -63,9 +68,13 @@ export default class PlayerTurnProgress extends React.Component {
             notificationText: this.props.player["username"]
           },
           () => {
-            setTimeout(() => {
+            if (!this.state.isNestedTurnResult) {
+              setTimeout(() => {
+                this.setState({ roll: true, turnNotificator: false });
+              }, NOTIFICATION_DISPLAY_TIME_MS);
+            } else {
               this.setState({ roll: true, turnNotificator: false });
-            }, NOTIFICATION_DISPLAY_TIME_MS);
+            }
           }
         );
       }
@@ -97,11 +106,9 @@ export default class PlayerTurnProgress extends React.Component {
       //if triggered set back we want to animate that turn also
       if (this.state.finalPlayerState["hasTriggeredSetBack"]) {
         this.props.flagSetBackRotation(true);
-        this.setState({ isNestedTurnResult: true });
-        this.props.updatePlayerTurnResult(nestedTurnResult);
-      } else {
-        this.props.updatePlayerTurnResult(nestedTurnResult);
       }
+      this.setState({ isNestedTurnResult: true });
+      this.props.updatePlayerTurnResult(nestedTurnResult);
     }
   };
 
