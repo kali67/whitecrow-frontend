@@ -22,6 +22,8 @@ const Hamburger = styled.div`
   background-size: contain;
   background-color: white;
   border-radius: 5%;
+  position: fixed
+  z-index: 100;
 `;
 
 const ClosedDrawer = styled.div`
