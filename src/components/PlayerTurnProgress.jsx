@@ -14,7 +14,9 @@ export default class PlayerTurnProgress extends React.Component {
       player: null,
       finalPlayerState: null,
       animateMovement: false,
-      roll: false
+      roll: false,
+      notificationText: "",
+      isNestedTurnResult: false
     };
   }
 
@@ -43,6 +45,7 @@ export default class PlayerTurnProgress extends React.Component {
   updatePlayerModel = () => {
     let player = this.props.player;
     player["hasFinishedGame"] = true;
+    this.setState({ isNestedTurnResult: false });
     this.props.updatePlayerState(player);
   };
 
@@ -56,7 +59,8 @@ export default class PlayerTurnProgress extends React.Component {
           {
             turnNotificator: true,
             player: this.props.player,
-            finalPlayerState: this.props.finalPlayerState
+            finalPlayerState: this.props.finalPlayerState,
+            notificationText: this.props.player["username"]
           },
           () => {
             setTimeout(() => {
@@ -93,16 +97,8 @@ export default class PlayerTurnProgress extends React.Component {
       //if triggered set back we want to animate that turn also
       if (this.state.finalPlayerState["hasTriggeredSetBack"]) {
         this.props.flagSetBackRotation(true);
-        this.setState({
-          turnNotificator: true,
-          notificationText: "Uh, Oh! You have been set back!"
-        });
-        setTimeout(() => {
-          this.setState({
-            turnNotificator: false
-          });
-          this.props.updatePlayerTurnResult(nestedTurnResult);
-        }, NOTIFICATION_DISPLAY_TIME_MS);
+        this.setState({ isNestedTurnResult: true });
+        this.props.updatePlayerTurnResult(nestedTurnResult);
       } else {
         this.props.updatePlayerTurnResult(nestedTurnResult);
       }
@@ -151,12 +147,8 @@ export default class PlayerTurnProgress extends React.Component {
         />
       );
     }
-    if (this.state.turnNotificator) {
-      return (
-        <TurnNotification
-          username={this.state.player["username"].toUpperCase()}
-        />
-      );
+    if (this.state.turnNotificator && !this.state.isNestedTurnResult) {
+      return <TurnNotification text={this.state.notificationText} />;
     }
     if (this.state.showCards) {
       return (

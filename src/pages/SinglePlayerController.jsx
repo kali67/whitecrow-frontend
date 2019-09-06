@@ -16,11 +16,10 @@ import {
 } from "../actions/singlePlayerControllerActions";
 
 import { fetchUserPlayer } from "../actions/userActions";
-
 import { connect } from "react-redux";
-import EndGameController from "../components/EndGameController";
 
 class SinglePlayerController extends React.Component {
+
   componentDidMount() {
     document.getElementById("root").style = "background: #1c2321;";
     this.props.fetchGameDetails(this.props.match.params.id);
@@ -57,7 +56,9 @@ class SinglePlayerController extends React.Component {
   findPlayerTurnResult = () => {
     let playerNext = this.props.players[this.props.playerTurnIndex];
     console.log(this.props.AITurnResults);
-    return this.props.AITurnResults.filter(value => value["playerId"] === playerNext["id"])[0];
+    return this.props.AITurnResults.filter(
+      value => value["playerId"] === playerNext["id"]
+    )[0];
   };
 
   // Used to keep the players turn but just animate a nested turn result i.e. set back
@@ -69,7 +70,7 @@ class SinglePlayerController extends React.Component {
       }
       return x;
     });
-    this.props.updatePlayerTurnResult(newAITurnResults)
+    this.props.updatePlayerTurnResult(newAITurnResults);
   };
 
   isUsersTurn = () => {
@@ -89,21 +90,22 @@ class SinglePlayerController extends React.Component {
     });
   };
 
-  flagSetBackRotation = (flag) => {
-    this.props.flagSetBackRotation(flag)
+  redirectToEndGameScreen = () => {
+    this.props.history.push({
+      pathname: `/game/${this.props.gameId}/end`
+    });
+  };
+
+  flagSetBackRotation = flag => {
+    this.props.flagSetBackRotation(flag);
   };
 
   render() {
     if (this.props.loadingGameDetails || this.props.loadingUserDetails) {
       return <SpinnerFullCircle />;
     }
-    if (this.hasGameEnded()) {
-      return (
-        <EndGameController
-          gameId={this.props.gameId}
-          players={this.props.players}
-        />
-      );
+    else if (this.hasGameEnded()) {
+      this.redirectToEndGameScreen()
     }
     return (
       <div style={{ display: "flex" }}>

@@ -184,7 +184,7 @@ class UserPlayerTurn extends React.Component {
       );
     }
     if (this.props.shouldShowTurnNotificator) {
-      return <TurnNotification username={this.props.notificationText} />;
+      return <TurnNotification text={this.props.notificationText} />;
     }
     if (this.props.cardDrawn) {
       return (

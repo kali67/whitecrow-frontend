@@ -6,7 +6,7 @@ import axios from "axios";
 import { LoginSignUpView } from "../components/LoginWidget";
 import whitecrow from "../static/image/whitecrowwhite.png";
 import { showLogin, showSignUp, login } from "../actions/loginActions";
-import { authenticate } from "../actions/authActions";
+import { authenticate, denyAccess } from "../actions/authActions";
 
 const LoginWrapper = styled.div`
   display: flex;
@@ -42,7 +42,6 @@ const Whitecrow = styled.div`
 `;
 
 class LoginPage extends React.Component {
-
   componentDidMount() {
     localStorage.removeItem("jwt");
   }
@@ -55,7 +54,26 @@ class LoginPage extends React.Component {
       })
       .then(response => {
         this.props.authenticate(response.data["jwtToken"]);
-        this.props.history.push("/home");
+        axios
+          .get("/user", {
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("jwt")
+            }
+          })
+          .then(response => {
+            this.setState({ loading: false }, () => {
+              this.props.setActiveLanguage(response.data["languageCode"]);
+              this.props.history.push("/home");
+            });
+          })
+          .catch(() => {
+            this.setState({ loading: false });
+          });
+      })
+      .catch(error => {
+        if (error.response.status === 401) {
+          denyAccess();
+        }
       });
   };
 

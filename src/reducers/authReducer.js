@@ -1,14 +1,20 @@
-import { AUTHENTICATE } from "../actions/types";
+import { AUTHENTICATE, ACCESS_DENIED } from "../actions/types";
 
 const initialState = {
-  jwt: null
+  accessDenied: false
 };
+
 export default function(state = initialState, action) {
   switch (action.type) {
     case AUTHENTICATE:
       return {
         ...state,
-        jwt: action.jwt
+        accessDenied: false
+      };
+    case ACCESS_DENIED:
+      return {
+        ...state,
+        accessDenied: true
       };
     default:
       return state;

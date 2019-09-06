@@ -37,3 +37,6 @@ export const SET_SET_BACK_ROTATION_FLAG = "SET_SET_BACK_ROTATION_FLAG";
 
 export const END_TURN = "END_TURN";
 export const FLAG_AS_SET_BACK = "FLAG_AS_SET_BACK";
+
+export const ACCESS_DENIED = "ACCESS_DENIED";
+

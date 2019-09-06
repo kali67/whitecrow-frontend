@@ -5,8 +5,9 @@ import Button from "@atlaskit/button";
 import styled from "styled-components";
 import Select from "react-select";
 import axios from "axios";
+import { denyAccess } from "../actions/authActions";
 
-export default class CreateGameForm extends React.Component {
+class CreateGameForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -35,11 +36,18 @@ export default class CreateGameForm extends React.Component {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("jwt")
           }
-        }).then(response => {
-          this.setState({ loadingCreateGame: false }, () =>
-            this.props.history.push(`/game/${response.data["id"]}`)
-          );
         })
+          .then(response => {
+            this.setState({ loadingCreateGame: false }, () =>
+              this.props.history.push(`/game/${response.data["id"]}`)
+            );
+          })
+          .catch(error => {
+            console.log(error);
+            if (error.response.status === 401) {
+              denyAccess();
+            }
+          })
       );
     }
   };
@@ -68,6 +76,8 @@ export default class CreateGameForm extends React.Component {
     );
   }
 }
+
+export default CreateGameForm;
 
 const gameTypeOptions = [
   { value: "SINGLEPLAYER", label: "Single Player" },
@@ -130,7 +140,8 @@ const CreateForm = props => {
           isLoading={props.loadingCreateGame}
           appearance="primary"
           onClick={e => props.joinGame(e)}
-          role="button">
+          role="button"
+        >
           <Translate id="create" />
         </Button>
       </ButtonWrapper>

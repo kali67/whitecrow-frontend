@@ -51,7 +51,7 @@ export default class CardModal extends React.Component {
     return (
       <Modal isOpen={true} style={customStyles}>
           <ModalCardWrapper>
-              {!this.props.requiresDecision ? <NotifyFinishedRead dismissCardModel={this.props.dismissCardModel} />: null}
+              {!this.props.requiresDecision ? <NotifyFinishedRead dismissCardModel={this.props.dismissCardModel} />: <Padding />}
               <Card card={this.state.card} />
           </ModalCardWrapper>
           {this.props.decision ? (
@@ -141,6 +141,11 @@ const NotifyFinishedRead = props => {
 
   );
 };
+
+const Padding = styled.div`
+    height: 70px;
+    width: 100%
+`;
 
 const CardDecisionOutcome = props => {
   let decisionTextColor = props.decision === "ACCEPTED" ? "lime" : "red";

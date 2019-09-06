@@ -34,6 +34,7 @@ class CardController extends React.Component {
         } else {
           this.props.makeCardDecision();
         }
+        this.setState({ loading: false });
       });
   };
 
@@ -50,6 +51,7 @@ class CardController extends React.Component {
         }
       )
       .then(() => {
+        this.setState({ loading: false });
         this.props.makeCardDecision();
       });
   };

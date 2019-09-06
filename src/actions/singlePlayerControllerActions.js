@@ -9,7 +9,7 @@ import {
   UPDATE_PLAYER_POSITION,
   UPDATE_PLAYER_TURN_RESULTS,
   UPDATE_AI_TURN_RESULTS,
-  SET_SET_BACK_ROTATION_FLAG
+  SET_SET_BACK_ROTATION_FLAG, ACCESS_DENIED
 } from "./types";
 
 const compare = (a, b) => {
@@ -23,6 +23,10 @@ const compare = (a, b) => {
 };
 
 export const fetchGameDetails = gameId => dispatch => {
+  dispatch({
+    type: LOADING,
+    loading: true,
+  });
   axios
     .get(`/game/details/${gameId}`, {
       headers: {
@@ -40,7 +44,12 @@ export const fetchGameDetails = gameId => dispatch => {
         loading: false,
         gameId: gameId
       });
-    });
+    }).catch((error) => {
+      console.log(error);
+      dispatch({
+        type: ACCESS_DENIED
+      })
+  });
 };
 
 const queryPlayerTurns = gameId => {
@@ -116,6 +125,9 @@ export const finishPlayerTurn = (
       })
       .catch(error => {
         console.log(error);
+        dispatch({
+          type: ACCESS_DENIED
+        })
       });
   } else {
     dispatch({

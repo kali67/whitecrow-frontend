@@ -3,7 +3,8 @@ import {
   UPDATE_PLAYER_MAIL_CARDS,
   UPDATE_PLAYER_OPPOURTUNITY_CARDS,
   UPDATE_PLAYER_DAY,
-  UPDATE_PLAYER_MONEY
+  UPDATE_PLAYER_MONEY,
+  ACCESS_DENIED,
 } from "./types";
 
 import axios from "axios";
@@ -27,6 +28,11 @@ export const fetchUserPlayer = gameId => dispatch => {
           username: response.data["username"],
           hasFinishedGame: response.data["hasFinishedGame"]
         }
+      });
+    })
+    .catch(() => {
+      dispatch({
+        type: ACCESS_DENIED
       });
     });
 };

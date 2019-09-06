@@ -5,15 +5,15 @@ import HomePage from "../pages/HomePage";
 import SinglePlayerController from "../pages/SinglePlayerController";
 import EndGameController from "./EndGameController";
 import LoginPage from "../pages/LoginPage";
-import requiresAuthentication from "../components/RequiresAuthentication";
+import AuthenticationWrapper from "../components/RequiresAuthentication";
 import Page from "./Page";
 import AccountInfoContainer from "./Account/AccountInfoContainer";
 
-const SinglePlayerControllerAuth = requiresAuthentication(
+const SinglePlayerControllerAuth = AuthenticationWrapper(
   SinglePlayerController
 );
-const HomePageAuth = requiresAuthentication(HomePage);
-const AccountPageAuth = requiresAuthentication(AccountInfoContainer);
+const HomePageAuth = AuthenticationWrapper(HomePage);
+const AccountPageAuth = AuthenticationWrapper(AccountInfoContainer);
 
 class MainRouter extends React.Component {
   render() {
@@ -37,12 +37,16 @@ class MainRouter extends React.Component {
           <Route
             exact
             path="/game/:id/end"
-            render={props => <EndGameController {...props} />}
+            render={({ history, match }) => (
+              <EndGameController history={history} match={match} {...this.props} />
+            )}
           />
           <Route
             exact
             path="/login"
-            render={({ history }) => <LoginPage history={history} />}
+            render={({ history }) => (
+              <LoginPage history={history} {...this.props} />
+            )}
           />
           <Route
             exact

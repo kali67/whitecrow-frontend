@@ -21,7 +21,7 @@ const TurnNotification = props => {
   return (
     <Modal isOpen={true} style={customStyles}>
       <ModalBody>
-        <ModalText>{props.username}</ModalText>
+        <ModalText>{props.text}</ModalText>
       </ModalBody>
     </Modal>
   );

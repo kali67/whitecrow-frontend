@@ -78,7 +78,7 @@ export default class DieAnimation extends React.Component {
       <Modal isOpen={this.state.isOpen} style={customStyles}>
         <ModalBody>
           {this.props.number < 0 ? (
-            <ModalText>The project has been set back! Go back 1 day.</ModalText>
+            <ModalText>GO BACK 1 DAY</ModalText>
           ) : (
             <ReactDice
               faceColor="#ffffff"

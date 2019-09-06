@@ -18,7 +18,7 @@ const createContentKey = player => {
 
 const findPlayerRank = (allPlayersInGame, id) => {
   for (let i = 0; i < allPlayersInGame.length; i++) {
-    if (allPlayersInGame[i]["id"] == id) {
+    if (allPlayersInGame[i]["id"] === id) {
       return i + 1;
     }
   }

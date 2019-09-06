@@ -1,4 +1,4 @@
-import React  from "react";
+import React from "react";
 import { connect } from "react-redux";
 import axios from "axios";
 
@@ -8,6 +8,7 @@ import AccountPasswordForm from "./AccountPasswordForm";
 import AccountProfileForm from "./AccountProfileForm";
 
 import { Divider } from "./AccountInfoStyles";
+import { denyAccess } from "../../actions/authActions";
 
 class AccountInfoContainer extends React.Component {
   constructor(props) {
@@ -27,6 +28,11 @@ class AccountInfoContainer extends React.Component {
       })
       .then(response => {
         this.setState({ userDetails: response.data, loading: false });
+      })
+      .catch(error => {
+        if (error.response.status === 401) {
+          denyAccess();
+        }
       });
   }
 
@@ -34,7 +40,10 @@ class AccountInfoContainer extends React.Component {
     axios
       .put(
         "/user",
-        { username: this.state.userDetails["username"], languageCode: languageCode },
+        {
+          username: this.state.userDetails["username"],
+          languageCode: languageCode
+        },
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("jwt")}`
@@ -43,7 +52,10 @@ class AccountInfoContainer extends React.Component {
       )
       .then(() => {
         this.props.setActiveLanguage(languageCode);
-        this.setState({ ...this.state.userDetails, languageCode: languageCode });
+        this.setState({
+          ...this.state.userDetails,
+          languageCode: languageCode
+        });
       });
   };
 
@@ -65,6 +77,11 @@ class AccountInfoContainer extends React.Component {
         this.setState(prevState => ({
           userDetails: { ...prevState.userDetails, username: username }
         }));
+      })
+      .catch(error => {
+        if (error.response.status === 401) {
+          denyAccess();
+        }
       });
   };
 
