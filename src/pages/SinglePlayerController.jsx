@@ -12,10 +12,11 @@ import {
   finishPlayerTurn,
   rollDie,
   updatePlayerTurnResult,
-  flagSetBackRotation
+  flagSetBackRotation,
+  resetLoadingStates
 } from "../actions/singlePlayerControllerActions";
 
-import { fetchUserPlayer } from "../actions/userActions";
+import { fetchUserPlayer, resetUserLoadingState } from "../actions/userActions";
 import { connect } from "react-redux";
 
 class SinglePlayerController extends React.Component {
@@ -101,7 +102,7 @@ class SinglePlayerController extends React.Component {
   };
 
   render() {
-    if (this.props.loadingGameDetails || this.props.loadingUserDetails) {
+    if (this.props.loadingGameDetails || this.props.loadingUserDetails || this.props.loadingStartGame) {
       return <SpinnerFullCircle />;
     }
     else if (this.hasGameEnded()) {
@@ -139,8 +140,9 @@ class SinglePlayerController extends React.Component {
 }
 
 const mapStateToProps = ({ game, user }) => ({
-  loadingGameDetails: game.loading,
-  loadingUserDetails: user.loading,
+  loadingStartGame: game.loading,
+  loadingGameDetails: game.isLoadingGameDetails,
+  loadingUserDetails: user.isLoadingUserDetails,
   userPlayer: user.player,
   players: game.players,
   numberRounds: game.numberRounds,
@@ -161,6 +163,8 @@ export default connect(
     rollDie,
     fetchUserPlayer,
     updatePlayerTurnResult,
-    flagSetBackRotation
+    flagSetBackRotation,
+    resetLoadingStates,
+    resetUserLoadingState
   }
 )(SinglePlayerController);

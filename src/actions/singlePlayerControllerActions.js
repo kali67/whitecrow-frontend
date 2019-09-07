@@ -9,7 +9,10 @@ import {
   UPDATE_PLAYER_POSITION,
   UPDATE_PLAYER_TURN_RESULTS,
   UPDATE_AI_TURN_RESULTS,
-  SET_SET_BACK_ROTATION_FLAG, ACCESS_DENIED, CLOSE_DASHBOARD
+  SET_SET_BACK_ROTATION_FLAG,
+  ACCESS_DENIED,
+  CLOSE_DASHBOARD,
+  IS_LOADING_GAME_DETAILS
 } from "./types";
 
 const compare = (a, b) => {
@@ -22,10 +25,17 @@ const compare = (a, b) => {
   return 0;
 };
 
+export const resetLoadingStates = () => dispatch => {
+  dispatch({
+    type: IS_LOADING_GAME_DETAILS,
+    isLoadingGameDetails: true
+  });
+};
+
 export const fetchGameDetails = gameId => dispatch => {
   dispatch({
-    type: LOADING,
-    loading: true,
+    type: IS_LOADING_GAME_DETAILS,
+    isLoadingGameDetails: true
   });
   axios
     .get(`/game/details/${gameId}`, {
@@ -41,15 +51,20 @@ export const fetchGameDetails = gameId => dispatch => {
         players: mappedPlayers,
         numberRounds: gameResponse.data["numberRounds"],
         playerTurnIndex: gameResponse.data["next"]["order"],
-        loading: false,
         gameId: gameId
       });
-    }).catch((error) => {
+      console.log(gameResponse);
+      dispatch({
+        type: IS_LOADING_GAME_DETAILS,
+        isLoadingGameDetails: false
+      });
+    })
+    .catch(error => {
       console.log(error);
       dispatch({
         type: ACCESS_DENIED
-      })
-  });
+      });
+    });
 };
 
 const queryPlayerTurns = gameId => {
@@ -67,8 +82,7 @@ const queryPlayerTurns = gameId => {
 export const startGame = gameId => dispatch => {
   dispatch({
     type: LOADING,
-    loading: true,
-    isLoadingQueryPlayerTurns: true
+    loading: true
   });
   queryPlayerTurns(gameId).then(response => {
     dispatch({
@@ -136,7 +150,7 @@ export const finishPlayerTurn = (
         console.log(error);
         dispatch({
           type: ACCESS_DENIED
-        })
+        });
       });
   } else {
     dispatch({
@@ -164,5 +178,5 @@ export const flagSetBackRotation = flag => dispatch => {
   dispatch({
     type: SET_SET_BACK_ROTATION_FLAG,
     flag: flag
-  })
+  });
 };

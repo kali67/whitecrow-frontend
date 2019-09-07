@@ -8,7 +8,8 @@ import {
   UPDATE_PLAYER_POSITION,
   UPDATE_PLAYER_TURN_RESULTS,
   UPDATE_AI_TURN_RESULTS,
-  SET_SET_BACK_ROTATION_FLAG
+  SET_SET_BACK_ROTATION_FLAG,
+  IS_LOADING_GAME_DETAILS
 } from "../actions/types";
 
 const initialState = {
@@ -21,11 +22,17 @@ const initialState = {
   gameId: -1,
   userTurnResult: null,
   isInSetBackState: false,
-  isLoadingQueryPlayerTurns: false
+  isLoadingQueryPlayerTurns: false,
+  isLoadingGameDetails: true
 };
 
 export default function(state = initialState, action) {
   switch (action.type) {
+    case IS_LOADING_GAME_DETAILS:
+      return {
+        ...state,
+        isLoadingGameDetails: action.isLoadingGameDetails
+      };
     case FETCH_GAME_DETAILS:
       return {
         ...state,

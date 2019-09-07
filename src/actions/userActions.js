@@ -4,12 +4,24 @@ import {
   UPDATE_PLAYER_OPPOURTUNITY_CARDS,
   UPDATE_PLAYER_DAY,
   UPDATE_PLAYER_MONEY,
-  ACCESS_DENIED,
+  ACCESS_DENIED, IS_LOADING_USER_DETAILS,
 } from "./types";
 
 import axios from "axios";
 
+
+export const resetUserLoadingState = () => dispatch => {
+  dispatch({
+    type: IS_LOADING_USER_DETAILS,
+    isLoadingUserDetails: true
+  });
+};
+
 export const fetchUserPlayer = gameId => dispatch => {
+  dispatch({
+    type: IS_LOADING_USER_DETAILS,
+    isLoadingUserDetails: true
+  });
   axios
     .get(`/game/${gameId}/player`, {
       headers: {
@@ -28,6 +40,10 @@ export const fetchUserPlayer = gameId => dispatch => {
           username: response.data["username"],
           hasFinishedGame: response.data["hasFinishedGame"]
         }
+      });
+      dispatch({
+        type: IS_LOADING_USER_DETAILS,
+        isLoadingUserDetails: false
       });
     })
     .catch(() => {

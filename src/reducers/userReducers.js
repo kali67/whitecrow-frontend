@@ -3,16 +3,23 @@ import {
   UPDATE_PLAYER_MAIL_CARDS,
   UPDATE_PLAYER_OPPOURTUNITY_CARDS,
   UPDATE_PLAYER_MONEY,
-  UPDATE_PLAYER_DAY
+  UPDATE_PLAYER_DAY,
+  IS_LOADING_USER_DETAILS
 } from "../actions/types";
 
 const initialState = {
   player: null,
-  loading: true
+  loading: true,
+  isLoadingUserDetails: true
 };
 
 export default function(state = initialState, action) {
   switch (action.type) {
+    case IS_LOADING_USER_DETAILS:
+      return {
+        ...state,
+        isLoadingUserDetails: action.isLoadingUserDetails
+      };
     case FETCH_USER_PLAYER:
       return {
         ...state,
@@ -28,7 +35,10 @@ export default function(state = initialState, action) {
       };
     case UPDATE_PLAYER_OPPOURTUNITY_CARDS:
       let updatedPlayer = Object.assign({}, state.player);
-      updatedPlayer["opportunity"] = [...state.player["opportunity"], action.card];
+      updatedPlayer["opportunity"] = [
+        ...state.player["opportunity"],
+        action.card
+      ];
       return {
         ...state,
         player: updatedPlayer

@@ -4,8 +4,8 @@ import { SpinnerFullCircle } from "./Spinner";
 import EndGameView from "./EndGameView";
 import GameBoard from "./GameBoard";
 import { connect } from "react-redux";
-import { fetchGameDetails } from "../actions/singlePlayerControllerActions";
-import { fetchUserPlayer } from "../actions/userActions";
+import { fetchGameDetails, resetLoadingStates } from "../actions/singlePlayerControllerActions";
+import { fetchUserPlayer, resetUserLoadingState } from "../actions/userActions";
 
 class EndGameController extends React.Component {
   constructor(props) {
@@ -31,6 +31,11 @@ class EndGameController extends React.Component {
     ) {
       this.fetchEndGameDetails();
     }
+  }
+
+  componentWillUnmount() {
+    this.props.resetLoadingStates();
+    this.props.resetUserLoadingState();
   }
 
   fetchEndGameDetails = () => {
@@ -78,15 +83,17 @@ class EndGameController extends React.Component {
 
 const mapStateToProps = state => ({
   userPlayer: state.user.player,
-  loadingGameDetails: state.game.loading,
-  loadingUserDetails: state.user.loading,
+  loadingGameDetails: state.game.isLoadingGameDetails,
+  loadingUserDetails: state.user.isLoadingUserDetails,
   players: state.game.players
 });
 
 export default connect(
   mapStateToProps,
   {
+    resetLoadingStates,
     fetchGameDetails,
-    fetchUserPlayer
+    fetchUserPlayer,
+    resetUserLoadingState
   }
 )(EndGameController);
