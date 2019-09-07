@@ -155,7 +155,7 @@ class UserPlayerTurn extends React.Component {
         this.props.playerStateBeforeTurn["day"] >
         this.props.userTurnResult["currentDay"];
       this.props.flagAsSetBackTurn(isSetBackTurnResult);
-      this.props.animatePlayerMovement()
+      this.props.animatePlayerMovement();
     });
   };
 
@@ -189,6 +189,7 @@ class UserPlayerTurn extends React.Component {
     if (this.props.cardDrawn) {
       return (
         <CardController
+          cardCancelled={this.props.userTurnResult["cardCancelled"]}
           userPlayer={this.props.playerStateBeforeTurn}
           makeCardDecision={this.makeCardDecision}
           requiresDecision={this.props.isOpportunityCard}

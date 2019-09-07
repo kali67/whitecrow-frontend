@@ -19,7 +19,9 @@ class CardController extends React.Component {
     this.setState({ loadingAdd: true });
     axios
       .post(
-        `/player/${this.props.userPlayer["id"]}/add/opportunity/${card["id"]["cardId"]}`,
+        `/player/${this.props.userPlayer["id"]}/add/opportunity/${
+          card["id"]["cardId"]
+        }`,
         {},
         {
           headers: {
@@ -60,6 +62,7 @@ class CardController extends React.Component {
   render() {
     return (
       <CardModal
+        cardCancelled={this.props.cardCancelled}
         declineCard={this.endTurn}
         decision={this.props.decision}
         requiresDecision={this.props.requiresDecision}

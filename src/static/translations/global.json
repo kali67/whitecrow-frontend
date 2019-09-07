@@ -48,5 +48,9 @@
   "day": ["Day ${day}", "Día ${day}"],
   "roll-die": ["Roll Dice", "Tirar el dado"],
   "play-order": ["Player Order", "Orden del jugador"],
-  "your-turn": ["Your Turn!", "¡Tu turno!"]
+  "your-turn": ["Your Turn!", "¡Tu turno!"],
+  "card-cancelled": [
+    "You're recent investment has prevented you from having to pay for this mail card!",
+    "¡Su inversión reciente le ha impedido tener que pagar por esta tarjeta de correo!"
+  ]
 }

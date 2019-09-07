@@ -5,6 +5,7 @@ import styled from "styled-components";
 import Card from "./Card";
 import { SpinnerFullCircle } from "./Spinner";
 import { Button } from "@atlaskit/button/components/Button";
+import { Translate } from "react-localize-redux";
 
 Modal.setAppElement("#root");
 
@@ -70,6 +71,9 @@ export default class CardModal extends React.Component {
             loadingDecline={this.props.loadingDecline}
             declineCard={this.props.declineCard}
           />
+        ) : null}
+        {this.props.cardCancelled ? (
+          <CardDecisionOutcome cardCancelled={true} />
         ) : null}
       </Modal>
     );
@@ -154,6 +158,17 @@ const Padding = styled.div`
 `;
 
 const CardDecisionOutcome = props => {
-  let decisionTextColor = props.decision === "ACCEPTED" ? "lime" : "red";
-  return <h1 style={{ color: decisionTextColor }}>{props.decision}</h1>;
+  let decisionTextColor = props.decision === "DECLINED" ? "red" : "lime";
+  if (props.cardCancelled) {
+    return (
+      <h1 style={{ color: decisionTextColor, textAlign: "center" }}>
+        <Translate id="card-cancelled" />
+      </h1>
+    );
+  }
+  return (
+    <h1 style={{ color: decisionTextColor, textAlign: "center" }}>
+      {props.decision}
+    </h1>
+  );
 };
