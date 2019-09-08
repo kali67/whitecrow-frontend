@@ -3,6 +3,7 @@ import Modal from "react-modal";
 import styled from "styled-components";
 import ReactDice from "react-dice-complete";
 import "react-dice-complete/dist/react-dice-complete.css";
+import {Translate} from "react-localize-redux";
 
 Modal.setAppElement("#root");
 
@@ -78,7 +79,7 @@ export default class DieAnimation extends React.Component {
       <Modal isOpen={this.state.isOpen} style={customStyles}>
         <ModalBody>
           {this.props.number < 0 ? (
-            <ModalText>GO BACK 1 DAY</ModalText>
+            <ModalText><Translate id="go-back" /></ModalText>
           ) : (
             <ReactDice
               faceColor="#ffffff"

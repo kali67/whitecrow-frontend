@@ -112,7 +112,7 @@ const CardDecisionControls = props => {
           props.declineCard();
         }}
       >
-        Decline
+        <Translate id="decline-btn" />
       </Button>
       <Button
         isLoading={props.loadingAdd}
@@ -126,7 +126,7 @@ const CardDecisionControls = props => {
           justifyContent: "center"
         }}
       >
-        Accept
+        <Translate id="accept-btn" />
       </Button>
     </ButtonWrapper>
   );
@@ -139,15 +139,13 @@ const NotifyFinishedRead = props => {
       style={{
         marginBottom: "50px",
         background: "#36B37E",
-        // minWidth: "61%",
-        // maxWidth: "350px",
         width: "100%",
         height: "50px",
         justifyContent: "center"
       }}
       appearance="primary"
     >
-      Finished Reading!
+      <Translate id="finished-reading" />
     </Button>
   );
 };
@@ -168,7 +166,11 @@ const CardDecisionOutcome = props => {
   }
   return (
     <h1 style={{ color: decisionTextColor, textAlign: "center" }}>
-      {props.decision}
+      {props.decision === "ACCEPTED" ? (
+        <Translate id="accepted-decision" />
+      ) : (
+        <Translate id="declined-decision" />
+      )}
     </h1>
   );
 };

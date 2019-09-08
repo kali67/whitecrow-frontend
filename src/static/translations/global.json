@@ -52,5 +52,26 @@
   "card-cancelled": [
     "Your recent investment has prevented you from having to pay for this mail card!",
     "¡Su inversión reciente le ha impedido pagar esta tarjeta de correo!"
-  ]
+  ],
+  "decline-btn": ["Decline", "Disminución"],
+  "accept-btn": ["Accept", "Aceptar"],
+  "declined-decision": ["DECLINED", "RECHAZADO"],
+  "accepted-decision": ["ACCEPTED", "ACEPTADO"],
+  "finished-reading": ["Finished Reading!", "¡Lectura terminada!"],
+  "user-go-back": ["Uh, Oh! You have been set back!", "¡Uh, oh! ¡Te has retrasado!"],
+  "go-back": ["GO BACK 1 DAY", "VOLVER 1 DIA"],
+  "sign-up": ["Sign up to WhiteCrow", "Regístrese en Cuervo blanco"],
+  "username-hint": ["You can use letters, numbers & periods.", "Puedes usar letras, números y puntos."],
+  "username-error": ["This user name is already in use, try another one.", "Este nombre de usuario ya está en uso, intente con otro."],
+  "password-hint": ["Use 8 or more characters with a mix of letters, numbers & symbols.", "Use 8 o más caracteres con una combinación de letras, números y símbolos."],
+  "password-error": ["Password needs to be more than 8 characters.", "La contraseña debe tener más de 8 caracteres."],
+  "password-valid": ["Awesome password!", "Impresionante contraseña!"],
+  "already-have-account": ["Already have an account?", "¿Ya tienes una cuenta?"],
+  "login": ["Login", "Iniciar sesión"],
+  "sign-up-btn": ["Sign Up", "Regístrate"],
+  "dont-have-account": ["Don't have an account?", "¿No tienes una cuenta?"],
+  "sign-in-title": ["Sign in to WhiteCrow", "Inicie sesión en Cuervo blanco"],
+  "username-label" : ["Username", "Nombre de usuario"],
+  "password-label": ["Password", "Contraseña"],
+  "welcome": ["Welcome to WhiteCrow!", "¡Bienvenido a Cuervo blanco!"]
 }

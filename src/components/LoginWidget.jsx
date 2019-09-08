@@ -10,6 +10,7 @@ import Form, {
   ValidMessage
 } from "@atlaskit/form";
 import axios from "axios";
+import {Translate} from "react-localize-redux";
 
 export const LoginSignUpView = ({
   isShowingLogin,
@@ -49,7 +50,7 @@ const LoginForm = ({ showSignUp, authenticate }) => {
           height: "50%"
         }}
       >
-        <h1>SIGN IN TO WHITECROW</h1>
+        <h1><Translate id={"sign-in-title"} /></h1>
         <div
           style={{
             display: "flex",
@@ -68,7 +69,7 @@ const LoginForm = ({ showSignUp, authenticate }) => {
               <form {...formProps}>
                 <Field
                   name="username"
-                  label="User name"
+                  label={<Translate id={"username-label"} />}
                   isRequired
                   defaultValue=""
                 >
@@ -78,7 +79,7 @@ const LoginForm = ({ showSignUp, authenticate }) => {
                 </Field>
                 <Field
                   name="password"
-                  label="Password"
+                  label={<Translate id={"password-label"} />}
                   isRequired
                   defaultValue=""
                 >
@@ -97,7 +98,7 @@ const LoginForm = ({ showSignUp, authenticate }) => {
                       appearance="primary"
                       isLoading={submitting}
                     >
-                      Login
+                        <Translate id={"login"} />
                     </Button>
                   </ButtonGroup>
                 </FormFooter>
@@ -106,9 +107,9 @@ const LoginForm = ({ showSignUp, authenticate }) => {
           </Form>
         </div>
       </div>
-      <p>Don't have an account?</p>
+      <p><Translate id={"dont-have-account"} /></p>
       <Button type="submit" appearance="link" onClick={e => showSignUp()}>
-        Sign up
+          <Translate id={"sign-up-btn"}/>
       </Button>
     </React.Fragment>
   );
@@ -126,7 +127,7 @@ const SignUpForm = ({ showLogin, authenticate }) => {
           height: "50%"
         }}
       >
-        <h1>SIGN UP TO WHITECROW</h1>
+        <h1><Translate id={"sign-up"} /></h1>
         <div
           style={{
             display: "flex",
@@ -155,7 +156,7 @@ const SignUpForm = ({ showLogin, authenticate }) => {
               <form {...formProps}>
                 <Field
                   name="username"
-                  label="User name"
+                  label={<Translate id={"username-label"} />}
                   isRequired
                   defaultValue=""
                 >
@@ -164,12 +165,12 @@ const SignUpForm = ({ showLogin, authenticate }) => {
                       <TextField autoComplete="off" {...fieldProps} />
                       {!error && (
                         <HelperMessage>
-                          You can use letters, numbers & periods.
+                          <Translate id={"username-hint"} />
                         </HelperMessage>
                       )}
                       {error && (
                         <ErrorMessage>
-                          This user name is already in use, try another one.
+                            <Translate id={"username-error"} />
                         </ErrorMessage>
                       )}
                     </Fragment>
@@ -177,7 +178,7 @@ const SignUpForm = ({ showLogin, authenticate }) => {
                 </Field>
                 <Field
                   name="password"
-                  label="Password"
+                  label={<Translate id={"password-label"} />}
                   isRequired
                   defaultValue=""
                   validate={value =>
@@ -189,16 +190,15 @@ const SignUpForm = ({ showLogin, authenticate }) => {
                       <TextField type="password" {...fieldProps} />
                       {!error && !valid && (
                         <HelperMessage>
-                          Use 8 or more characters with a mix of letters,
-                          numbers & symbols.
+                          <Translate id={"password-hint"} />
                         </HelperMessage>
                       )}
                       {error && (
                         <ErrorMessage>
-                          Password needs to be more than 8 characters.
+                            <Translate id={"password-error"} />
                         </ErrorMessage>
                       )}
-                      {valid && <ValidMessage>Awesome password!</ValidMessage>}
+                      {valid && <ValidMessage><Translate id={"password-valid"} /></ValidMessage>}
                     </Fragment>
                   )}
                 </Field>
@@ -209,7 +209,7 @@ const SignUpForm = ({ showLogin, authenticate }) => {
                       appearance="primary"
                       isLoading={submitting}
                     >
-                      Sign Up
+                      <Translate id={"sign-up-btn"}/>
                     </Button>
                   </ButtonGroup>
                 </FormFooter>
@@ -218,9 +218,9 @@ const SignUpForm = ({ showLogin, authenticate }) => {
           </Form>
         </div>
       </div>
-      <p>Already have an account?</p>
+      <p><Translate id={"already-have-account"} /></p>
       <Button type="submit" appearance="link" onClick={e => showLogin()}>
-        Login
+        <Translate id={"login"} />
       </Button>
     </React.Fragment>
   );

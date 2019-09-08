@@ -7,6 +7,7 @@ import { LoginSignUpView } from "../components/LoginWidget";
 import whitecrow from "../static/image/whitecrowwhite.png";
 import { showLogin, showSignUp, login } from "../actions/loginActions";
 import { authenticate, denyAccess } from "../actions/authActions";
+import {Translate} from "react-localize-redux";
 
 const LoginWrapper = styled.div`
   display: flex;
@@ -93,7 +94,7 @@ class LoginPage extends React.Component {
     return (
       <LoginWrapper>
         <SplashArea>
-          <h1 style={{ color: "#ffffff" }}>Welcome to WhiteCrow!</h1>
+          <h1 style={{ color: "#ffffff" }}><Translate id={"welcome"} /></h1>
           <Whitecrow image={whitecrow} />
         </SplashArea>
         <LoginWidgetWrapper>

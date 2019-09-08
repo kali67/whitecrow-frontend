@@ -109,7 +109,7 @@ class UserPlayerTurn extends React.Component {
       if (this.props.userTurnResult["hasTriggeredSetBack"]) {
         this.props.flagSetBackRotation(true);
         this.props.showFullScreenNotification(
-          "Uh, Oh! You have been set back!"
+         <Translate id={"user-go-back"} />
         );
         setTimeout(() => {
           this.props.dismissTurnNotification();
