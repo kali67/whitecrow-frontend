@@ -6,9 +6,7 @@ const ModalText = styled.h1`
   font-size: 80px;
   color: #fff;
   text-align: center;
-  -webkit-animation: glow 1s ease-in-out infinite alternate;
-  -moz-animation: glow 1s ease-in-out infinite alternate;
-  animation: glow 1s ease-in-out infinite alternate;
+  font-weight: 900;
 `;
 
 const ModalBody = styled.div`

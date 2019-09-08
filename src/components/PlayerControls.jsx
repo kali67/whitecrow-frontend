@@ -44,18 +44,6 @@ const PlayerInfoContainer = styled.div`
 `;
 
 export default class PlayerControls extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      rolledDisabled: !this.props.isSinglePlayersTurn
-    };
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.isSinglePlayersTurn !== this.props.isSinglePlayersTurn) {
-      this.setState({ rolledDisabled: prevProps.isSinglePlayersTurn });
-    }
-  }
 
   calculatePlayerDayFromTurn = () => {
     if (!this.props.usersPlayerUpdated || !this.props.showEndTurnUpdate) {
@@ -70,7 +58,7 @@ export default class PlayerControls extends React.Component {
     return (
       <PlayerControlContainer>
         <PlayerOrderWrapper>
-          <b style={{ marginBottom: "15%", textDecoration: "underline" }}>
+          <b style={{ marginBottom: "8%", textDecoration: "underline", textAlign:"center" }}>
             <Translate id="play-order" />
           </b>
           <PlayerTurnTracker
@@ -84,7 +72,7 @@ export default class PlayerControls extends React.Component {
           money={this.props.userPlayer["money"]}
           day={this.props.userPlayer["day"]}
           rollDie={this.props.rollDie}
-          rolledDisabled={this.state.rolledDisabled}
+          rolledDisabled={!this.props.isSinglePlayersTurn}
           isLoadingRoll={this.props.isLoadingRoll}
           showHelpModal={this.props.showHelpModal}
         />
@@ -235,8 +223,10 @@ export class CardHolder extends React.Component {
     };
   }
   shouldComponentUpdate(nextProps, nextState) {
-    return nextProps.mail.length !== this.props.mail.length ||
-        nextProps.opportunity.length !== this.props.opportunity.length;
+    return (
+      nextProps.mail.length !== this.props.mail.length ||
+      nextProps.opportunity.length !== this.props.opportunity.length
+    );
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {}

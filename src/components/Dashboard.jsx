@@ -40,17 +40,10 @@ const DrawerContainer = styled.div`
 `;
 
 class Dashboard extends React.Component {
-  constructor(props) {
-    super(props);
-  }
 
   componentDidMount() {
     this.setState({ userPlayer: this.props.userPlayer });
   }
-
-  rollDie = () => {
-    this.props.rollDie();
-  };
 
   render() {
     return (
@@ -69,7 +62,7 @@ class Dashboard extends React.Component {
               players={this.props.players}
               userPlayer={this.props.userPlayer}
               isLoadingRoll={this.props.isLoadingQueryPlayerTurns}
-              rollDie={this.rollDie}
+              rollDie={() => this.props.rollDie()}
               closeDrawer={() => this.props.closeDashboard()}
               helpModalIsOpen={this.props.helpModalIsOpen}
               showHelpModal={() => this.props.showHelpModal()}
