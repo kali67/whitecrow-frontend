@@ -19,3 +19,7 @@ pipelines:
           - docker inspect registry.heroku.com/$APP_NAME/web --format={{.Id}} > WEB_DOCKER_IMAGE_ID
           - export WEB_DOCKER_IMAGE_ID=$(cat WEB_DOCKER_IMAGE_ID)
           - bash ./deploy.sh
+definitions:
+  services:
+    docker:
+      memory: 2048
