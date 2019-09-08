@@ -36,6 +36,7 @@ class EndGameController extends React.Component {
   componentWillUnmount() {
     this.props.resetLoadingStates();
     this.props.resetUserLoadingState();
+    document.getElementById("root").style = "background: #ffffff;";
   }
 
   fetchEndGameDetails = () => {
