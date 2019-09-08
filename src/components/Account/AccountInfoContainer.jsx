@@ -37,7 +37,7 @@ class AccountInfoContainer extends React.Component {
   }
 
   saveLanguage = languageCode => {
-    axios
+    return axios
       .put(
         "/user",
         {

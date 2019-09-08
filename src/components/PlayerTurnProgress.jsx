@@ -55,8 +55,7 @@ export default class PlayerTurnProgress extends React.Component {
   };
 
   updateComponentState = () => {
-    if (this.props.finalPlayerState) {
-      // we have found a turn result from server for this player
+    if (this.props.finalPlayerState) { // we have found a turn result from server for this player
       if (this.hasPlayerFinishedBeforeTurn()) {
         this.props.finishPlayerTurn();
       } else {

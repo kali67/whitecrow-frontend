@@ -19,7 +19,7 @@ const AccountLanguageForm = ({ currentLanguage, saveLanguage, languages }) => {
       <FormWrapper>
         <Form
           onSubmit={data => {
-            saveLanguage(data.language.value);
+            return saveLanguage(data.language.value);
           }}>
           {({ formProps, submitting }) => (
             <form {...formProps}>
