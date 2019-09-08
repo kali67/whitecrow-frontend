@@ -1,5 +1,8 @@
 import React from "react";
 import styled from "styled-components";
+import sanitizeHtml from 'sanitize-html';
+
+
 
 const CardWrapper = styled.div`
   z-index: 1;
@@ -38,10 +41,12 @@ const ContentWrapper = styled.div`
 const Title = styled.h4`
   color: black;
   padding-top: 10px;
+  font-size: 20px;
 `;
 
 const Action = styled.p`
-  font-size: 0.75em;
+  font-size: 0.95em;
+  font-weight: 700;
 `;
 
 const SubTitle = styled.h6`
@@ -57,7 +62,7 @@ const Divider = styled.div`
 
 const CardParagraph = styled.p`
   padding-top: 10px;
-  font-size: 0.8em;
+  font-size: 0.9em;
   margin-right: 10px;
 `;
 
@@ -81,6 +86,13 @@ const ColumnFontSmall = {
   fontSize: "10px"
 };
 
+const boldOpportunityCategories = (paragraph) => {
+    let dirty = paragraph.replace(/"([^"]+)"/g, `<b>$1</b>`);
+    return sanitizeHtml(dirty, {
+        allowedTags: ['b']
+    });
+};
+
 const Card = props => {
   return (
     <CardWrapper>
@@ -93,7 +105,7 @@ const Card = props => {
         <SubTitle style={props.small ? SubTitleFontSmall : null}>{props.card["subTitle"]}</SubTitle>
         <Divider />
         <CardParagraph style={props.small ? DescriptionFontSmall : null}>
-          {props.card["description"]}
+            <div dangerouslySetInnerHTML={{__html: boldOpportunityCategories(props.card["description"])}}/>
         </CardParagraph>
       </ContentWrapper>
     </CardWrapper>
