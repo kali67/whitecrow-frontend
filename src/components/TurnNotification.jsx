@@ -2,14 +2,14 @@ import React from "react";
 import Modal from "react-modal";
 import styled from "styled-components";
 
-const ModalText = styled.h1`
+export const ModalText = styled.h1`
   font-size: 80px;
   color: #fff;
   text-align: center;
   font-weight: 900;
 `;
 
-const ModalBody = styled.div`
+export const ModalBody = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;

@@ -1,9 +1,10 @@
 import React from "react";
 import Modal from "react-modal";
-import styled from "styled-components";
 import ReactDice from "react-dice-complete";
 import "react-dice-complete/dist/react-dice-complete.css";
 import {Translate} from "react-localize-redux";
+
+import {ModalText, ModalBody} from "./TurnNotification";
 
 Modal.setAppElement("#root");
 
@@ -29,21 +30,6 @@ const customStyles = {
     backgroundColor: "rgba(0,0,0,0.9)"
   }
 };
-
-const ModalText = styled.h1`
-  font-size: 80px;
-  color: #fff;
-  text-align: center;
-  -webkit-animation: glow 1s ease-in-out infinite alternate;
-  -moz-animation: glow 1s ease-in-out infinite alternate;
-  animation: glow 1s ease-in-out infinite alternate;
-`;
-
-const ModalBody = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
 
 export default class DieAnimation extends React.Component {
   constructor(props) {
