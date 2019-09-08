@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Tile, { IndicatedTileWrapper } from "./Tile";
+import { connect } from "react-redux";
 
 const Counter = styled.div`
   align-items: center;
@@ -26,7 +27,7 @@ const CounterContainer = styled.div`
   justify-content: center;
 `;
 
-export default class PlayerPositionTile extends React.Component {
+class PlayerPositionTile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -39,9 +40,26 @@ export default class PlayerPositionTile extends React.Component {
     this.setState({ showingDetails: !this.state.showingDetails });
   };
 
+  createNameTags = (players) => {
+    return players.map((player) => {
+      let fullUsername = player["username"];
+      let endRange = 4;
+      if (fullUsername.length < endRange){
+        endRange = fullUsername.length - 1
+      }
+      return [fullUsername.slice(0, endRange).toUpperCase(), player.id]
+    });
+
+
+  };
+
   playerCounters = () => {
-    return this.props.players.map((element, i) => {
-      return <Counter key={i}>{element.id}</Counter>;
+    return this.createNameTags(this.props.players).map((element, i) => {
+      let idName = element[0];
+        if (this.props.userPlayerId === element[1]){
+          idName = <p style={{color: "purple", fontWeight: "900", fontSize: "1.2em"}}>YOU</p>
+        }
+      return <Counter key={i}>{idName}</Counter>;
     });
   };
 
@@ -66,3 +84,9 @@ export default class PlayerPositionTile extends React.Component {
     }
   }
 }
+
+const mapStateToProps = state => ({
+  userPlayerId: state.user.player["id"]
+});
+
+export default connect(mapStateToProps)(PlayerPositionTile)
