@@ -14,7 +14,6 @@ const PlayerOrderWrapper = styled.div`
   min-width: 10%;
   padding-right: 2%;
   flex-direction: column;
-  text-align: center;
 `;
 
 const LargeIcon = styled.div`

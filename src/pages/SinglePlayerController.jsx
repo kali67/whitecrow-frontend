@@ -20,7 +20,6 @@ import { fetchUserPlayer, resetUserLoadingState } from "../actions/userActions";
 import { connect } from "react-redux";
 
 class SinglePlayerController extends React.Component {
-
   componentDidMount() {
     document.getElementById("root").style = "background: #1c2321;";
     this.props.fetchGameDetails(this.props.match.params.id);
@@ -31,6 +30,10 @@ class SinglePlayerController extends React.Component {
     if (prevProps.gameId !== this.props.gameId) {
       this.props.startGame(this.props.gameId);
     }
+  }
+
+  componentWillUnmount() {
+    document.getElementById("root").style = "background: #ffffff;";
   }
 
   updatePlayersPosition = updatedPosition => {
@@ -102,11 +105,14 @@ class SinglePlayerController extends React.Component {
   };
 
   render() {
-    if (this.props.loadingGameDetails || this.props.loadingUserDetails || this.props.loadingStartGame) {
+    if (
+      this.props.loadingGameDetails ||
+      this.props.loadingUserDetails ||
+      this.props.loadingStartGame
+    ) {
       return <SpinnerFullCircle />;
-    }
-    else if (this.hasGameEnded()) {
-      this.redirectToEndGameScreen()
+    } else if (this.hasGameEnded()) {
+      this.redirectToEndGameScreen();
     }
     return (
       <div style={{ display: "flex" }}>
