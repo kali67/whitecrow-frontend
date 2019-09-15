@@ -53,7 +53,7 @@
     "Your recent investment has prevented you from having to pay for this mail card!",
     "¡Su inversión reciente le ha impedido pagar esta tarjeta de correo!"
   ],
-  "decline-btn": ["Decline", "Disminución"],
+  "decline-btn": ["Decline", "Rechazar"],
   "accept-btn": ["Accept", "Aceptar"],
   "declined-decision": ["DECLINED", "RECHAZADO"],
   "accepted-decision": ["ACCEPTED", "ACEPTADO"],

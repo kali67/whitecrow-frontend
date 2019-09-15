@@ -74,7 +74,7 @@ class EndGameController extends React.Component {
         <GameBoard players={this.props.players} />
         <EndGameView
           gameData={this.state.gameData}
-          userPlayerId={this.props.userPlayerId}
+          userPlayerId={this.props.userPlayer["id"]}
           goHome={this.goHome}
         />
       </React.Fragment>
