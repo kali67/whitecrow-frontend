@@ -7,6 +7,7 @@ import sanitizeHtml from 'sanitize-html';
 const CardWrapper = styled.div`
   z-index: 1;
   max-height:  ${props => props.height};
+  max-width: 300px;
   height: 100%;
   width: 100%;
   background-color: #f4f4f4;
@@ -96,7 +97,7 @@ const boldOpportunityCategories = (paragraph) => {
 
 const Card = props => {
   return (
-    <CardWrapper height={props.small? "400px" : "600px"}>
+    <CardWrapper height={props.small? "300px" : "600px"}>
       <CategoryColumn color={props.card["color"]} style={props.small ? ColumnFontSmall : null}>
         {props.card["categoryDescription"]}
       </CategoryColumn>
