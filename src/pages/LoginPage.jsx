@@ -7,7 +7,8 @@ import { LoginSignUpView } from "../components/LoginWidget";
 import whitecrow from "../static/image/whitecrowwhite.png";
 import { showLogin, showSignUp, login } from "../actions/loginActions";
 import { authenticate, denyAccess } from "../actions/authActions";
-import {Translate} from "react-localize-redux";
+import { Translate } from "react-localize-redux";
+import ConsentModal from "../components/ConsentModal";
 
 const LoginWrapper = styled.div`
   display: flex;
@@ -43,6 +44,12 @@ const Whitecrow = styled.div`
 `;
 
 class LoginPage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      modalIsOpen: false
+    };
+  }
   componentDidMount() {
     localStorage.removeItem("jwt");
   }
@@ -72,9 +79,9 @@ class LoginPage extends React.Component {
           });
       })
       .catch(error => {
-        if (error.response.status === 401) {
-          denyAccess();
-        }
+        // if (error.response.status === 401) {
+        //   denyAccess();
+        // }
       });
   };
 
@@ -90,11 +97,21 @@ class LoginPage extends React.Component {
     this.props.login(username, password);
   };
 
+  showConsent = () => {
+    this.setState({ modalIsOpen: true });
+  };
+
+  closeConsent = () => {
+    this.setState({ modalIsOpen: false });
+  };
+
   render() {
     return (
       <LoginWrapper>
         <SplashArea>
-          <h1 style={{ color: "#ffffff" }}><Translate id={"welcome"} /></h1>
+          <h1 style={{ color: "#ffffff" }}>
+            <Translate id={"welcome"} />
+          </h1>
           <Whitecrow image={whitecrow} />
         </SplashArea>
         <LoginWidgetWrapper>
@@ -104,8 +121,10 @@ class LoginPage extends React.Component {
             showSignUp={this.showSignUp}
             login={this.login}
             authenticate={this.authenticate}
+            showConsent={this.showConsent}
           />
         </LoginWidgetWrapper>
+        <ConsentModal isOpen={this.state.modalIsOpen} closeConsent={this.closeConsent}/>
       </LoginWrapper>
     );
   }

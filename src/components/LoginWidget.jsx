@@ -2,7 +2,9 @@ import React, { Fragment } from "react";
 
 import TextField from "@atlaskit/textfield";
 import Button, { ButtonGroup } from "@atlaskit/button";
+import { Checkbox } from "@atlaskit/checkbox";
 import Form, {
+  CheckboxField,
   Field,
   FormFooter,
   HelperMessage,
@@ -10,14 +12,24 @@ import Form, {
   ValidMessage
 } from "@atlaskit/form";
 import axios from "axios";
-import {Translate} from "react-localize-redux";
+import { Translate } from "react-localize-redux";
+import styled from "styled-components";
+
+const Link = styled.p`
+  color: #0052cc;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+`;
 
 export const LoginSignUpView = ({
   isShowingLogin,
   showLogin,
   showSignUp,
   login,
-  authenticate
+  authenticate,
+  showConsent
 }) => {
   return (
     <React.Fragment>
@@ -32,6 +44,7 @@ export const LoginSignUpView = ({
           authenticate={authenticate}
           showLogin={showLogin}
           login={login}
+          showConsent={showConsent}
         />
       )}
     </React.Fragment>
@@ -50,7 +63,9 @@ const LoginForm = ({ showSignUp, authenticate }) => {
           height: "50%"
         }}
       >
-        <h1><Translate id={"sign-in-title"} /></h1>
+        <h1>
+          <Translate id={"sign-in-title"} />
+        </h1>
         <div
           style={{
             display: "flex",
@@ -98,7 +113,7 @@ const LoginForm = ({ showSignUp, authenticate }) => {
                       appearance="primary"
                       isLoading={submitting}
                     >
-                        <Translate id={"login"} />
+                      <Translate id={"login"} />
                     </Button>
                   </ButtonGroup>
                 </FormFooter>
@@ -107,15 +122,17 @@ const LoginForm = ({ showSignUp, authenticate }) => {
           </Form>
         </div>
       </div>
-      <p><Translate id={"dont-have-account"} /></p>
+      <p>
+        <Translate id={"dont-have-account"} />
+      </p>
       <Button type="submit" appearance="link" onClick={e => showSignUp()}>
-          <Translate id={"sign-up-btn"}/>
+        <Translate id={"sign-up-btn"} />
       </Button>
     </React.Fragment>
   );
 };
 
-const SignUpForm = ({ showLogin, authenticate }) => {
+const SignUpForm = ({ showLogin, authenticate, showConsent }) => {
   return (
     <React.Fragment>
       <div
@@ -124,10 +141,29 @@ const SignUpForm = ({ showLogin, authenticate }) => {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "space-evenly",
-          height: "50%"
+          height: "60%"
         }}
       >
-        <h1><Translate id={"sign-up"} /></h1>
+        <h1>
+          <Translate id={"sign-up"} />
+        </h1>
+        <br />
+        <br />
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center"
+          }}
+        >
+          <h6 style={{ display: "flex", color: "red" }}>
+            <Translate id={"prompt-consent"} />
+          </h6>
+          <Link onClick={() => showConsent()}>
+            <Translate id={"link-info-consent"} />
+          </Link>
+        </div>
         <div
           style={{
             display: "flex",
@@ -170,7 +206,7 @@ const SignUpForm = ({ showLogin, authenticate }) => {
                       )}
                       {error && (
                         <ErrorMessage>
-                            <Translate id={"username-error"} />
+                          <Translate id={"username-error"} />
                         </ErrorMessage>
                       )}
                     </Fragment>
@@ -195,13 +231,29 @@ const SignUpForm = ({ showLogin, authenticate }) => {
                       )}
                       {error && (
                         <ErrorMessage>
-                            <Translate id={"password-error"} />
+                          <Translate id={"password-error"} />
                         </ErrorMessage>
                       )}
-                      {valid && <ValidMessage><Translate id={"password-valid"} /></ValidMessage>}
+                      {valid && (
+                        <ValidMessage>
+                          <Translate id={"password-valid"} />
+                        </ValidMessage>
+                      )}
                     </Fragment>
                   )}
                 </Field>
+                <CheckboxField
+                  name="information-consent"
+                  label={<Translate id="info-consent" />}
+                >
+                  {({ fieldProps }) => (
+                    <Checkbox
+                      {...fieldProps}
+                      isRequired
+                      label={<Translate id={"consent"} />}
+                    />
+                  )}
+                </CheckboxField>
                 <FormFooter>
                   <ButtonGroup>
                     <Button
@@ -209,7 +261,7 @@ const SignUpForm = ({ showLogin, authenticate }) => {
                       appearance="primary"
                       isLoading={submitting}
                     >
-                      <Translate id={"sign-up-btn"}/>
+                      <Translate id={"sign-up-btn"} />
                     </Button>
                   </ButtonGroup>
                 </FormFooter>
@@ -218,7 +270,9 @@ const SignUpForm = ({ showLogin, authenticate }) => {
           </Form>
         </div>
       </div>
-      <p><Translate id={"already-have-account"} /></p>
+      <p>
+        <Translate id={"already-have-account"} />
+      </p>
       <Button type="submit" appearance="link" onClick={e => showLogin()}>
         <Translate id={"login"} />
       </Button>
