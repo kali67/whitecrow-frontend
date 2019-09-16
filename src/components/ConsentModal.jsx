@@ -112,9 +112,10 @@ const ConsentModal = props => (
           <li>
             <Translate id={"clause-8"} />
           </li>
+          <li>
+            <Translate id={"footer-clause"} />
+          </li>
         </ul>
-        <br />
-        <Translate id={"footer-clause"} />
         <br />
       </ModalContent>
     </ModalBody>
