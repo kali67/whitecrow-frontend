@@ -110,6 +110,7 @@ const PreTest = props => {
             href={
               "https://canterbury.qualtrics.com/jfe/form/SV_e3Y2QzGnmNxR7CZ"
             }
+            target="_blank"
             onContextMenu={() => props.completePreTest()}
             onClick={() => props.completePreTest()}
           >
@@ -141,6 +142,7 @@ const CompletedPreTest = props => {
         <li>
           <span style={props.finishedAtLeastOneGame ? null : DisabledLinkStyle}>
             <a
+              target="_blank"
               href={
                 "https://canterbury.qualtrics.com/jfe/form/SV_e3Y2QzGnmNxR7CZ"
               }
@@ -152,6 +154,7 @@ const CompletedPreTest = props => {
         <li>
           <span style={props.finishedAtLeastOneGame ? null : DisabledLinkStyle}>
             <a
+              target="_blank"
               href={
                 "https://canterbury.qualtrics.com/jfe/form/SV_e3Y2QzGnmNxR7CZ"
               }
