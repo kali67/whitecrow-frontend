@@ -107,35 +107,35 @@
   ],
   "clause-1": [
     "I have been given a full explanation of this project and have had the opportunity to ask questions.",
-    "Me dieron una explicación completa de este proyecto y tuve la oportunidad de hacer preguntas."
+    "Se me ha informado adecuadamente acerca de este proyecto y se me dio la oportunidad de hacer preguntas para aclarar mis dudas."
   ],
   "clause-2": [
     "I understand what is required of me if I agree to take part in the research.",
-    "Entiendo lo que se requiere de mí si acepto participar en la investigación."
+    "Entiendo qué se requiere de mí en caso de que decida participar en el estudio."
   ],
   "clause-3": [
     "I understand that participation is voluntary, and I may withdraw at any time without penalty. Withdrawal of participation will also include the withdrawal of any information I have provided should this remain practically achievable.",
-    "Entiendo que la participación es voluntaria, y puedo retirarme en cualquier momento sin penalización. El retiro de la participación también incluirá el retiro de cualquier información que haya proporcionado en caso de que esto sea prácticamente posible."
+    "Entiendo que mi participación es voluntaria y que puedo abandonar el estudio en cualquier momento sin ser penalizado. Si decido renunciar a participar, mi información puede ser removida del estudio siempre y cuando el proceso de análisis de datos no haya comenzado."
   ],
   "clause-4": [
     "I understand that any information or opinions I provide will be kept confidential to the researcher Gabriel Alberto Garcia Mireles, Polina Maslova and Miguel Morales and that any published or reported results will not identify the participants.",
-    "Entiendo que cualquier información u opinión que proporcione se mantendrá confidencial para el investigador Gabriel Alberto García Mireles, Polina Maslova y Miguel Morales y que cualquier resultado publicado o informado no identificará a los participantes."
+    "Entiendo que la información y opiniones que provea serán tratadas de manera confidencial por los investigadores y que los resultados que pudieran publicarse del estudio serán reportados de manera que no sea posible identificar a los participantes ni a la institución a la que pertenecen."
   ],
   "clause-5": [
     "I understand that a thesis is a public document and will be available through the UC Library.",
-    "Entiendo que una tesis es un documento público y estará disponible a través de la Biblioteca de la UC."
+    "Entiendo que los datos recolectados para el estudio serán almacenados en un lugar seguro y protegido mediante contraseña, y que serán destruidos al término de un año."
   ],
   "clause-6": [
     "I understand that all data collected for the study will be kept in locked and secure facilities and/or in password protected electronic form and will be destroyed after 1 year.",
-    "Entiendo que todos los datos recopilados para el estudio se guardarán en instalaciones cerradas y seguras y / o en forma electrónica protegida por contraseña y se destruirán después de 1 año."
+    "Entiendo los riesgos asociados a mi participación y cómo estos serán manejados."
   ],
   "clause-7": [
     "I understand the risks associated with taking part and how they will be managed.",
-    "Entiendo los riesgos asociados con la participación y cómo se gestionarán."
+    "Al crear una cuenta en el sistema estoy accediendo a participar en este estudio."
   ],
   "clause-8": [
     "I understand that I can contact the researcher Hayden Taylor via hta55@uclive.ac.nz or supervisor Miguel Morales via miguel.morales@canterbury.ac.nz for further information.",
-    "Entiendo que puedo contactar al investigador Hayden Taylor a través de hta55@uclive.ac.nz o al supervisor Miguel Morales a través de miguel.morales@canterbury.ac.nz para obtener más información. Si tengo alguna queja, puedo contactar al Presidente del Comité de Ética Humana de la Universidad de Canterbury, Private Bag 4800, Christchurch (human-ethics@canterbury.ac.nz)"
+    "Entiendo que puedo contactar a Hayden Taylor (hta55@uclive.ac.nz) o Miguel Morales (miguel.morales@canterbury.ac.nz) en caso de que requiera más información sobre el estudio. En caso de que tenga alguna queja, puedo contactar al representante del Comité de Ética en Investigación en Educación de la Universidad de Canterbury, Private Bag 4800, Christchurch (human-ethics@canterbury.ac.nz)"
   ],
   "footer-clause": [
     "If I have any complaints, I can contact the Chair of the University of Canterbury Human Ethics Committee, Private Bag 4800, Christchurch (human-ethics@canterbury.ac.nz)",
@@ -143,27 +143,54 @@
   ],
   "information-para-1": [
     "This is a research project with the aim of accessing the effect of serious games on learning. In this case, WhiteCrow PM is an online board game that simulates a month of economic life of a software project involving players being thrown obstacles that are associated with the potential risks a in software project. Based on this, players are exposed to a wide range of risks and potential mitigation techniques for them. The research is intended to investigate the effect of this game on participants knowledge about the risks associated with software projects and potential solutions for them.",
-    "Este es un proyecto de investigación con el objetivo de acceder al efecto de los juegos serios en el aprendizaje. En este caso, Cuervo blanco es un juego de mesa en línea que simula un mes de vida económica de un proyecto de software que involucra a jugadores que se enfrentan a obstáculos asociados con los riesgos potenciales de un proyecto de software. En base a esto, los jugadores están expuestos a una amplia gama de riesgos y posibles técnicas de mitigación para ellos. El objetivo de la investigación es investigar el efecto de este juego en el conocimiento de los participantes sobre los riesgos asociados con los proyectos de software y las posibles soluciones para ellos."
+    "Hola! Mi nombre es Hayden Taylor y soy estudiante de la Universidad de Canterbury en Nueva Zelanda. Como parte de mi investigación, estoy analizando el efecto que tiene el uso de juegos serios en el proceso de enseñanza y aprendizaje de los alumnos. En este estudio en particular, estoy evaluando Cuervo Blanco, que es un juego de mesa en línea que simula un mes de vida económica de un proyecto de software. En Cuervo Blanco, los jugadores se enfrentan a obstáculos asociados a la ocurrencia de riesgos durante un proyecto de desarrollo de software. La meta en el juego es manejar adecuadamente las situaciones que se te presentan y evitar que tu proyecto fracase."
   ],
   "information-para-2": [
     "If you choose to take part in this study, your involvement in this project will be taking a pre-test to access the level of knowledge around the risks associated with software projects, play multiple rounds of the game WhiteCrow, take a post-test and full in a survey. We anticipate that the pre/post-test will take a combined 30 minutes to complete, while approximately 50 minutes is required for playing the game and 15 minutes for the survey.",
-    "Si elige participar en este estudio, su participación en este proyecto será realizar una prueba previa para acceder al nivel de conocimiento sobre los riesgos asociados con los proyectos de software, jugar múltiples rondas del juego WhiteCrow, tomar una prueba posterior y completo en una encuesta. Anticipamos que la prueba previa / posterior tomará 30 minutos combinados para completarse, mientras que se requieren aproximadamente 50 minutos para jugar el juego y 15 minutos para la encuesta."
+    "El objetivo de esta investigación es entender el impacto que este juego tiene sobre el aprendizaje de los jugadores respecto al tema de Administración de Riesgos. A través de tu profesor te estamos invitando a formar parte del estudio ya que te encuentras inscrito en un curso de Ingeniería de Software."
   ],
   "information-para-3": [
-    "Participation is voluntary and you have the right to withdraw at any stage without penalty. No notification of withdrawal will need to be given to us, as you can simply discontinue with your tasks. However, once you have finished all tasks, your data will not be able to be removed from the data set as we would not be able to identify which data points belong to you.",
-    "La participación es voluntaria y tiene derecho a retirarse en cualquier etapa sin penalización. No será necesario que nos envíe ninguna notificación de retiro, ya que simplemente puede interrumpir sus tareas. Sin embargo, una vez que haya terminado todas las tareas, sus datos no podrán eliminarse del conjunto de datos, ya que no podremos identificar qué puntos de datos le pertenecen."
+    "If you decide to participate in the study, we will ask you to take part in the following tasks",
+    "Si decides participar en el estudio, te pediremos tomar parte en las siguientes tareas"
+  ],
+  "information-para-3-1": [
+    "Solve an entry diagnostic test. This exam consists of 5 questions regarding the topic of Risk Management. The effort required to complete it is 30 minutes.",
+    "Resolver un examen diagnóstico de entrada. Este examen consiste de 5 preguntas referentes al tema de Administración de Riesgos. El esfuerzo requerido para completarlo es de 30 minutos."
+  ],
+  "information-para-3-2": [
+    "Play as many times as you want White Crow. During the next few days you can play as many times as you want and whenever you want White Crow. Each game takes about 50 minutes.",
+    "Jugar cuantas veces quieras Cuervo Blanco. Durante los próximos días podrás jugar cuantas veces quieras y cuando quieras Cuervo Blanco. Cada partida toma alrededor de 50 minutos."
+  ],
+  "information-para-3-3": [
+    "Solve a diagnostic exit test. We will ask you to solve an exam similar to the diagnosis of entry. Similarly, the estimated effort to complete it is approximately 30 minutes.",
+    "Resolver un examen diagnóstico de salida. Te pediremos resolver un examen similar al diagnóstico de entrada. De igual manera, el esfuerzo estimado para completarlo es de aproximadamente 30 minutos."
+  ],
+  "information-para-3-4": [
+    "Answer a survey. As a last task, we will ask you to answer a survey to gather information about your user experience. Answering the survey will take about 15 minutes.",
+    "Responder una encuesta. Como última tarea, te pediremos que respondas una encuesta para recabar información sobre tu experiencia de usuario. Responder la encuesta te tomará alrededor de 15 minutos."
   ],
   "information-para-4": [
-    "The results of the project may be published, but you may be assured of the complete confidentiality of data gathered in this investigation. To ensure anonymity and confidentiality, a random identifier that does not link to your profile will be used to identify related task artefacts for which we will use in our results. All data will be destroyed after 1 year to allow for publication of a research paper. A thesis is a public document and will be available through the UC Library.",
-    "Los resultados del proyecto pueden publicarse, pero puede estar seguro de la total confidencialidad de los datos recopilados en esta investigación. Para garantizar el anonimato y la confidencialidad, se utilizará un identificador aleatorio que no se vincule a su perfil para identificar los artefactos de tareas relacionadas para los que utilizaremos en nuestros resultados. Todos los datos serán destruidos después de 1 año para permitir la publicación de un trabajo de investigación. Una tesis es un documento público y estará disponible a través de la Biblioteca de la UC."
+    "Your participation is voluntary and you have the right to waive participation at any time. In addition, you have the right to request that your data be destroyed. If during the study you decide to abandon your participation, we will not use your data, however, keep in mind that once we start analyzing the data in October 2019, it will be very difficult to remove them.",
+    "Tu participación es voluntaria y tienes derecho a renunciar a participar en cualquier momento. Además, tienes derecho a solicitar que tus datos sean destruidos. Si durante el estudio decides abandonar tu participación, no utilizaremos tus datos, sin embargo, ten en cuenta que una vez que comencemos con el análisis de los datos en octubre de 2019, será muy complicado removerlos."
   ],
   "information-para-5": [
-    "The project is being carried out as a requirement for SENG402 as part of the Software Engineering degree by Hayden Taylor under the supervision of Miguel Morales, who can be contacted at miguel.morales@canterbury.ac.nz. He will be pleased to discuss any concerns you may have about participation in the project. This project has been reviewed and approved by the University of Canterbury Human Ethics Committee, and participants should address any complaints to The Chair, Human Ethics Committee, University of Canterbury, Private Bag 4800, Christchurch (human-ethics@canterbury.ac.nz).",
-    "El proyecto se lleva a cabo como un requisito para SENG402 como parte del título de Ingeniería de Software por Hayden Taylor bajo la supervisión de Miguel Morales, a quien se puede contactar en miguel.morales@canterbury.ac.nz. Estará encantado de discutir cualquier inquietud que pueda tener sobre participación en el proyecto. Este proyecto ha sido revisado y aprobado por el Comité de Ética Humana de la Universidad de Canterbury, y los participantes deben dirigir cualquier queja al Presidente, Comité de Ética Humana, Universidad de Canterbury, Private Bag 4800, Christchurch (human-ethics@canterbury.ac.nz)."
+    "The results of this study will be published through a research article and in my thesis, which will be a public document and will be available through the Canterbury University library. The results will be confidential and your identity will not be disclosed. To ensure this, at the beginning of the study we will assign you an identifier that will allow us to track the results without knowing your identity. The data collected will be stored on a protected server and will be destroyed within one year.",
+    "Los resultados de este estudio serán publicados a través de un artículo de investigación y en mi tesis, la cual será un documento público y estará disponible a través de la biblioteca de la Universidad de Canterbury. Los resultados serán confidenciales y tu identidad no será revelada. Para asegurar esto, al inicio del estudio te asignaremos un identificador que nos permitirá llevar una traza de los resultados sin conocer tu identidad. Los datos recolectados serán almacenados en un servidor protegido y serán destruidos al término de un año."
+  ],
+  "information-para-6": [
+    "This project is carried out as a requirement of the SENG402 (Software Engineering Research Project) course of the Software Engineering degree and is supervised by Miguel Morales, whom you can contact at miguel.morales@canterbury.ac.nz to discuss Any questions you have about your participation in the study.",
+    "Este proyecto es llevado a cabo como requisito del curso SENG402 (Proyecto de Investigación en Ingeniería de Software) de la carrera de Ingeniería de Software y es supervisado por Miguel Morales, a quien puedes contactar en miguel.morales@canterbury.ac.nz para discutir cualquier duda que tengas sobre tu participación en el estudio."
+  ],
+  "information-para-7": [
+    "This project has been reviewed and approved by the Ethics Committee of the University of Canterbury. Any complaint or comment can be sent to the Chairman of the Committee: University of Canterbury, Private Bag 4800, Christchurch, New Zealand (human-ethics@canterbury.ac.nz).",
+    "Este proyecto ha sido revisado y aprobado por el Comité de Ética de la Universidad de Canterbury. Cualquier queja o comentario puedes hacerlo llegar al Presidente del Comité: University of Canterbury, Private Bag 4800, Christchurch, New Zealand (human-ethics@canterbury.ac.nz)."
   ],
   "consent-title": [
     "By providing consent you agree to the following statements",
     "Al dar su consentimiento, usted acepta las siguientes declaraciones"
   ],
-  "read-carefully": ["Please read this carefully!", "¡Por favor lea esto cuidadosamente!"]
+  "read-carefully": [
+    "Please read this carefully!",
+    "¡Por favor lea esto cuidadosamente!"
+  ]
 }

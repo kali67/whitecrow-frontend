@@ -78,12 +78,24 @@ const ConsentModal = props => (
         <br />
         <br />
         <Translate id={"information-para-3"} />
+        <ul>
+          <li> <Translate id={"information-para-3-1"} /></li>
+          <li> <Translate id={"information-para-3-2"} /></li>
+          <li> <Translate id={"information-para-3-3"} /></li>
+          <li> <Translate id={"information-para-3-4"} /></li>
+        </ul>
         <br />
         <br />
         <Translate id={"information-para-4"} />
         <br />
         <br />
         <Translate id={"information-para-5"} />
+        <br />
+        <br />
+        <Translate id={"information-para-6"} />
+        <br />
+        <br />
+        <Translate id={"information-para-7"} />
         <h3>
           <Translate id={"consent-title"} />
         </h3>

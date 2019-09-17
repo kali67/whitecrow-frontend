@@ -70,9 +70,9 @@ export default function(state = initialState, action) {
     case FINISH_USER_TURN:
       return {
         ...state,
-        isLoadingRoll: action.isLoadingRoll,
         AITurnResults: action.AITurnResults,
-        playerTurnIndex: action.playerTurnIndex
+        playerTurnIndex: action.playerTurnIndex,
+        isLoadingQueryPlayerTurns: action.isLoadingQueryPlayerTurns
       };
     case FINISH_AI_TURN:
       return {

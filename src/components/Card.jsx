@@ -62,7 +62,7 @@ const Divider = styled.div`
   width: 90%;
 `;
 
-const CardParagraph = styled.p`
+const CardParagraph = styled.div`
   padding-top: 10px;
   font-size: 0.9em;
   margin-right: 10px;

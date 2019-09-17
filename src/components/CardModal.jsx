@@ -51,7 +51,7 @@ export default class CardModal extends React.Component {
     }
     return (
       <Modal isOpen={true} style={customStyles}>
-        <ModalCardWrapper style={{"max-width": "300px"}}>
+        <ModalCardWrapper style={{"maxWidth": "300px"}}>
           {!this.props.requiresDecision ? (
             <NotifyFinishedRead
               dismissCardModel={this.props.dismissCardModel}

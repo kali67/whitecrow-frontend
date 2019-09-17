@@ -129,7 +129,7 @@ class SinglePlayerController extends React.Component {
             flagSetBackRotation={this.flagSetBackRotation}
           />
         )}
-        {!this.isUsersTurn() && !this.props.isLoadingRoll && (
+        {!this.isUsersTurn() && !this.props.isLoadingQueryPlayerTurns && (
           <PlayerTurnProgress
             finishPlayerTurn={this.finishPlayerTurn}
             player={this.props.players[this.props.playerTurnIndex]}
@@ -146,6 +146,7 @@ class SinglePlayerController extends React.Component {
 }
 
 const mapStateToProps = ({ game, user }) => ({
+  isLoadingQueryPlayerTurns: game.isLoadingQueryPlayerTurns,
   loadingStartGame: game.loading,
   loadingGameDetails: game.isLoadingGameDetails,
   loadingUserDetails: user.isLoadingUserDetails,

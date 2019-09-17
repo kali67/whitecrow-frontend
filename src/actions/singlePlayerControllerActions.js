@@ -117,17 +117,21 @@ export const rollDie = (userPlayerId, gameId) => dispatch => {
     type: LOADING,
     isLoadingQueryPlayerTurns: true
   });
-  usePlayerTurn(userPlayerId, gameId).then(response => {
-    dispatch({
-      type: ROLL_DIE,
-      userTurnResult: response.data,
-      loading: false
+  usePlayerTurn(userPlayerId, gameId)
+    .then(response => {
+      dispatch({
+        type: ROLL_DIE,
+        userTurnResult: response.data,
+        loading: false
+      });
+      dispatch({
+        type: CLOSE_DASHBOARD,
+        isOpen: false
+      });
+    })
+    .catch(error => {
+      console.log(error);
     });
-    dispatch({
-      type: CLOSE_DASHBOARD,
-      isOpen: false
-    });
-  });
 };
 
 export const finishPlayerTurn = (
@@ -138,12 +142,17 @@ export const finishPlayerTurn = (
 ) => dispatch => {
   let currentPlayerTurnIndex = (playerTurnIndex + 1) % players.length;
   if (isUserTurn) {
+    dispatch({
+      type: LOADING,
+      isLoadingQueryPlayerTurns: true
+    });
     queryPlayerTurns(gameId)
       .then(response => {
         dispatch({
           type: FINISH_USER_TURN,
           AITurnResults: response.data,
-          playerTurnIndex: currentPlayerTurnIndex
+          playerTurnIndex: currentPlayerTurnIndex,
+          isLoadingQueryPlayerTurns: false
         });
       })
       .catch(error => {
