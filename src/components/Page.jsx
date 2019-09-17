@@ -68,7 +68,7 @@ const PageWrapper = styled.div`
   margin-right: 10%;
   margin-left: 10%;
   margin-top: 5%;
-  height: 90vh;
+  height: 85vh;
 `;
 
 const Navbar = styled.nav`

@@ -55,7 +55,9 @@ class HomePage extends React.Component {
   }
 
   completePreTest = () => {
-    this.props.updateHasTakenPreTest(this.props.id);
+    setTimeout(() => {
+      this.props.updateHasTakenPreTest(this.props.id);
+    }, 10000);
   };
 
   render() {
@@ -64,7 +66,7 @@ class HomePage extends React.Component {
     }
     return (
       <React.Fragment>
-        <div style={{ height: "250px" }}>
+        <div style={{ display: "flex", flexDirection: "column", paddingBottom: "5%" }}>
           {this.props.hasCompletedPreTest ? (
             <CompletedPreTest
               finishedAtLeastOneGame={this.state.finishedAtLeastOneGame}
@@ -111,6 +113,7 @@ const PreTest = props => {
               "https://canterbury.qualtrics.com/jfe/form/SV_e3Y2QzGnmNxR7CZ"
             }
             target="_blank"
+            rel="noopener noreferrer"
             onContextMenu={() => props.completePreTest()}
             onClick={() => props.completePreTest()}
           >
@@ -143,6 +146,7 @@ const CompletedPreTest = props => {
           <span style={props.finishedAtLeastOneGame ? null : DisabledLinkStyle}>
             <a
               target="_blank"
+              rel="noopener noreferrer"
               href={
                 "https://canterbury.qualtrics.com/jfe/form/SV_e3Y2QzGnmNxR7CZ"
               }
@@ -155,6 +159,7 @@ const CompletedPreTest = props => {
           <span style={props.finishedAtLeastOneGame ? null : DisabledLinkStyle}>
             <a
               target="_blank"
+              rel="noopener noreferrer"
               href={
                 "https://canterbury.qualtrics.com/jfe/form/SV_e3Y2QzGnmNxR7CZ"
               }
