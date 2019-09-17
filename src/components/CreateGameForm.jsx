@@ -72,6 +72,7 @@ class CreateGameForm extends React.Component {
         onPlayerCountChange={this.onPlayerCountChange}
         onRoundChange={this.onRoundChange}
         loadingCreateGame={this.state.loadingCreateGame}
+        hasTakenTest={this.props.hasTakenTest}
       />
     );
   }
@@ -141,6 +142,7 @@ const CreateForm = props => {
           appearance="primary"
           onClick={e => props.joinGame(e)}
           role="button"
+          isDisabled={!props.hasTakenTest}
         >
           <Translate id="create" />
         </Button>

@@ -8,6 +8,7 @@ const CardWrapper = styled.div`
   z-index: 1;
   max-height:  ${props => props.height};
   max-width: 300px;
+  min-height: 300px;
   height: 100%;
   width: 100%;
   background-color: #f4f4f4;

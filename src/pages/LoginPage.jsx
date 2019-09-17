@@ -52,6 +52,7 @@ class LoginPage extends React.Component {
   }
   componentDidMount() {
     localStorage.removeItem("jwt");
+    localStorage.removeItem("hasTakenTest");
   }
 
   authenticate = (username, password) => {
@@ -124,7 +125,10 @@ class LoginPage extends React.Component {
             showConsent={this.showConsent}
           />
         </LoginWidgetWrapper>
-        <ConsentModal isOpen={this.state.modalIsOpen} closeConsent={this.closeConsent}/>
+        <ConsentModal
+          isOpen={this.state.modalIsOpen}
+          closeConsent={this.closeConsent}
+        />
       </LoginWrapper>
     );
   }
