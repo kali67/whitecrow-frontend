@@ -4,13 +4,16 @@ import {
   UPDATE_PLAYER_OPPOURTUNITY_CARDS,
   UPDATE_PLAYER_MONEY,
   UPDATE_PLAYER_DAY,
-  IS_LOADING_USER_DETAILS
+  IS_LOADING_USER_DETAILS,
+  SET_ACCOUNT_DETAILS
 } from "../actions/types";
 
 const initialState = {
   player: null,
   loading: true,
-  isLoadingUserDetails: true
+  isLoadingUserDetails: true,
+  hasCompletedPreTest: false,
+  id: null
 };
 
 export default function(state = initialState, action) {
@@ -57,7 +60,12 @@ export default function(state = initialState, action) {
         ...state,
         player: playerUpdatedDay
       };
-
+    case SET_ACCOUNT_DETAILS:
+      return {
+        ...state,
+        id: action.id,
+        hasCompletedPreTest: action.hasCompletedPreTest
+      };
     default:
       return state;
   }

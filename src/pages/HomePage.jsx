@@ -4,64 +4,92 @@ import axios from "axios";
 import SectionMessage from "@atlaskit/section-message";
 import CreateGameForm from "../components/CreateGameForm";
 import { Translate } from "react-localize-redux";
+import { connect } from "react-redux";
+
+import {
+  updateHasTakenPreTest,
+  setAccountDetails
+} from "../actions/userActions";
+import { SpinnerFullCircle } from "../components/Spinner";
 
 const DisabledLinkStyle = { opacity: ".4", pointerEvents: "none" };
 
-export default class HomePage extends React.Component {
+class HomePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       finishedAtLeastOneGame: false,
-      hasTakenTest: localStorage.getItem("hasTakenTest") !== null
+      loading: true
     };
   }
 
   componentDidMount() {
     axios
-      .get("/games/finished", {
+      .get("/user", {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("jwt")
         }
       })
       .then(response => {
-        console.log(response);
-        if (response.data.length > 0) {
-          this.setState({ finishedAtLeastOneGame: true });
-        }
+        this.props.setAccountDetails(response.data);
+        axios
+          .get("/games/finished", {
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("jwt")
+            }
+          })
+          .then(response => {
+            if (response.data.length > 0) {
+              this.setState({ finishedAtLeastOneGame: true });
+            }
+            this.setState({ loading: false });
+          })
+          .catch(error => {
+            console.log(error);
+            this.setState({ loading: false });
+          });
       })
-      .catch(error => {
-        console.log(error);
+      .catch(() => {
+        this.setState({ loading: false });
       });
   }
 
-  hasTakenTest = () => {
-    localStorage.setItem("hasTakenTest", "true");
-    setTimeout(() => {
-      this.setState({ hasTakenTest: true });
-    }, 1000);
+  completePreTest = () => {
+    this.props.updateHasTakenPreTest(this.props.id);
   };
 
   render() {
+    if (this.state.loading) {
+      return <SpinnerFullCircle />;
+    }
     return (
       <React.Fragment>
         <div style={{ height: "250px" }}>
-          {this.state.hasTakenTest ? (
+          {this.props.hasCompletedPreTest ? (
             <CompletedPreTest
               finishedAtLeastOneGame={this.state.finishedAtLeastOneGame}
             />
           ) : (
-            <PreTest hasTakenTest={this.hasTakenTest} />
+            <PreTest completePreTest={this.completePreTest} />
           )}
         </div>
         <CreateGameForm
           {...this.props}
-          hasTakenTest={this.state.hasTakenTest}
+          hasTakenTest={this.props.hasCompletedPreTest}
         />
       </React.Fragment>
     );
   }
 }
+const mapStateToProps = state => ({
+  hasCompletedPreTest: state.user.hasCompletedPreTest,
+  id: state.user.id
+});
 
+export default connect(
+  mapStateToProps,
+  { updateHasTakenPreTest, setAccountDetails }
+)(HomePage);
 const PreTest = props => {
   return (
     <SectionMessage appearance="warning">
@@ -82,8 +110,8 @@ const PreTest = props => {
             href={
               "https://canterbury.qualtrics.com/jfe/form/SV_e3Y2QzGnmNxR7CZ"
             }
-            onContextMenu={props.hasTakenTest}
-            onClick={() => props.hasTakenTest()}
+            onContextMenu={() => props.completePreTest()}
+            onClick={() => props.completePreTest()}
           >
             Qualtrics Prerequisite Test
           </a>
@@ -116,8 +144,6 @@ const CompletedPreTest = props => {
               href={
                 "https://canterbury.qualtrics.com/jfe/form/SV_e3Y2QzGnmNxR7CZ"
               }
-              onContextMenu={props.hasTakenTest}
-              onClick={props.hasTakenTest}
             >
               Qualtrics Post Test
             </a>
@@ -129,7 +155,6 @@ const CompletedPreTest = props => {
               href={
                 "https://canterbury.qualtrics.com/jfe/form/SV_e3Y2QzGnmNxR7CZ"
               }
-              onClick={props.hasTakenTest}
             >
               Qualtrics Survey
             </a>

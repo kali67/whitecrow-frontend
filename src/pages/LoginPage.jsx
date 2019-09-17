@@ -52,7 +52,6 @@ class LoginPage extends React.Component {
   }
   componentDidMount() {
     localStorage.removeItem("jwt");
-    localStorage.removeItem("hasTakenTest");
   }
 
   authenticate = (username, password) => {

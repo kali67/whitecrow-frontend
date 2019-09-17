@@ -4,11 +4,12 @@ import {
   UPDATE_PLAYER_OPPOURTUNITY_CARDS,
   UPDATE_PLAYER_DAY,
   UPDATE_PLAYER_MONEY,
-  ACCESS_DENIED, IS_LOADING_USER_DETAILS,
+  ACCESS_DENIED,
+  IS_LOADING_USER_DETAILS,
+  SET_ACCOUNT_DETAILS
 } from "./types";
 
 import axios from "axios";
-
 
 export const resetUserLoadingState = () => dispatch => {
   dispatch({
@@ -78,5 +79,33 @@ export const updatePlayerDay = day => dispatch => {
   dispatch({
     type: UPDATE_PLAYER_DAY,
     day: day
+  });
+};
+
+export const setAccountDetails = details => dispatch => {
+  console.log(details);
+  dispatch({
+    type: SET_ACCOUNT_DETAILS,
+    hasCompletedPreTest: details["hasCompletedPreTest"],
+    id: details["id"]
+  });
+};
+
+export const updateHasTakenPreTest = id => dispatch => {
+  axios.put(
+    "/user",
+    {
+      id: id,
+      hasCompletedPreTest: true
+    },
+    {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("jwt")
+      }
+    }
+  );
+  dispatch({
+    type: SET_ACCOUNT_DETAILS,
+    hasCompletedPreTest: true
   });
 };
