@@ -14,6 +14,9 @@ import Form, {
 import axios from "axios";
 import { Translate } from "react-localize-redux";
 import styled from "styled-components";
+import Select from "@atlaskit/select/dist/esm/Select";
+
+import globe from "../static/image/globe.png";
 
 const Link = styled.p`
   color: #0052cc;
@@ -23,13 +26,24 @@ const Link = styled.p`
   }
 `;
 
+const Icon = styled.div`
+  background-image: url(${props => props.image});
+  height: 40px;
+  width: 40px;
+  margin-right: 10px;
+  background-size: cover;
+`;
+
 export const LoginSignUpView = ({
   isShowingLogin,
   showLogin,
   showSignUp,
   login,
   authenticate,
-  showConsent
+  showConsent,
+  languages,
+  handleLanguageChange,
+  activeLanguage
 }) => {
   return (
     <React.Fragment>
@@ -38,6 +52,9 @@ export const LoginSignUpView = ({
           showSignUp={showSignUp}
           login={login}
           authenticate={authenticate}
+          languages={languages}
+          handleLanguageChange={handleLanguageChange}
+          activeLanguage={activeLanguage}
         />
       ) : (
         <SignUpForm
@@ -45,15 +62,60 @@ export const LoginSignUpView = ({
           showLogin={showLogin}
           login={login}
           showConsent={showConsent}
+          languages={languages}
+          handleLanguageChange={handleLanguageChange}
+          activeLanguage={activeLanguage}
         />
       )}
     </React.Fragment>
   );
 };
 
-const LoginForm = ({ showSignUp, authenticate }) => {
+const LanguagesSelect = ({ languages, handleLanguageChange, activeLanguage }) => {
+  return (
+    <div
+      style={{
+        display: "flex",
+        width: "100%",
+        justifyContent: "flex-end",
+        marginRight: "5%"
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center"
+        }}
+      >
+        <Icon image={globe} />
+      </div>
+      <div style={{ width: "200px" }}>
+        <Select
+          options={languages.map(x => {
+            return { label: x.name, value: x.code };
+          })}
+          placeholder={activeLanguage.name}
+          onChange={handleLanguageChange}
+        />
+      </div>
+    </div>
+  );
+};
+const LoginForm = ({
+  showSignUp,
+  authenticate,
+  languages,
+  handleLanguageChange,
+  activeLanguage
+}) => {
   return (
     <React.Fragment>
+      <LanguagesSelect
+        languages={languages}
+        handleLanguageChange={handleLanguageChange}
+        activeLanguage={activeLanguage}
+      />
       <div
         style={{
           display: "flex",
@@ -122,19 +184,33 @@ const LoginForm = ({ showSignUp, authenticate }) => {
           </Form>
         </div>
       </div>
-      <p>
-        <Translate id={"dont-have-account"} />
-      </p>
-      <Button type="submit" appearance="link" onClick={e => showSignUp()}>
-        <Translate id={"sign-up-btn"} />
-      </Button>
+      <AccountActionFooter>
+        <p>
+          <Translate id={"dont-have-account"} />
+        </p>
+        <Button type="submit" appearance="link" onClick={e => showSignUp()}>
+          <Translate id={"sign-up-btn"} />
+        </Button>
+      </AccountActionFooter>
     </React.Fragment>
   );
 };
 
-const SignUpForm = ({ showLogin, authenticate, showConsent }) => {
+const SignUpForm = ({
+  showLogin,
+  authenticate,
+  showConsent,
+  languages,
+  handleLanguageChange,
+  activeLanguage
+}) => {
   return (
     <React.Fragment>
+      <LanguagesSelect
+        languages={languages}
+        handleLanguageChange={handleLanguageChange}
+        activeLanguage={activeLanguage}
+      />
       <div
         style={{
           display: "flex",
@@ -270,12 +346,21 @@ const SignUpForm = ({ showLogin, authenticate, showConsent }) => {
           </Form>
         </div>
       </div>
-      <p>
-        <Translate id={"already-have-account"} />
-      </p>
-      <Button type="submit" appearance="link" onClick={e => showLogin()}>
-        <Translate id={"login"} />
-      </Button>
+      <AccountActionFooter>
+        <p>
+          <Translate id={"already-have-account"} />
+        </p>
+        <Button type="submit" appearance="link" onClick={e => showLogin()}>
+          <Translate id={"login"} />
+        </Button>
+      </AccountActionFooter>
     </React.Fragment>
   );
 };
+
+const AccountActionFooter = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;

@@ -81,8 +81,7 @@ class CreateGameForm extends React.Component {
 export default CreateGameForm;
 
 const gameTypeOptions = [
-  { value: "SINGLEPLAYER", label: "Single Player" },
-  { value: "MULTIPLAYER", label: "Multiplayer" }
+  { value: "SINGLEPLAYER", label: "Single Player" }
 ];
 
 const numberOfPlayers = [

@@ -1,10 +1,9 @@
-import { OPEN_DASHBOARD, CLOSE_DASHBOARD, SHOW_HELPMODAL, CLOSE_HELPMODAL } from "../actions/types";
+import { OPEN_DASHBOARD, CLOSE_DASHBOARD } from "../actions/types";
 
 const initialState = {
   isOpen: false,
   isLoadingRoll: false,
   loadingFetch: true,
-  helpModalIsOpen: false
 };
 
 export default function(state = initialState, action) {
@@ -14,13 +13,6 @@ export default function(state = initialState, action) {
       return {
         ...state,
         isOpen: action.isOpen
-      };
-    case SHOW_HELPMODAL:
-    case CLOSE_HELPMODAL:
-      return {
-        ...state,
-        isOpen: action.isOpen,
-        helpModalIsOpen: action.helpModalIsOpen
       };
     default:
       return state;

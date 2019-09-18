@@ -52,6 +52,7 @@ class AccountInfoContainer extends React.Component {
       )
       .then(() => {
         this.props.setActiveLanguage(languageCode);
+        localStorage.setItem("lang", languageCode);
         this.setState({
           ...this.state.userDetails,
           languageCode: languageCode

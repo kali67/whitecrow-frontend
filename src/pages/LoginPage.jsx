@@ -6,7 +6,7 @@ import axios from "axios";
 import { LoginSignUpView } from "../components/LoginWidget";
 import whitecrow from "../static/image/whitecrowwhite.png";
 import { showLogin, showSignUp, login } from "../actions/loginActions";
-import { authenticate, denyAccess } from "../actions/authActions";
+import { authenticate } from "../actions/authActions";
 import { Translate } from "react-localize-redux";
 import ConsentModal from "../components/ConsentModal";
 
@@ -23,7 +23,7 @@ const LoginWidgetWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
 `;
 
 const SplashArea = styled.div`
@@ -47,7 +47,8 @@ class LoginPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      modalIsOpen: false
+      modalIsOpen: false,
+      lang: "ES"
     };
   }
   componentDidMount() {
@@ -63,19 +64,20 @@ class LoginPage extends React.Component {
       .then(response => {
         this.props.authenticate(response.data["jwtToken"]);
         axios
-          .get("/user", {
-            headers: {
-              Authorization: "Bearer " + localStorage.getItem("jwt")
+          .put(
+            "/user",
+            {
+              username: username,
+              languageCode: this.props.activeLanguage.code
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("jwt")}`
+              }
             }
-          })
-          .then(response => {
-            this.setState({ loading: false }, () => {
-              this.props.setActiveLanguage(response.data["languageCode"]);
-              this.props.history.push("/home");
-            });
-          })
-          .catch(() => {
-            this.setState({ loading: false });
+          )
+          .then(() => {
+            this.props.history.push("/home");
           });
       })
       .catch(error => {
@@ -105,6 +107,11 @@ class LoginPage extends React.Component {
     this.setState({ modalIsOpen: false });
   };
 
+  handleLanguageChange = newValue => {
+    this.props.setActiveLanguage(newValue.value);
+    localStorage.setItem("lang", newValue.value);
+  };
+
   render() {
     return (
       <LoginWrapper>
@@ -122,6 +129,9 @@ class LoginPage extends React.Component {
             login={this.login}
             authenticate={this.authenticate}
             showConsent={this.showConsent}
+            languages={this.props.languages}
+            handleLanguageChange={this.handleLanguageChange}
+            activeLanguage={this.props.activeLanguage}
           />
         </LoginWidgetWrapper>
         <ConsentModal
@@ -133,8 +143,12 @@ class LoginPage extends React.Component {
   }
 }
 
-const mapStateToProps = ({ login }) => ({
-  showLoginView: login.showLogin
+const mapStateToProps = ({ login, localize }) => ({
+  showLoginView: login.showLogin,
+  languages: localize.languages,
+  activeLanguage: localize.languages.filter(value => {
+    return value.active;
+  })[0]
 });
 
 export default connect(

@@ -3,6 +3,7 @@ import { withLocalize } from "react-localize-redux";
 
 import MainRouter from "./MainRouter";
 import axios from "axios";
+import { connect } from "react-redux";
 
 import { SpinnerFullCircle } from "./Spinner";
 
@@ -23,6 +24,7 @@ class Localization extends React.Component {
         }
       })
       .then(response => {
+
         this.setState({ loading: false }, () => {
           this.props.setActiveLanguage(response.data["languageCode"]);
         });
@@ -41,4 +43,6 @@ class Localization extends React.Component {
   }
 }
 
-export default withLocalize(Localization);
+const mapStateToProps = state => ({});
+
+export default connect(mapStateToProps)(withLocalize(Localization));

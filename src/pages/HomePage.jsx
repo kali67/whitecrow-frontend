@@ -66,7 +66,13 @@ class HomePage extends React.Component {
     }
     return (
       <React.Fragment>
-        <div style={{ display: "flex", flexDirection: "column", paddingBottom: "5%" }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            paddingBottom: "5%"
+          }}
+        >
           {this.props.hasCompletedPreTest ? (
             <CompletedPreTest
               finishedAtLeastOneGame={this.state.finishedAtLeastOneGame}
@@ -99,13 +105,12 @@ const PreTest = props => {
         <Translate id={"read-carefully"} />
       </h4>
       <p>
-        Before you play the game, we ask you to take a test so that we can
-        assess your level of knowledge before you play! Please use the id you
-        used to create an account. Once you have finished, play a few rounds of
-        the game and you will be presented with another test and a survey.
+        <Translate id="pre-test" />
       </p>
       <br />
-      <b>The following items need to be completed before playing the game:</b>
+      <b>
+        <Translate id="pre-test-items" />
+      </b>
       <ul>
         <li>
           <a
@@ -117,7 +122,7 @@ const PreTest = props => {
             onContextMenu={() => props.completePreTest()}
             onClick={() => props.completePreTest()}
           >
-            Qualtrics Prerequisite Test
+            <Translate id="qualtric-pre-test" />
           </a>
         </li>
       </ul>
@@ -127,19 +132,17 @@ const PreTest = props => {
 
 const CompletedPreTest = props => {
   return (
-    <SectionMessage appearance="info">
-      <h2>Thank you for completing the prerequisite test!</h2>
+    <SectionMessage appearance="confirmation">
+      <h2>
+        <Translate id="completed-pre-title" />
+      </h2>
+      <br />
       <p>
-        Now that you have completed the test, you can play as many games as you
-        want. You need to complete at least one game before being able to take
-        the next test and survey. Once you have played at least one (feel free
-        to play as many until you feel comfortable) you may complete the final
-        tests.
+        <Translate id="completed-pre-body" />
       </p>
       <br />
       <b>
-        The following items need to be completed and will become available after
-        finishing one game:
+        <Translate id="next-steps-post" />
       </b>
       <ul>
         <li>
@@ -151,7 +154,7 @@ const CompletedPreTest = props => {
                 "https://canterbury.qualtrics.com/jfe/form/SV_e3Y2QzGnmNxR7CZ"
               }
             >
-              Qualtrics Post Test
+              <Translate id="qualtric-post-test" />
             </a>
           </span>
         </li>
@@ -164,7 +167,7 @@ const CompletedPreTest = props => {
                 "http://canterbury.qualtrics.com/jfe/form/SV_bee5e5GDr6BYPcN"
               }
             >
-              Qualtrics Survey
+              <Translate id="qualtric-survey" />
             </a>
           </span>
         </li>

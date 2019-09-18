@@ -5,14 +5,11 @@ import { connect } from "react-redux";
 import {
   openDashboard,
   closeDashboard,
-  showHelpModal,
-  closeHelpModal
 } from "../actions/dashboardActions";
 
 import hamburger from "../static/image/hamburger.png";
 import Slider from "react-slide-out";
 import PlayerControls, { CardHolder } from "./PlayerControls";
-import HelpModal from "./HelpModal";
 
 const Hamburger = styled.div`
   background-image: url(${props => props.image});
@@ -64,8 +61,6 @@ class Dashboard extends React.Component {
               isLoadingRoll={this.props.isLoadingQueryPlayerTurns}
               rollDie={() => this.props.rollDie()}
               closeDrawer={() => this.props.closeDashboard()}
-              helpModalIsOpen={this.props.helpModalIsOpen}
-              showHelpModal={() => this.props.showHelpModal()}
             />
 
             <CardHolder mail={this.props.userPlayer.mail} opportunity={this.props.userPlayer.opportunity}/>
@@ -77,10 +72,6 @@ class Dashboard extends React.Component {
             onClick={() => this.props.openDashboard()}
           />
         </ClosedDrawer>
-        <HelpModal
-          isOpen={this.props.helpModalIsOpen}
-          closeHelpModal={() => this.props.closeHelpModal()}
-        />
       </React.Fragment>
     );
   }
@@ -88,7 +79,6 @@ class Dashboard extends React.Component {
 
 const mapStateToProps = state => ({
   isOpen: state.dashboard.isOpen,
-  helpModalIsOpen: state.dashboard.helpModalIsOpen,
   players: state.game.players,
   playerTurnIndex: state.game.playerTurnIndex,
   isSinglePlayersTurn:
@@ -101,5 +91,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { openDashboard, closeDashboard, showHelpModal, closeHelpModal }
+  { openDashboard, closeDashboard }
 )(Dashboard);

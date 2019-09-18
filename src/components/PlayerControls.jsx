@@ -44,7 +44,6 @@ const PlayerInfoContainer = styled.div`
 `;
 
 export default class PlayerControls extends React.Component {
-
   calculatePlayerDayFromTurn = () => {
     if (!this.props.usersPlayerUpdated || !this.props.showEndTurnUpdate) {
       return this.props.userPlayer.day;
@@ -58,7 +57,13 @@ export default class PlayerControls extends React.Component {
     return (
       <PlayerControlContainer>
         <PlayerOrderWrapper>
-          <b style={{ marginBottom: "8%", textDecoration: "underline", textAlign:"center" }}>
+          <b
+            style={{
+              marginBottom: "8%",
+              textDecoration: "underline",
+              textAlign: "center"
+            }}
+          >
             <Translate id="play-order" />
           </b>
           <PlayerTurnTracker
@@ -74,36 +79,11 @@ export default class PlayerControls extends React.Component {
           rollDie={this.props.rollDie}
           rolledDisabled={!this.props.isSinglePlayersTurn}
           isLoadingRoll={this.props.isLoadingRoll}
-          showHelpModal={this.props.showHelpModal}
         />
       </PlayerControlContainer>
     );
   }
 }
-
-const HelpIcon = styled.div`
-  text-decoration: bold;
-  background: #108ee9;
-  color: white;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  border-radius: 100%;
-  border: 1px solid #108ee9;
-  width: 25px;
-  height: 25px;
-  &:hover {
-    border: 1px solid #0847a6;
-    cursor: grab;
-  }
-`;
-
-const HelpIconWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-`;
 
 const RollDiceBtnWrapper = styled.div`
   height: 100%;
@@ -147,26 +127,16 @@ const PlayerInfoView = ({
   day,
   rollDie,
   rolledDisabled,
-  isLoadingRoll,
-  showHelpModal
+  isLoadingRoll
 }) => {
   return (
     <PlayerInfoContainer>
-      <HelpIconWrapper>
-        <HelpIcon
-          onClick={e => {
-            showHelpModal();
-          }}
-        >
-          ?
-        </HelpIcon>
-      </HelpIconWrapper>
-
       <div
         style={{
           display: "flex",
           flexDirection: "row",
-          justifyContent: "space-evenly"
+          justifyContent: "space-evenly",
+          marginTop: "5%"
         }}
       >
         <TextWrapper>

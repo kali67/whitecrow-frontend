@@ -38,7 +38,7 @@ const AccountLanguageForm = ({ currentLanguage, saveLanguage, languages }) => {
                 )}
               </Field>
               <FormFooter>
-                <Button type="submit" appearance="warning" isloading={submitting}>
+                <Button type="submit" appearance="warning" isLoading={submitting}>
                   <Translate id="update-language" />
                 </Button>
               </FormFooter>

@@ -190,7 +190,33 @@
     "Al dar su consentimiento, usted acepta las siguientes declaraciones"
   ],
   "read-carefully": [
-    "Please read this carefully!",
-    "¡Por favor lea esto cuidadosamente!"
-  ]
+    "Please read instructions below!",
+    "¡Por favor lee las siguientes instrucciones."
+  ],
+  "pre-test": [
+    "Before you are able to play the game, you must complete the prerequisite test. To do this, click the link below and answer the questions presented.",
+    "Antes de comenzar a jugar, deberás responder un cuestionario de entrada. Para acceder el cuestionario da click en la liga de abajo."
+  ],
+  "pre-test-items": [
+    "The following items need to be completed before playing the game:",
+    "La siguiente actividad requiere ser completada antes de comenzar a jugar:"
+  ],
+  "qualtric-pre-test": [
+    "Qualtrics Prerequisite Test",
+    "Cuestionario de entrada"
+  ],
+  "completed-pre-title": [
+    "Awesome, you have completed the prerequisite test!",
+    "Perfecto! has completado el cuestionario diagnóstico."
+  ],
+  "completed-pre-body": [
+    "Now that the you have completed the prerequisite test, you are now able to create games. Once you have completed at least one game, a survey and post test will become available to complete. You may play as many games as you like until you feel ready to take the tests, however we would recommend at least two games. Once complete, check back here in order to have access to the tests.",
+    "Ahora que has completado el cuestionario diagnóstico, podrás comenzar a jugar Cuervo Blanco. Una vez que completes al menos un juego, te pediremos que respondas un cuestionario de salida y una encuesta de satisfacción.\nPuedes jugar tantos juegos como quieras antes de responder el cuestionario de salida, nuestra recomendación es que al menos juegues dos veces Cuervo Blanco antes de intentar responder el cuestionario."
+  ],
+  "next-steps-post": [
+    "The following items need to be completed and will become available after finishing one game:",
+    "Las siguientes actividades estarán disponibles una vez que completes al menos un juego:"
+  ],
+  "qualtric-post-test": ["Qualtrics Post Test", "Cuestionario de salida"],
+  "qualtric-survey": ["Qualtrics Survey", "Encuesta de satisfacción."]
 }
