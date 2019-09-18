@@ -83,7 +83,6 @@ export const updatePlayerDay = day => dispatch => {
 };
 
 export const setAccountDetails = details => dispatch => {
-  console.log(details);
   dispatch({
     type: SET_ACCOUNT_DETAILS,
     hasCompletedPreTest: details["hasCompletedPreTest"],

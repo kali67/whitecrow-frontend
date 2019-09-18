@@ -14,6 +14,14 @@ import globalTranslations from "./static/translations/global.json";
 
 axios.defaults.baseURL = "https://whitecrow-backend.herokuapp.com";
 
+const GetLang = () => {
+    const langCode = localStorage.getItem("lang");
+    if (langCode) {
+        return langCode
+    }
+    return "ES"
+};
+
 ReactDOM.render(
   <Provider store={store}>
     <LocalizeProvider
@@ -23,7 +31,7 @@ ReactDOM.render(
         options: {
           renderToStaticMarkup,
           renderInnerHtml: true,
-          defaultLanguage: "ES"
+          defaultLanguage: GetLang()
         }
       }}
       store={store}>
