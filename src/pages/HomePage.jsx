@@ -161,7 +161,7 @@ const CompletedPreTest = props => {
               target="_blank"
               rel="noopener noreferrer"
               href={
-                "https://canterbury.qualtrics.com/jfe/form/SV_e3Y2QzGnmNxR7CZ"
+                "http://canterbury.qualtrics.com/jfe/form/SV_bee5e5GDr6BYPcN"
               }
             >
               Qualtrics Survey
