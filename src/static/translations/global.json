@@ -218,5 +218,9 @@
     "Las siguientes actividades estarán disponibles una vez que completes al menos un juego:"
   ],
   "qualtric-post-test": ["Qualtrics Post Test", "Cuestionario de salida"],
-  "qualtric-survey": ["Qualtrics Survey", "Encuesta de satisfacción."]
+  "qualtric-survey": ["Qualtrics Survey", "Encuesta de satisfacción."],
+  "incorrect-password": [
+    "Whoops, the username and/or password is incorrect!",
+    "¡Vaya, el nombre de usuario y / o contraseña son incorrectos!"
+  ]
 }

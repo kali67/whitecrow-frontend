@@ -71,7 +71,11 @@ export const LoginSignUpView = ({
   );
 };
 
-const LanguagesSelect = ({ languages, handleLanguageChange, activeLanguage }) => {
+const LanguagesSelect = ({
+  languages,
+  handleLanguageChange,
+  activeLanguage
+}) => {
   return (
     <div
       style={{
@@ -160,12 +164,19 @@ const LoginForm = ({
                   isRequired
                   defaultValue=""
                 >
-                  {({ fieldProps }) => (
-                    <TextField
-                      type="password"
-                      autoComplete="off"
-                      {...fieldProps}
-                    />
+                  {({ fieldProps, error }) => (
+                    <Fragment>
+                      <TextField
+                        type="password"
+                        autoComplete="off"
+                        {...fieldProps}
+                      />
+                      {error && (
+                        <ErrorMessage>
+                          <Translate id="incorrect-password" />
+                        </ErrorMessage>
+                      )}
+                    </Fragment>
                   )}
                 </Field>
                 <FormFooter>

@@ -80,10 +80,11 @@ class LoginPage extends React.Component {
             this.props.history.push("/home");
           });
       })
-      .catch(error => {
-        // if (error.response.status === 401) {
-        //   denyAccess();
-        // }
+      .catch(() => {
+        return {
+          username: "error",
+          password: "error"
+        };
       });
   };
 
