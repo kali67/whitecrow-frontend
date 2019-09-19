@@ -43,10 +43,7 @@ class CreateGameForm extends React.Component {
             );
           })
           .catch(error => {
-            console.log(error);
-            if (error.response.status === 401) {
-              denyAccess();
-            }
+            denyAccess();
           })
       );
     }

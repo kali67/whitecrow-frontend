@@ -20,7 +20,6 @@ const AccountPasswordForm = () => {
       <FormWrapper>
         <Form
           onSubmit={data => {
-            console.log(data);
           }}>
           {({ formProps, submitting }) => (
             <form {...formProps}>

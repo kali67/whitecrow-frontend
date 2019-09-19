@@ -45,7 +45,6 @@ class HomePage extends React.Component {
             this.setState({ loading: false });
           })
           .catch(error => {
-            console.log(error);
             this.setState({ loading: false });
           });
       })

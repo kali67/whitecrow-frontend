@@ -14,7 +14,6 @@ class EndGameController extends React.Component {
       loading: true,
       gameData: null
     };
-    console.log(this.props)
   }
   componentDidMount() {
     document.getElementById("root").style = "background: #1c2321;";
@@ -51,7 +50,6 @@ class EndGameController extends React.Component {
         }
       )
       .then(response => {
-        console.log(response);
         this.setState({ loading: false, gameData: response["data"] });
       });
   };

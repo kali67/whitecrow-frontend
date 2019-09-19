@@ -59,7 +59,6 @@ class SinglePlayerController extends React.Component {
 
   findPlayerTurnResult = () => {
     let playerNext = this.props.players[this.props.playerTurnIndex];
-    console.log(this.props.AITurnResults);
     return this.props.AITurnResults.filter(
       value => value["playerId"] === playerNext["id"]
     )[0];
