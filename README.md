@@ -24,8 +24,9 @@ or install any dependencies of the project if you are building the docker image.
 If you have, remove the build directory and the `/node_modules` directory and the `package-lock.json` file from root. This can be done with
 `rm -rf package-lock.json node_modules`.
 
-Once you have built the image, you can run it by running this command `docker run whitecrow-frontend` this will take care of everything for you. Serve is
-being used to serve the static app. Read about it [here](https://www.npmjs.com/package/serve).
+Once you have built the image, you can run it by running this command `docker run docker run -p 3000:5000 whitecrow-frontend` this will take care of everything for you. 
+-p indicates that port 3000 on the physical machine maps to port 5000 on the virtual. Change port 3000 if you wish to recieve requests from a different port.
+Serve is being used to serve the static app. Read about it [here](https://www.npmjs.com/package/serve).
 
 
 
