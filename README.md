@@ -1,26 +1,32 @@
-## Available Scripts
+# White Crow PM Frontend
 
-In the project directory, you can run:
+You will need the [backend](https://bitbucket.org/kali67/whitecrow-backend/src/master) running in order for the frontend to be able
+to make requests. In order to set the url for the backend, you can do this by modifying `axios.defaults.baseURL = "http://localhost:8080"` in
+`src/index.js`.
 
-### `npm start`
 
-Runs the app in the development mode.
-Open [http://localhost:3000/login](http://localhost:3000/login) to view it in the browser.
+## Local Development
+Before proceeding, you will need to run `yarn` to install all the project dependencies. If you don't already have `yarn` installed, then please
+visit [here](https://yarnpkg.com/lang/en/docs/install/#mac-stable) to do so.
 
-The page will reload if you make edits.
+In the project directory, run `yarn start`. This runs the app in development mode. You can view this by navigating to `http://localhost:3000/login`
+in your browser.
+
+The page will reload if you make edits to files.
 You will also see any lint errors in the console.
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Production Deployment
 
-### `npm run build`
+### Docker Deployment
+All you need to do is build the docker image by running `docker build -t whitecrow-frontend .` from the root directory. A word of caution, don't build
+or install any dependencies of the project if you are building the docker image. If you have, remove the build directory and the `/node_modules` directory.
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Once you have built the image, you can run it by running this command `docker run whitecrow-frontend` this will take care of everything for you. Serve is
+being used to serve the static app. Read about it [here](https://www.npmjs.com/package/serve).
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+
+You can build the production application to the `build` directory by running `npm run build`. It correctly bundles React in production mode and optimizes the build for the best performance.
+The build is minified and the filenames include the hashes. 
