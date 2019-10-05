@@ -20,7 +20,9 @@ You will also see any lint errors in the console.
 
 ### Docker Deployment
 All you need to do is build the docker image by running `docker build -t whitecrow-frontend .` from the root directory. A word of caution, don't build
-or install any dependencies of the project if you are building the docker image. If you have, remove the build directory and the `/node_modules` directory.
+or install any dependencies of the project if you are building the docker image. 
+If you have, remove the build directory and the `/node_modules` directory and the `package-lock.json` file from root. This can be done with
+`rm -rf package-lock.json node_modules`.
 
 Once you have built the image, you can run it by running this command `docker run whitecrow-frontend` this will take care of everything for you. Serve is
 being used to serve the static app. Read about it [here](https://www.npmjs.com/package/serve).
