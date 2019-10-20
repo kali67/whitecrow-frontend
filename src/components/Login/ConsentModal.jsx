@@ -55,11 +55,7 @@ const ModalContent = styled.div`
 `;
 
 const ConsentModal = props => (
-  <Modal
-    isOpen={props.isOpen}
-    onRequestClose={props.closeConsent}
-    style={customStyles}
-  >
+  <Modal isOpen={props.isOpen} onRequestClose={props.closeConsent} style={customStyles}>
     <ModalBody>
       <ModalHeader>
         <h1>
@@ -79,10 +75,22 @@ const ConsentModal = props => (
         <br />
         <Translate id={"information-para-3"} />
         <ul>
-          <li> <Translate id={"information-para-3-1"} /></li>
-          <li> <Translate id={"information-para-3-2"} /></li>
-          <li> <Translate id={"information-para-3-3"} /></li>
-          <li> <Translate id={"information-para-3-4"} /></li>
+          <li>
+            {" "}
+            <Translate id={"information-para-3-1"} />
+          </li>
+          <li>
+            {" "}
+            <Translate id={"information-para-3-2"} />
+          </li>
+          <li>
+            {" "}
+            <Translate id={"information-para-3-3"} />
+          </li>
+          <li>
+            {" "}
+            <Translate id={"information-para-3-4"} />
+          </li>
         </ul>
         <br />
         <br />

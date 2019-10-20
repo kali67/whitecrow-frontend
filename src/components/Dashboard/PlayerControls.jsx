@@ -9,50 +9,7 @@ import PlayerTurnTracker from "../PlayerTurn/PlayerTurnTracker";
 import coin from "../../static/image/coin.png";
 import calendar from "../../static/image/calendar.png";
 
-const PlayerOrderWrapper = styled.div`
-  display: flex;
-  min-width: 10%;
-  padding-right: 2%;
-  flex-direction: column;
-`;
-
-const LargeIcon = styled.div`
-  background-image: url(${props => props.image});
-  height: 40px;
-  width: 35px;
-  margin-right: 10px;
-  background-size: cover;
-`;
-
-const PlayerControlContainer = styled.div`
-  min-height: 50%;
-  display: flex;
-  flex-direction: row;
-  padding: 2%;
-  margin-bottom: 3%;
-  border-radius: 1%;
-  border: 2px solid #e1e1e1;
-`;
-
-const PlayerInfoContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  padding-left: 2%;
-  min-width: 50%;
-  border-left: 1px dashed #e1e1e1;
-`;
-
 export default class PlayerControls extends React.Component {
-  calculatePlayerDayFromTurn = () => {
-    if (!this.props.usersPlayerUpdated || !this.props.showEndTurnUpdate) {
-      return this.props.userPlayer.day;
-    }
-    if (this.props.showEndTurnUpdate) {
-      return this.props.usersPlayerUpdated["currentDay"];
-    }
-  };
-
   render() {
     return (
       <PlayerControlContainer>
@@ -83,43 +40,6 @@ export default class PlayerControls extends React.Component {
     );
   }
 }
-
-const RollDiceBtnWrapper = styled.div`
-  height: 100%;
-  display: flex;
-  align-items: flex-end;
-`;
-
-const TextWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-`;
-
-const IconText = styled.div`
-  color: ${props => props.color};
-  margin-top: 8px;
-`;
-
-const ActiveRollButtonStyle = {
-  height: "22%",
-  width: "100%",
-  justifyContent: "center",
-  background: "#36B37E"
-};
-const DisabledRollButtonStyle = {
-  height: "22%",
-  width: "100%",
-  justifyContent: "center"
-};
-
-const getMoneyTextColor = money => {
-  if (money > 800) {
-    return "#36B37E";
-  } else if (money < 200) {
-    return "#BF2600";
-  }
-  return "#FF8B00";
-};
 
 const PlayerInfoView = ({ money, day, rollDie, rolledDisabled, isLoadingRoll }) => {
   return (
@@ -192,3 +112,74 @@ export class CardHolder extends React.Component {
     return <Tabs tabs={tabs(this.state)} />;
   }
 }
+
+const RollDiceBtnWrapper = styled.div`
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+`;
+
+const TextWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+const IconText = styled.div`
+  color: ${props => props.color};
+  margin-top: 8px;
+`;
+
+const ActiveRollButtonStyle = {
+  height: "22%",
+  width: "100%",
+  justifyContent: "center",
+  background: "#36B37E"
+};
+const DisabledRollButtonStyle = {
+  height: "22%",
+  width: "100%",
+  justifyContent: "center"
+};
+
+const PlayerOrderWrapper = styled.div`
+  display: flex;
+  min-width: 10%;
+  padding-right: 2%;
+  flex-direction: column;
+`;
+
+const LargeIcon = styled.div`
+  background-image: url(${props => props.image});
+  height: 40px;
+  width: 35px;
+  margin-right: 10px;
+  background-size: cover;
+`;
+
+const PlayerControlContainer = styled.div`
+  min-height: 50%;
+  display: flex;
+  flex-direction: row;
+  padding: 2%;
+  margin-bottom: 3%;
+  border-radius: 1%;
+  border: 2px solid #e1e1e1;
+`;
+
+const PlayerInfoContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding-left: 2%;
+  min-width: 50%;
+  border-left: 1px dashed #e1e1e1;
+`;
+
+const getMoneyTextColor = money => {
+  if (money > 800) {
+    return "#36B37E";
+  } else if (money < 200) {
+    return "#BF2600";
+  }
+  return "#FF8B00";
+};

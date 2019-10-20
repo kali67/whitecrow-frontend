@@ -59,9 +59,7 @@ class SinglePlayerController extends React.Component {
 
   findPlayerTurnResult = () => {
     let playerNext = this.props.players[this.props.playerTurnIndex];
-    return this.props.AITurnResults.filter(
-      value => value["playerId"] === playerNext["id"]
-    )[0];
+    return this.props.AITurnResults.filter(value => value["playerId"] === playerNext["id"])[0];
   };
 
   // Used to keep the players turn but just animate a nested turn result i.e. set back
@@ -115,10 +113,7 @@ class SinglePlayerController extends React.Component {
     }
     return (
       <div style={{ display: "flex" }}>
-        <DrawerController
-          gameId={this.props.match.params.id}
-          rollDie={this.rollDie}
-        />
+        <DrawerController gameId={this.props.match.params.id} rollDie={this.rollDie} />
         <GameBoard players={this.props.players} />
         {this.isUsersTurn() && (
           <UserPlayerTurn

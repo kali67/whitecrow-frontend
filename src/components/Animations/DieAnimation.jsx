@@ -2,11 +2,16 @@ import React from "react";
 import Modal from "react-modal";
 import ReactDice from "react-dice-complete";
 import "react-dice-complete/dist/react-dice-complete.css";
-import {Translate} from "react-localize-redux";
+import { Translate } from "react-localize-redux";
+import styled from "styled-components";
 
-import {ModalText, ModalBody} from "./TurnNotification";
+import { ModalText, ModalBody } from "./TurnNotification";
 
 Modal.setAppElement("#root");
+
+const NonClickableDiv = styled.div`
+  pointer-events: none;
+`;
 
 const customStyles = {
   content: {
@@ -37,7 +42,7 @@ export default class DieAnimation extends React.Component {
     this.reactDice = React.createRef();
     this.state = {
       isOpen: true
-    }
+    };
   }
 
   componentDidMount() {
@@ -47,9 +52,9 @@ export default class DieAnimation extends React.Component {
       }, 500);
     } else {
       setTimeout(() => {
-       this.setState({isOpen: false}, () => {
-         this.props.callback();
-       })
+        this.setState({ isOpen: false }, () => {
+          this.props.callback();
+        });
       }, 5000);
     }
   }
@@ -65,18 +70,22 @@ export default class DieAnimation extends React.Component {
       <Modal isOpen={this.state.isOpen} style={customStyles}>
         <ModalBody>
           {this.props.number < 0 ? (
-            <ModalText><Translate id="go-back" /></ModalText>
+            <ModalText>
+              <Translate id="go-back" />
+            </ModalText>
           ) : (
-            <ReactDice
-              faceColor="#ffffff"
-              dotColor="#000000"
-              dieSize={120}
-              numDice={1}
-              rollDone={() => {
-                this.rollDoneCallback();
-              }}
-              ref={dice => (this.reactDice = dice)}
-            />
+            <NonClickableDiv>
+              <ReactDice
+                faceColor="#ffffff"
+                dotColor="#000000"
+                dieSize={120}
+                numDice={1}
+                rollDone={() => {
+                  this.rollDoneCallback();
+                }}
+                ref={dice => (this.reactDice = dice)}
+              />
+            </NonClickableDiv>
           )}
         </ModalBody>
       </Modal>
