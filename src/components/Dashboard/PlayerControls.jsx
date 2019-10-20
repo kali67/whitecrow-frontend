@@ -25,7 +25,7 @@ const LargeIcon = styled.div`
 `;
 
 const PlayerControlContainer = styled.div`
-  min-height: 55%;
+  min-height: 50%;
   display: flex;
   flex-direction: row;
   padding: 2%;
