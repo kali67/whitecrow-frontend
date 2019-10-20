@@ -20,7 +20,7 @@ const Date = styled.div`
 const Title = styled.div`
   flex-grow: 1;
   text-align: center;
-  font-size: 1.1em;
+  font-size: 1em;
   color: white;
 `;
 
@@ -73,7 +73,7 @@ export const Layer = styled.div`
 const Description = styled.div`
   flex-grow: 1;
   text-align: center;
-  font-size: 0.8em;
+  font-size: 0.7em;
   width: 100%;
   color: ${props => props.descriptionColor || "#FFFFFF"};
 `;

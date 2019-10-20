@@ -112,6 +112,10 @@ const usePlayerTurn = (playerId, gameId) => {
 };
 
 export const rollDie = (userPlayerId, gameId) => dispatch => {
+  dispatch({
+    type: LOADING,
+    isLoadingQueryPlayerTurns: true
+  });
   usePlayerTurn(userPlayerId, gameId)
     .then(response => {
       dispatch({
@@ -138,8 +142,7 @@ export const finishPlayerTurn = (
   let currentPlayerTurnIndex = (playerTurnIndex + 1) % players.length;
   if (isUserTurn) {
     dispatch({
-      type: LOADING,
-      isLoadingQueryPlayerTurns: true
+      type: LOADING
     });
     queryPlayerTurns(gameId)
       .then(response => {
