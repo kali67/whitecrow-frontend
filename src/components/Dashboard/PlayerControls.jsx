@@ -25,7 +25,7 @@ const LargeIcon = styled.div`
 `;
 
 const PlayerControlContainer = styled.div`
-  min-height: 375px;
+  min-height: 55%;
   display: flex;
   flex-direction: row;
   padding: 2%;
@@ -121,13 +121,7 @@ const getMoneyTextColor = money => {
   return "#FF8B00";
 };
 
-const PlayerInfoView = ({
-  money,
-  day,
-  rollDie,
-  rolledDisabled,
-  isLoadingRoll
-}) => {
+const PlayerInfoView = ({ money, day, rollDie, rolledDisabled, isLoadingRoll }) => {
   return (
     <PlayerInfoContainer>
       <div
