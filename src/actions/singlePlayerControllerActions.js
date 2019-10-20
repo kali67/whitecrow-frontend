@@ -68,7 +68,7 @@ export const fetchGameDetails = gameId => dispatch => {
 
 const queryPlayerTurns = gameId => {
   return axios.post(
-    `/game/single/${gameId}/query_turns`,
+    `/game/single/${gameId}/start`,
     {},
     {
       headers: {
