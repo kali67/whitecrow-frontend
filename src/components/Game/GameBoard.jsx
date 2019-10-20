@@ -13,8 +13,8 @@ import {
   SleepImage,
   BeachImage,
   MoonImage
-} from "../static/TileObjects";
-import Spinner, { SpinnerFullCircle } from "./Spinner";
+} from "../../static/TileObjects";
+import Spinner, { SpinnerFullCircle } from "../Animations/Spinner";
 import BoardTile from "./BoardTile";
 
 const Wrapper = styled.div`

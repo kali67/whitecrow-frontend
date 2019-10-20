@@ -3,10 +3,10 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import HomePage from "../pages/HomePage";
 import SinglePlayerController from "../pages/SinglePlayerController";
-import EndGameController from "./EndGameController";
+import EndGameController from "./EndGame/EndGameController";
 import LoginPage from "../pages/LoginPage";
 import AuthenticationWrapper from "../components/RequiresAuthentication";
-import Page from "./Page";
+import Page from "../pages/Page";
 import AccountInfoContainer from "./Account/AccountInfoContainer";
 
 const SinglePlayerControllerAuth = AuthenticationWrapper(

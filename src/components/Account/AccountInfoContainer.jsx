@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import axios from "axios";
 
-import { SpinnerFullCircle } from "../Spinner";
+import { SpinnerFullCircle } from "../Animations/Spinner";
 import AccountLanguageForm from "./AccountLanguageForm";
 import AccountPasswordForm from "./AccountPasswordForm";
 import AccountProfileForm from "./AccountProfileForm";

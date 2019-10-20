@@ -1,9 +1,9 @@
 import React from "react";
-import GameBoard from "../components/GameBoard";
-import { SpinnerFullCircle } from "../components/Spinner";
-import DrawerController from "../components/DrawerController";
-import PlayerTurnProgress from "../components/PlayerTurnProgress";
-import UserPlayerTurn from "../components/UserPlayerTurn";
+import GameBoard from "../components/Game/GameBoard";
+import { SpinnerFullCircle } from "../components/Animations/Spinner";
+import DrawerController from "../components/Dashboard/DrawerController";
+import PlayerTurnProgress from "../components/PlayerTurn/PlayerTurnProgress";
+import UserPlayerTurn from "../components/PlayerTurn/UserPlayerTurn";
 
 import {
   fetchGameDetails,

@@ -1,11 +1,11 @@
 import React from "react";
 import axios from "axios";
-import { SpinnerFullCircle } from "./Spinner";
+import { SpinnerFullCircle } from "../Animations/Spinner";
 import EndGameView from "./EndGameView";
-import GameBoard from "./GameBoard";
+import GameBoard from "../Game/GameBoard";
 import { connect } from "react-redux";
-import { fetchGameDetails, resetLoadingStates } from "../actions/singlePlayerControllerActions";
-import { fetchUserPlayer, resetUserLoadingState } from "../actions/userActions";
+import { fetchGameDetails, resetLoadingStates } from "../../actions/singlePlayerControllerActions";
+import { fetchUserPlayer, resetUserLoadingState } from "../../actions/userActions";
 
 class EndGameController extends React.Component {
   constructor(props) {

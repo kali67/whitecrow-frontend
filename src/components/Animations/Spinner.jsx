@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Spinner from "@atlaskit/spinner";
 
-import Loading from "../static/image/test.gif";
+import Loading from "../../static/image/test.gif";
 
 const LoadingGifContainer = styled.div`
   z-index: 1;

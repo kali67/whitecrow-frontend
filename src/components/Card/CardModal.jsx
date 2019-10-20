@@ -3,7 +3,7 @@ import Modal from "react-modal";
 import styled from "styled-components";
 
 import Card from "./Card";
-import { SpinnerFullCircle } from "./Spinner";
+import { SpinnerFullCircle } from "../Animations/Spinner";
 import { Button } from "@atlaskit/button/components/Button";
 import { Translate } from "react-localize-redux";
 
@@ -51,19 +51,15 @@ export default class CardModal extends React.Component {
     }
     return (
       <Modal isOpen={true} style={customStyles}>
-        <ModalCardWrapper style={{"maxWidth": "300px"}}>
+        <ModalCardWrapper style={{ maxWidth: "300px" }}>
           {!this.props.requiresDecision ? (
-            <NotifyFinishedRead
-              dismissCardModel={this.props.dismissCardModel}
-            />
+            <NotifyFinishedRead dismissCardModel={this.props.dismissCardModel} />
           ) : (
             <Padding />
           )}
           <Card card={this.state.card} />
         </ModalCardWrapper>
-        {this.props.decision ? (
-          <CardDecisionOutcome decision={this.props.decision} />
-        ) : null}
+        {this.props.decision ? <CardDecisionOutcome decision={this.props.decision} /> : null}
         {this.props.requiresDecision ? (
           <CardDecisionControls
             accept={() => this.props.addOpportunityCard(this.state.card)}
@@ -72,9 +68,7 @@ export default class CardModal extends React.Component {
             declineCard={this.props.declineCard}
           />
         ) : null}
-        {this.props.cardCancelled ? (
-          <CardDecisionOutcome cardCancelled={true} />
-        ) : null}
+        {this.props.cardCancelled ? <CardDecisionOutcome cardCancelled={true} /> : null}
       </Modal>
     );
   }
@@ -110,8 +104,7 @@ const CardDecisionControls = props => {
         }}
         onClick={() => {
           props.declineCard();
-        }}
-      >
+        }}>
         <Translate id="decline-btn" />
       </Button>
       <Button
@@ -124,8 +117,7 @@ const CardDecisionControls = props => {
           background: "green",
           width: "110px",
           justifyContent: "center"
-        }}
-      >
+        }}>
         <Translate id="accept-btn" />
       </Button>
     </ButtonWrapper>
@@ -143,8 +135,7 @@ const NotifyFinishedRead = props => {
         height: "50px",
         justifyContent: "center"
       }}
-      appearance="primary"
-    >
+      appearance="primary">
       <Translate id="finished-reading" />
     </Button>
   );

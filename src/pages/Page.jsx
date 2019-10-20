@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Avatar from "./Avatar";
+import Avatar from "../components/Login/Avatar";
 
 import { WhitecrowBlack } from "../static/TileObjects";
 import { LogoutImage } from "../static/TileObjects";

@@ -1,16 +1,19 @@
 import React from "react";
 import { storiesOf } from "@storybook/react";
-import CardController from "../src/components/CardController";
+import CardController from "../src/components/Card/CardController";
 import Provider from "./provider";
 
 let card = {
-  category: "People",
-  title: "This is a test title!",
-  action: "Pay $100",
+  categoryDescription: "People (Organization)",
+  title: "\"Process-itis\"",
+  action: "Pay $250",
   subTitle: "Situation",
+  color:"#008000",
   description:
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec fringilla ligula eros, vitae dapibus urna laoreet quis. Duis finibus tempus purus, vitae dapibus urna laoreet quis. "
+    "In this organization everything has to be done following a process that was defined years ago. Currently nobody remembers why the things are done this way."
 };
+
+
 
 storiesOf("Card-Modal", module)
   .addDecorator(story => <Provider story={story()} />)

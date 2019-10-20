@@ -1,14 +1,14 @@
 import React from "react";
-import AnimateBoardMovement from "./AnimateBoardMovement";
-import TurnNotification from "./TurnNotification";
-import CardController from "./CardController";
+import AnimateBoardMovement from "../Animations/AnimateBoardMovement";
+import TurnNotification from "../Animations/TurnNotification";
+import CardController from "../Card/CardController";
 import { Translate } from "react-localize-redux";
 import { connect } from "react-redux";
 import {
   updatePlayerCards,
   updatePlayerDay,
   updatePlayerMoney
-} from "../actions/userActions";
+} from "../../actions/userActions";
 
 import {
   animatePlayerMovement,
@@ -19,11 +19,11 @@ import {
   showFullScreenNotification,
   stopPlayerTurnAnimation,
   flagAsSetBackTurn
-} from "../actions/userTurnActions";
+} from "../../actions/userTurnActions";
 
-import { updateCurrentUserTurnResult } from "../actions/singlePlayerControllerActions";
+import { updateCurrentUserTurnResult } from "../../actions/singlePlayerControllerActions";
 
-import DieAnimation from "./DieAnimation";
+import DieAnimation from "../Animations/DieAnimation";
 import axios from "axios";
 
 const NOTIFICATION_DISPLAY_TIME_MS = 3000;

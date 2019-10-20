@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import avatarImage from "../static/image/avatar.png";
+import avatarImage from "../../static/image/avatar.png";
 
 const AvatarWrapper = styled.div`
   border: 1.2px solid grey;

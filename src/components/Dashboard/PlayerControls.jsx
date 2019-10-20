@@ -4,10 +4,10 @@ import { Translate } from "react-localize-redux";
 
 import Button from "@atlaskit/button";
 import Tabs from "@atlaskit/tabs";
-import CardHistroy from "./CardHistroy";
-import PlayerTurnTracker from "./PlayerTurnTracker";
-import coin from "../static/image/coin.png";
-import calendar from "../static/image/calendar.png";
+import CardHistroy from "../Card/CardHistroy";
+import PlayerTurnTracker from "../PlayerTurn/PlayerTurnTracker";
+import coin from "../../static/image/coin.png";
+import calendar from "../../static/image/calendar.png";
 
 const PlayerOrderWrapper = styled.div`
   display: flex;
@@ -62,8 +62,7 @@ export default class PlayerControls extends React.Component {
               marginBottom: "8%",
               textDecoration: "underline",
               textAlign: "center"
-            }}
-          >
+            }}>
             <Translate id="play-order" />
           </b>
           <PlayerTurnTracker
@@ -137,8 +136,7 @@ const PlayerInfoView = ({
           flexDirection: "row",
           justifyContent: "space-evenly",
           marginTop: "5%"
-        }}
-      >
+        }}>
         <TextWrapper>
           <LargeIcon image={coin} />
           <IconText color={getMoneyTextColor(money)}>
@@ -148,23 +146,18 @@ const PlayerInfoView = ({
         <TextWrapper>
           <LargeIcon image={calendar} />
           <IconText color="black">
-            <Translate>
-              {({ translate }) => <h4>{translate("day", { day: day })}</h4>}
-            </Translate>
+            <Translate>{({ translate }) => <h4>{translate("day", { day: day })}</h4>}</Translate>
           </IconText>
         </TextWrapper>
       </div>
 
       <RollDiceBtnWrapper>
         <Button
-          style={
-            rolledDisabled ? DisabledRollButtonStyle : ActiveRollButtonStyle
-          }
+          style={rolledDisabled ? DisabledRollButtonStyle : ActiveRollButtonStyle}
           onClick={e => rollDie()}
           appearance="primary"
           isDisabled={rolledDisabled}
-          isLoading={isLoadingRoll}
-        >
+          isLoading={isLoadingRoll}>
           <Translate id="roll-die" />
         </Button>
       </RollDiceBtnWrapper>

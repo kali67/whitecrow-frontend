@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Modal from "react-modal";
 import Button from "@atlaskit/button";
 
-import whitecrow from "../static/image/whitecrow.png";
+import whitecrow from "../../static/image/whitecrow.png";
 
 Modal.setAppElement("#root");
 

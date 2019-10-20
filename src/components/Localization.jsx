@@ -4,7 +4,7 @@ import { withLocalize } from "react-localize-redux";
 import MainRouter from "./MainRouter";
 import { connect } from "react-redux";
 
-import { SpinnerFullCircle } from "./Spinner";
+import { SpinnerFullCircle } from "./Animations/Spinner";
 
 class Localization extends React.Component {
   render() {

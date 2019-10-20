@@ -3,12 +3,12 @@ import styled from "styled-components";
 import { connect } from "react-redux";
 import axios from "axios";
 
-import { LoginSignUpView } from "../components/LoginWidget";
+import { LoginSignUpView } from "../components/Login/LoginWidget";
 import whitecrow from "../static/image/whitecrowwhite.png";
 import { showLogin, showSignUp, login } from "../actions/loginActions";
 import { authenticate } from "../actions/authActions";
 import { Translate } from "react-localize-redux";
-import ConsentModal from "../components/ConsentModal";
+import ConsentModal from "../components/Login/ConsentModal";
 
 const LoginWrapper = styled.div`
   display: flex;

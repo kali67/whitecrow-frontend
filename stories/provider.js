@@ -4,6 +4,7 @@ import store from "../src/store";
 import globalTranslations from "../src/static/translations/global";
 import { renderToStaticMarkup } from "react-dom/server";
 import { LocalizeProvider } from "react-localize-redux";
+import "@atlaskit/css-reset";
 
 export default function Provider({ story }) {
   return (

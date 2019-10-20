@@ -4,7 +4,7 @@ import axios from "axios";
 import CardModal from "./CardModal";
 
 import { connect } from "react-redux";
-import { updatePlayerCards, updatePlayerMoney } from "../actions/userActions";
+import { updatePlayerCards, updatePlayerMoney } from "../../actions/userActions";
 
 class CardController extends React.Component {
   constructor(props) {

@@ -2,12 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
 
-import {
-  openDashboard,
-  closeDashboard,
-} from "../actions/dashboardActions";
+import { openDashboard, closeDashboard } from "../../actions/dashboardActions";
 
-import hamburger from "../static/image/hamburger.png";
+import hamburger from "../../static/image/hamburger.png";
 import Slider from "react-slide-out";
 import PlayerControls, { CardHolder } from "./PlayerControls";
 
@@ -37,7 +34,6 @@ const DrawerContainer = styled.div`
 `;
 
 class Dashboard extends React.Component {
-
   componentDidMount() {
     this.setState({ userPlayer: this.props.userPlayer });
   }
@@ -49,8 +45,7 @@ class Dashboard extends React.Component {
           foldWidth="60px"
           isOpen={this.props.isOpen}
           leftToRight={true}
-          onOutsideClick={() => this.props.closeDashboard()}
-        >
+          onOutsideClick={() => this.props.closeDashboard()}>
           <DrawerContainer>
             <PlayerControls
               usersPlayerUpdated={this.props.userPlayerUpdated}
@@ -63,14 +58,14 @@ class Dashboard extends React.Component {
               closeDrawer={() => this.props.closeDashboard()}
             />
 
-            <CardHolder mail={this.props.userPlayer.mail} opportunity={this.props.userPlayer.opportunity}/>
+            <CardHolder
+              mail={this.props.userPlayer.mail}
+              opportunity={this.props.userPlayer.opportunity}
+            />
           </DrawerContainer>
         </Slider>
         <ClosedDrawer>
-          <Hamburger
-            image={hamburger}
-            onClick={() => this.props.openDashboard()}
-          />
+          <Hamburger image={hamburger} onClick={() => this.props.openDashboard()} />
         </ClosedDrawer>
       </React.Fragment>
     );
@@ -82,11 +77,10 @@ const mapStateToProps = state => ({
   players: state.game.players,
   playerTurnIndex: state.game.playerTurnIndex,
   isSinglePlayersTurn:
-    state.game.players[state.game.playerTurnIndex]["id"] ===
-    state.user.player["id"],
+    state.game.players[state.game.playerTurnIndex]["id"] === state.user.player["id"],
   userPlayerUpdated: state.game.userTurnResult,
   userPlayer: state.user.player,
-  isLoadingQueryPlayerTurns: state.game.isLoadingQueryPlayerTurns
+  isLoadingQueryPlayerTurns: state.game.isLoadingQueryPlayerTurns,
 });
 
 export default connect(

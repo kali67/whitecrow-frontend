@@ -10,7 +10,7 @@ import {
   updateHasTakenPreTest,
   setAccountDetails
 } from "../actions/userActions";
-import { SpinnerFullCircle } from "../components/Spinner";
+import { SpinnerFullCircle } from "../components/Animations/Spinner";
 
 const DisabledLinkStyle = { opacity: ".4", pointerEvents: "none" };
 

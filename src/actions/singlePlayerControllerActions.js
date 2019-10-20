@@ -53,7 +53,6 @@ export const fetchGameDetails = gameId => dispatch => {
         playerTurnIndex: gameResponse.data["next"]["order"],
         gameId: gameId
       });
-      console.log(gameResponse);
       dispatch({
         type: IS_LOADING_GAME_DETAILS,
         isLoadingGameDetails: false
@@ -113,10 +112,6 @@ const usePlayerTurn = (playerId, gameId) => {
 };
 
 export const rollDie = (userPlayerId, gameId) => dispatch => {
-  dispatch({
-    type: LOADING,
-    isLoadingQueryPlayerTurns: true
-  });
   usePlayerTurn(userPlayerId, gameId)
     .then(response => {
       dispatch({
@@ -156,7 +151,6 @@ export const finishPlayerTurn = (
         });
       })
       .catch(error => {
-        console.log(error);
         dispatch({
           type: ACCESS_DENIED
         });

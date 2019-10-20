@@ -1,8 +1,8 @@
 import React from "react";
-import AnimateBoardMovement from "./AnimateBoardMovement";
-import CardController from "./CardController";
-import DieAnimation from "./DieAnimation";
-import TurnNotification from "./TurnNotification";
+import AnimateBoardMovement from "../Animations/AnimateBoardMovement";
+import CardController from "../Card/CardController";
+import DieAnimation from "../Animations/DieAnimation";
+import TurnNotification from "../Animations/TurnNotification";
 
 const NOTIFICATION_DISPLAY_TIME_MS = 3000;
 

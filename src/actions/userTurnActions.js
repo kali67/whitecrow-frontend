@@ -43,7 +43,6 @@ export const dismissCardModal = () => dispatch => {
 };
 
 export const showDrawnOpportunityCard = card => dispatch => {
-  console.log("shown card");
   dispatch({
     type: SHOW_DRAWN_OPPOURTUNITY_CARD,
     card: card

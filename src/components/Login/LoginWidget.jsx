@@ -16,7 +16,7 @@ import { Translate } from "react-localize-redux";
 import styled from "styled-components";
 import Select from "@atlaskit/select/dist/esm/Select";
 
-import globe from "../static/image/globe.png";
+import globe from "../../static/image/globe.png";
 
 const Link = styled.p`
   color: #0052cc;
