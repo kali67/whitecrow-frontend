@@ -1,68 +1,35 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# White Crow PM Frontend
 
-## Available Scripts
+You will need the [backend](https://bitbucket.org/kali67/whitecrow-backend/src/master) running in order for the frontend to be able
+to make requests. In order to set the url for the backend, you can do this by modifying `axios.defaults.baseURL = "http://localhost:8080"` in
+`src/index.js`.
 
-In the project directory, you can run:
 
-### `npm start`
+## Local Development
+Before proceeding, you will need to run `yarn` to install all the project dependencies. If you don't already have `yarn` installed, then please
+visit [here](https://yarnpkg.com/lang/en/docs/install/#mac-stable) to do so.
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+In the project directory, run `yarn start`. This runs the app in development mode. You can view this by navigating to `http://localhost:3000/login`
+in your browser.
 
-The page will reload if you make edits.<br>
+The page will reload if you make edits to files.
 You will also see any lint errors in the console.
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Production Deployment
 
-### `npm run build`
+### Docker Deployment
+All you need to do is build the docker image by running `docker build -t whitecrow-frontend .` from the root directory. A word of caution, don't build
+or install any dependencies of the project if you are building the docker image. 
+If you have, remove the build directory and the `/node_modules` directory and the `package-lock.json` file from root. This can be done with
+`rm -rf package-lock.json node_modules`.
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Once you have built the image, you can run it by running this command `docker run docker run -p 3000:5000 whitecrow-frontend` this will take care of everything for you. 
+-p indicates that port 3000 on the physical machine maps to port 5000 on the virtual. Change port 3000 if you wish to recieve requests from a different port.
+Serve is being used to serve the static app. Read about it [here](https://www.npmjs.com/package/serve).
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+You can build the production application to the `build` directory by running `npm run build`. It correctly bundles React in production mode and optimizes the build for the best performance.
+The build is minified and the filenames include the hashes. 
