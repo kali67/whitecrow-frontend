@@ -5,36 +5,6 @@ import { Translate } from "react-localize-redux";
 
 import Card from "./Card";
 
-const CardContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  width: 100%
-  margin-top: 5%;
-  overflow-y: scroll;
-`;
-
-const CardSizeWrapper = styled.div`
-  width: 200px;
-  margin: 2%
-  height: auto;
-`;
-
-const Content = styled.div`
-  align-items: center;
-  background-color: ${themed({ light: colors.N20, dark: colors.DN10 })};
-  border-radius: ${borderRadius}px;
-  color: ${colors.subtleText};
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  font-weight: 500;
-  justify-content: center;
-  margin-bottom: ${gridSize}px;
-  margin-top: ${math.multiply(gridSize, 2)}px;
-  padding: ${math.multiply(gridSize, 4)}px;
-`;
-
 export default class CardHistory extends React.Component {
   constructor(props) {
     super(props);
@@ -43,6 +13,11 @@ export default class CardHistory extends React.Component {
     };
   }
 
+  /**
+   * Gathers cards to be displayed in the
+   * card history tabs from props. Can either be
+   * MAIL or OPPORTUNITY.
+   */
   componentWillReceiveProps(nextProps) {
     if (nextProps !== this.props) {
       if (nextProps.isMail) {
@@ -83,3 +58,33 @@ export default class CardHistory extends React.Component {
     );
   }
 }
+
+const CardContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%
+  margin-top: 5%;
+  overflow-y: scroll;
+`;
+
+const CardSizeWrapper = styled.div`
+  width: 200px;
+  margin: 2%
+  height: auto;
+`;
+
+const Content = styled.div`
+  align-items: center;
+  background-color: ${themed({ light: colors.N20, dark: colors.DN10 })};
+  border-radius: ${borderRadius}px;
+  color: ${colors.subtleText};
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  font-weight: 500;
+  justify-content: center;
+  margin-bottom: ${gridSize}px;
+  margin-top: ${math.multiply(gridSize, 2)}px;
+  padding: ${math.multiply(gridSize, 4)}px;
+`;

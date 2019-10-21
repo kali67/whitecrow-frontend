@@ -9,29 +9,12 @@ import { Translate } from "react-localize-redux";
 
 Modal.setAppElement("#root");
 
-const customStyles = {
-  content: {
-    height: "100%",
-    width: "40%",
-    top: "50%",
-    left: "52%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-    alignItems: "center",
-    justifyContent: "center",
-    display: "flex",
-    flexDirection: "column",
-    backgroundColor: "rgba(0, 0, 0, 0)",
-    borderWidth: "0px",
-    overflow: "hidden"
-  },
-  overlay: {
-    backgroundColor: "rgba(0,0,0,0.75)"
-  }
-};
-
+/**
+ * Card modal for displaying mail cards or
+ * posing the decision for opportunity cards.
+ * This class also handles the displaying of accepted or
+ * rejected opportunity cards from AI players.
+ */
 export default class CardModal extends React.Component {
   constructor(props) {
     super(props);
@@ -74,24 +57,11 @@ export default class CardModal extends React.Component {
   }
 }
 
-const ModalCardWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-width: 55%;
-  max-width: 300px;
-  flex-direction: column
-  min-height: 500px;
-`;
-const ButtonWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin: 5%;
-  min-width: 55%;
-  max-width: 300px;
-`;
-
+/**
+ * Controls for card interactions. This component deals
+ * with the accepting or declining of opportunity cards and
+ * also the controls with reading cards.
+ */
 const CardDecisionControls = props => {
   return (
     <ButtonWrapper>
@@ -124,6 +94,12 @@ const CardDecisionControls = props => {
   );
 };
 
+/**
+ * This component handles the display of the
+ * finished reading button on cards.
+ *
+ * @param {dismissCardModel} props required for the button to render
+ */
 const NotifyFinishedRead = props => {
   return (
     <Button
@@ -141,11 +117,12 @@ const NotifyFinishedRead = props => {
   );
 };
 
-const Padding = styled.div`
-  height: 70px;
-  width: 100%;
-`;
-
+/**
+ * Shows the outcome of AI player decisions. This
+ * also handles the notification of cancellation of mail cards.
+ *
+ * @param {decision, cardCancelled} props
+ */
 const CardDecisionOutcome = props => {
   let decisionTextColor = props.decision === "DECLINED" ? "red" : "lime";
   if (props.cardCancelled) {
@@ -165,3 +142,48 @@ const CardDecisionOutcome = props => {
     </h1>
   );
 };
+
+const customStyles = {
+  content: {
+    height: "100%",
+    width: "40%",
+    top: "50%",
+    left: "52%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    alignItems: "center",
+    justifyContent: "center",
+    display: "flex",
+    flexDirection: "column",
+    backgroundColor: "rgba(0, 0, 0, 0)",
+    borderWidth: "0px",
+    overflow: "hidden"
+  },
+  overlay: {
+    backgroundColor: "rgba(0,0,0,0.75)"
+  }
+};
+
+const ModalCardWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 55%;
+  max-width: 300px;
+  flex-direction: column
+  min-height: 500px;
+`;
+const ButtonWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 5%;
+  min-width: 55%;
+  max-width: 300px;
+`;
+const Padding = styled.div`
+  height: 70px;
+  width: 100%;
+`;

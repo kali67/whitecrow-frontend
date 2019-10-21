@@ -27,8 +27,7 @@ export default class PlayerTurnProgress extends React.Component {
   componentDidUpdate(prevProps) {
     if (
       this.props.finalPlayerState &&
-      prevProps.finalPlayerState["playerId"] !==
-        this.props.finalPlayerState["playerId"]
+      prevProps.finalPlayerState["playerId"] !== this.props.finalPlayerState["playerId"]
     ) {
       this.setState({ isNestedTurnResult: false });
       this.updateComponentState();
@@ -122,9 +121,7 @@ export default class PlayerTurnProgress extends React.Component {
     } else if (this.state.finalPlayerState["opportunityCardResult"]) {
       this.setState({
         showCards: true,
-        decision: this.state.finalPlayerState["opportunityCardResult"][
-          "decision"
-        ],
+        decision: this.state.finalPlayerState["opportunityCardResult"]["decision"],
         card: this.state.finalPlayerState["opportunityCardResult"]["card"]
       });
     } else {
@@ -173,9 +170,7 @@ export default class PlayerTurnProgress extends React.Component {
       return (
         <DieAnimation
           callback={this.dieRollFinished}
-          number={
-            this.state.finalPlayerState["currentDay"] - this.state.player["day"]
-          }
+          number={this.state.finalPlayerState["currentDay"] - this.state.player["day"]}
         />
       );
     }

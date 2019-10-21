@@ -14,37 +14,8 @@ import {
   BeachImage,
   MoonImage
 } from "../../static/TileObjects";
-import Spinner, { SpinnerFullCircle } from "../Animations/Spinner";
+import { SpinnerFullCircle } from "../Animations/Spinner";
 import BoardTile from "./BoardTile";
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-`;
-
-const BoardWrapper = styled.div`
-  background-color: #c1bdbd;
-  width: 980px;
-  height: 690px;
-  margin-top: 10px;
-  border-radius: 20px;
-  display: flex; /* establish flex container */
-  flex-direction: column; /* make main axis vertical */
-  justify-content: center; /* center items vertically, in this case */
-  align-items: center; /* center items horizontally, in this case */
-  margin: auto;
-`;
-
-const Padding = styled.div`
-  height: 12.5px;
-`;
-
-const Scrollable = styled.div`
-  overflow-y: scroll;
-  height: 100vh;
-  width: 100%;
-  display: flex;
-`;
 
 class GameBoard extends React.Component {
   constructor(props) {
@@ -53,15 +24,10 @@ class GameBoard extends React.Component {
       gameTitle: "",
       gameDescrition: "",
       days: [],
-      isShowingHand: false,
       loading: true,
       players: []
     };
   }
-
-  showCardPicker = () => {
-    this.setState({ isShowingHand: true });
-  };
 
   static getDerivedStateFromProps(props, current_state) {
     if (current_state.players !== props.players) {
@@ -96,6 +62,12 @@ class GameBoard extends React.Component {
       });
   }
 
+  /**
+   * Builds every single tile component. Each 7 tiles is
+   * wrapped in a wrapper which forces them to display
+   * horizontally.
+   * @returns all board tiles as view components.
+   */
   buildTiles = () => {
     let week = [];
     let weeks = [];
@@ -103,7 +75,6 @@ class GameBoard extends React.Component {
       week.push(
         <BoardTile
           players={this.state.players}
-          onClick={this.showCardPicker}
           key={j}
           color={this.state.response["tiles"][j - 1].color}
           title={this.state.response["tiles"][j - 1].title}
@@ -112,9 +83,7 @@ class GameBoard extends React.Component {
           date={this.state.response["tiles"][j - 1].date}
           dateColor={this.state.response["tiles"][j - 1].dateColor}
           dateTextColor={this.state.response["tiles"][j - 1].dateTextColor}
-          descriptionColor={
-            this.state.response["tiles"][j - 1].descriptionColor
-          }
+          descriptionColor={this.state.response["tiles"][j - 1].descriptionColor}
           image={this.state.response["tiles"][j - 1].image}
         />
       );
@@ -126,11 +95,19 @@ class GameBoard extends React.Component {
     return weeks;
   };
 
+  /**
+   * removes dates from tiles that do not need them
+   * i.e. last few tiles of the board.
+   */
   stripTitles = data => {
     data["tiles"][34].date = null;
     data["tiles"][33].date = null;
   };
 
+  /**
+   * Maps images to tiles, i.e. mail, rest day etc.
+   * These tiles are predefined from the game board.
+   */
   mapImageToTile = data => {
     let mail = [1, 3, 5, 11, 16, 19, 24, 26];
     mail.forEach(index => {
@@ -177,3 +154,32 @@ export default connect(
   mapStateToProps,
   {}
 )(GameBoard);
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+const BoardWrapper = styled.div`
+  background-color: #c1bdbd;
+  width: 980px;
+  height: 690px;
+  margin-top: 10px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+`;
+
+const Padding = styled.div`
+  height: 12.5px;
+`;
+
+const Scrollable = styled.div`
+  overflow-y: scroll;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+`;

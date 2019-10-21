@@ -21,6 +21,11 @@ export default class BoardTile extends React.Component {
     return null;
   }
 
+  /**
+   * Determines which players are on the given board tile.
+   * Keeps track of player objects on the tile through state changes, this
+   * is where player progressions are managed.
+   */
   checkPlayerPositions = () => {
     let date = this.props.date;
     let playerPositions = this.state.players.map(el => el.day);
@@ -35,12 +40,7 @@ export default class BoardTile extends React.Component {
 
   render() {
     if (this.checkPlayerPositions().length > 0) {
-      return (
-        <PlayerPositionTile
-          {...this.props}
-          players={this.checkPlayerPositions()}
-        />
-      );
+      return <PlayerPositionTile {...this.props} players={this.checkPlayerPositions()} />;
     }
     return <Tile {...this.props} />;
   }

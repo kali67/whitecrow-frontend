@@ -18,22 +18,6 @@ import Select from "@atlaskit/select/dist/esm/Select";
 
 import globe from "../../static/image/globe.png";
 
-const Link = styled.p`
-  color: #0052cc;
-  text-decoration: none;
-  &:hover {
-    text-decoration: underline;
-  }
-`;
-
-const Icon = styled.div`
-  background-image: url(${props => props.image});
-  height: 40px;
-  width: 40px;
-  margin-right: 10px;
-  background-size: cover;
-`;
-
 export const LoginSignUpView = ({
   isShowingLogin,
   showLogin,
@@ -71,11 +55,7 @@ export const LoginSignUpView = ({
   );
 };
 
-const LanguagesSelect = ({
-  languages,
-  handleLanguageChange,
-  activeLanguage
-}) => {
+const LanguagesSelect = ({ languages, handleLanguageChange, activeLanguage }) => {
   return (
     <div
       style={{
@@ -83,15 +63,13 @@ const LanguagesSelect = ({
         width: "100%",
         justifyContent: "flex-end",
         marginRight: "5%"
-      }}
-    >
+      }}>
       <div
         style={{
           display: "flex",
           alignItems: "center",
           justifyContent: "center"
-        }}
-      >
+        }}>
         <Icon image={globe} />
       </div>
       <div style={{ width: "200px" }}>
@@ -127,8 +105,7 @@ const LoginForm = ({
           alignItems: "center",
           justifyContent: "space-evenly",
           height: "50%"
-        }}
-      >
+        }}>
         <h1>
           <Translate id={"sign-in-title"} />
         </h1>
@@ -139,38 +116,28 @@ const LoginForm = ({
             maxWidth: "100%",
             margin: "0 auto",
             flexDirection: "column"
-          }}
-        >
+          }}>
           <Form
             onSubmit={data => {
               return authenticate(data.username, data.password);
-            }}
-          >
+            }}>
             {({ formProps, submitting }) => (
               <form {...formProps}>
                 <Field
                   name="username"
                   label={<Translate id={"username-label"} />}
                   isRequired
-                  defaultValue=""
-                >
-                  {({ fieldProps }) => (
-                    <TextField autoComplete="off" {...fieldProps} />
-                  )}
+                  defaultValue="">
+                  {({ fieldProps }) => <TextField autoComplete="off" {...fieldProps} />}
                 </Field>
                 <Field
                   name="password"
                   label={<Translate id={"password-label"} />}
                   isRequired
-                  defaultValue=""
-                >
+                  defaultValue="">
                   {({ fieldProps, error }) => (
                     <Fragment>
-                      <TextField
-                        type="password"
-                        autoComplete="off"
-                        {...fieldProps}
-                      />
+                      <TextField type="password" autoComplete="off" {...fieldProps} />
                       {error && (
                         <ErrorMessage>
                           <Translate id="incorrect-password" />
@@ -181,11 +148,7 @@ const LoginForm = ({
                 </Field>
                 <FormFooter>
                   <ButtonGroup>
-                    <Button
-                      type="submit"
-                      appearance="primary"
-                      isLoading={submitting}
-                    >
+                    <Button type="submit" appearance="primary" isLoading={submitting}>
                       <Translate id={"login"} />
                     </Button>
                   </ButtonGroup>
@@ -229,8 +192,7 @@ const SignUpForm = ({
           alignItems: "center",
           justifyContent: "space-evenly",
           height: "60%"
-        }}
-      >
+        }}>
         <h1>
           <Translate id={"sign-up"} />
         </h1>
@@ -242,8 +204,7 @@ const SignUpForm = ({
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center"
-          }}
-        >
+          }}>
           <h6 style={{ display: "flex", color: "red" }}>
             <Translate id={"prompt-consent"} />
           </h6>
@@ -258,8 +219,7 @@ const SignUpForm = ({
             maxWidth: "100%",
             margin: "0 auto",
             flexDirection: "column"
-          }}
-        >
+          }}>
           <Form
             onSubmit={data => {
               return axios
@@ -273,16 +233,14 @@ const SignUpForm = ({
                 .catch(() => {
                   return { username: "IN_USE" };
                 });
-            }}
-          >
+            }}>
             {({ formProps, submitting }) => (
               <form {...formProps}>
                 <Field
                   name="username"
                   label={<Translate id={"username-label"} />}
                   isRequired
-                  defaultValue=""
-                >
+                  defaultValue="">
                   {({ fieldProps, error }) => (
                     <Fragment>
                       <TextField autoComplete="off" {...fieldProps} />
@@ -304,10 +262,7 @@ const SignUpForm = ({
                   label={<Translate id={"password-label"} />}
                   isRequired
                   defaultValue=""
-                  validate={value =>
-                    value.length < 8 ? "TOO_SHORT" : undefined
-                  }
-                >
+                  validate={value => (value.length < 8 ? "TOO_SHORT" : undefined)}>
                   {({ fieldProps, error, valid }) => (
                     <Fragment>
                       <TextField type="password" {...fieldProps} />
@@ -329,25 +284,14 @@ const SignUpForm = ({
                     </Fragment>
                   )}
                 </Field>
-                <CheckboxField
-                  name="information-consent"
-                  label={<Translate id="info-consent" />}
-                >
+                <CheckboxField name="information-consent" label={<Translate id="info-consent" />}>
                   {({ fieldProps }) => (
-                    <Checkbox
-                      {...fieldProps}
-                      isRequired
-                      label={<Translate id={"consent"} />}
-                    />
+                    <Checkbox {...fieldProps} isRequired label={<Translate id={"consent"} />} />
                   )}
                 </CheckboxField>
                 <FormFooter>
                   <ButtonGroup>
-                    <Button
-                      type="submit"
-                      appearance="primary"
-                      isLoading={submitting}
-                    >
+                    <Button type="submit" appearance="primary" isLoading={submitting}>
                       <Translate id={"sign-up-btn"} />
                     </Button>
                   </ButtonGroup>
@@ -374,4 +318,20 @@ const AccountActionFooter = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+`;
+
+const Link = styled.p`
+  color: #0052cc;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
+const Icon = styled.div`
+  background-image: url(${props => props.image});
+  height: 40px;
+  width: 40px;
+  margin-right: 10px;
+  background-size: cover;
 `;

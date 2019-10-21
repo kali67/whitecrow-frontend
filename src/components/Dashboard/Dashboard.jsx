@@ -8,31 +8,12 @@ import hamburger from "../../static/image/hamburger.png";
 import Slider from "react-slide-out";
 import PlayerControls, { CardHolder } from "./PlayerControls";
 
-const Hamburger = styled.div`
-  background-image: url(${props => props.image});
-  height: 40px;
-  width: 40px;
-  margin-left: -5px;
-  background-size: contain;
-  background-color: white;
-  border-radius: 5%;
-  position: fixed
-  z-index: 100;
-`;
-
-const ClosedDrawer = styled.div`
-  margin-top: 5%;
-`;
-
-const DrawerContainer = styled.div`
-  height: 100%;
-  background-color: white;
-  display: flex;
-  flex-direction: column;
-  padding: 1%;
-  overflow-y: scroll;
-`;
-
+/**
+ * This component handles the display of the dashboard
+ * and delegates smaller UI elements to separate
+ * components. The animations and view of the drawer sliding
+ * in and out is also implemented here.
+ */
 class Dashboard extends React.Component {
   componentDidMount() {
     this.setState({ userPlayer: this.props.userPlayer });
@@ -80,10 +61,35 @@ const mapStateToProps = state => ({
     state.game.players[state.game.playerTurnIndex]["id"] === state.user.player["id"],
   userPlayerUpdated: state.game.userTurnResult,
   userPlayer: state.user.player,
-  isLoadingQueryPlayerTurns: state.game.isLoadingQueryPlayerTurns,
+  isLoadingQueryPlayerTurns: state.game.isLoadingQueryPlayerTurns
 });
 
 export default connect(
   mapStateToProps,
   { openDashboard, closeDashboard }
 )(Dashboard);
+
+const Hamburger = styled.div`
+  background-image: url(${props => props.image});
+  height: 40px;
+  width: 40px;
+  margin-left: -5px;
+  background-size: contain;
+  background-color: white;
+  border-radius: 5%;
+  position: fixed
+  z-index: 100;
+`;
+
+const ClosedDrawer = styled.div`
+  margin-top: 5%;
+`;
+
+const DrawerContainer = styled.div`
+  height: 100%;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 1%;
+  overflow-y: scroll;
+`;

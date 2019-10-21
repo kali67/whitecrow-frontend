@@ -6,10 +6,7 @@ import CreateGameForm from "../components/CreateGameForm";
 import { Translate } from "react-localize-redux";
 import { connect } from "react-redux";
 
-import {
-  updateHasTakenPreTest,
-  setAccountDetails
-} from "../actions/userActions";
+import { updateHasTakenPreTest, setAccountDetails } from "../actions/userActions";
 import { SpinnerFullCircle } from "../components/Animations/Spinner";
 
 const DisabledLinkStyle = { opacity: ".4", pointerEvents: "none" };
@@ -70,20 +67,14 @@ class HomePage extends React.Component {
             display: "flex",
             flexDirection: "column",
             paddingBottom: "5%"
-          }}
-        >
+          }}>
           {this.props.hasCompletedPreTest ? (
-            <CompletedPreTest
-              finishedAtLeastOneGame={this.state.finishedAtLeastOneGame}
-            />
+            <CompletedPreTest finishedAtLeastOneGame={this.state.finishedAtLeastOneGame} />
           ) : (
             <PreTest completePreTest={this.completePreTest} />
           )}
         </div>
-        <CreateGameForm
-          {...this.props}
-          hasTakenTest={this.props.hasCompletedPreTest}
-        />
+        <CreateGameForm {...this.props} hasTakenTest={this.props.hasCompletedPreTest} />
       </React.Fragment>
     );
   }
@@ -113,14 +104,11 @@ const PreTest = props => {
       <ul>
         <li>
           <a
-            href={
-              "https://canterbury.qualtrics.com/jfe/form/SV_e3Y2QzGnmNxR7CZ"
-            }
+            href={"https://canterbury.qualtrics.com/jfe/form/SV_e3Y2QzGnmNxR7CZ"}
             target="_blank"
             rel="noopener noreferrer"
             onContextMenu={() => props.completePreTest()}
-            onClick={() => props.completePreTest()}
-          >
+            onClick={() => props.completePreTest()}>
             <Translate id="qualtric-pre-test" />
           </a>
         </li>
@@ -149,10 +137,7 @@ const CompletedPreTest = props => {
             <a
               target="_blank"
               rel="noopener noreferrer"
-              href={
-                "https://canterbury.qualtrics.com/jfe/form/SV_e3Y2QzGnmNxR7CZ"
-              }
-            >
+              href={"https://canterbury.qualtrics.com/jfe/form/SV_e3Y2QzGnmNxR7CZ"}>
               <Translate id="qualtric-post-test" />
             </a>
           </span>
@@ -162,10 +147,7 @@ const CompletedPreTest = props => {
             <a
               target="_blank"
               rel="noopener noreferrer"
-              href={
-                "http://canterbury.qualtrics.com/jfe/form/SV_bee5e5GDr6BYPcN"
-              }
-            >
+              href={"http://canterbury.qualtrics.com/jfe/form/SV_bee5e5GDr6BYPcN"}>
               <Translate id="qualtric-survey" />
             </a>
           </span>

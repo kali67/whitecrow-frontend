@@ -2,6 +2,24 @@ import React from "react";
 import Modal from "react-modal";
 import styled from "styled-components";
 
+/**
+ * Notification for players turns. This is a fullscreen modal
+ * with players username as text.
+ * @param props text used to display on the turn notification
+ */
+const TurnNotification = props => {
+  return (
+    <Modal isOpen={true} style={customStyles}>
+      <ModalBody>
+        <ModalText>{props.text}</ModalText>
+      </ModalBody>
+    </Modal>
+  );
+};
+
+export default TurnNotification;
+Modal.setAppElement("#root");
+
 export const ModalText = styled.h1`
   font-size: 80px;
   color: #fff;
@@ -14,20 +32,6 @@ export const ModalBody = styled.div`
   align-items: center;
   justify-content: center;
 `;
-
-const TurnNotification = props => {
-  return (
-    <Modal isOpen={true} style={customStyles}>
-      <ModalBody>
-        <ModalText>{props.text}</ModalText>
-      </ModalBody>
-    </Modal>
-  );
-};
-
-export default TurnNotification;
-
-Modal.setAppElement("#root");
 
 const customStyles = {
   content: {

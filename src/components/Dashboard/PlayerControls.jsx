@@ -9,38 +9,50 @@ import PlayerTurnTracker from "../PlayerTurn/PlayerTurnTracker";
 import coin from "../../static/image/coin.png";
 import calendar from "../../static/image/calendar.png";
 
-export default class PlayerControls extends React.Component {
-  render() {
-    return (
-      <PlayerControlContainer>
-        <PlayerOrderWrapper>
-          <b
-            style={{
-              marginBottom: "8%",
-              textDecoration: "underline",
-              textAlign: "center"
-            }}>
-            <Translate id="play-order" />
-          </b>
-          <PlayerTurnTracker
-            userPlayerId={this.props.userPlayer.id}
-            players={this.props.players}
-            playerTurn={this.props.playerTurn}
-          />
-        </PlayerOrderWrapper>
-        <PlayerInfoView
-          username={this.props.userPlayer["username"]}
-          money={this.props.userPlayer["money"]}
-          day={this.props.userPlayer["day"]}
-          rollDie={this.props.rollDie}
-          rolledDisabled={!this.props.isSinglePlayersTurn}
-          isLoadingRoll={this.props.isLoadingRoll}
+/**
+ * UI component to handle view logic of player controls,
+ * these are player turn trackers, die rolling delegation etc.
+ *
+ * @param {userplayer, players, playerTurn} props userplayer object
+ * that details the user and also a list of players along which whose turn
+ * it is.
+ */
+const PlayerControls = props => {
+  return (
+    <PlayerControlContainer>
+      <PlayerOrderWrapper>
+        <b
+          style={{
+            marginBottom: "8%",
+            textDecoration: "underline",
+            textAlign: "center"
+          }}>
+          <Translate id="play-order" />
+        </b>
+        <PlayerTurnTracker
+          userPlayerId={props.userPlayer.id}
+          players={props.players}
+          playerTurn={props.playerTurn}
         />
-      </PlayerControlContainer>
-    );
-  }
-}
+      </PlayerOrderWrapper>
+      <PlayerInfoView
+        username={props.userPlayer["username"]}
+        money={props.userPlayer["money"]}
+        day={props.userPlayer["day"]}
+        rollDie={props.rollDie}
+        rolledDisabled={!props.isSinglePlayersTurn}
+        isLoadingRoll={props.isLoadingRoll}
+      />
+    </PlayerControlContainer>
+  );
+};
 
+export default PlayerControls;
+
+/**
+ * Handles UI logic for money, days and
+ * the die button layout
+ */
 const PlayerInfoView = ({ money, day, rollDie, rolledDisabled, isLoadingRoll }) => {
   return (
     <PlayerInfoContainer>
@@ -105,8 +117,6 @@ export class CardHolder extends React.Component {
       nextProps.opportunity.length !== this.props.opportunity.length
     );
   }
-
-  componentDidUpdate(prevProps, prevState, snapshot) {}
 
   render() {
     return <Tabs tabs={tabs(this.state)} />;

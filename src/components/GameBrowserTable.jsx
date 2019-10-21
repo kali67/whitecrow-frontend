@@ -1,11 +1,5 @@
 import React from "react";
-import TableTree, {
-  Headers,
-  Header,
-  Rows,
-  Row,
-  Cell
-} from "@atlaskit/table-tree";
+import TableTree, { Headers, Header, Rows, Row, Cell } from "@atlaskit/table-tree";
 import axios from "axios";
 import { Translate } from "react-localize-redux";
 
@@ -81,8 +75,7 @@ export default class GameBrowserTable extends React.Component {
                   <button
                     disabled={true}
                     className="btn-disabled float-right"
-                    onClick={e => joinGame(e, id)}
-                  >
+                    onClick={e => joinGame(e, id)}>
                     Join
                   </button>
                 </Cell>

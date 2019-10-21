@@ -28,7 +28,11 @@ class AuthenticationWrapper extends React.Component {
   }
 
   render() {
-    return <React.Fragment>{React.cloneElement(this.props.children, {...this.props[0]})}</React.Fragment>;
+    return (
+      <React.Fragment>
+        {React.cloneElement(this.props.children, { ...this.props[0] })}
+      </React.Fragment>
+    );
   }
 }
 const mapStateToProps = state => ({

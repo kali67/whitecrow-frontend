@@ -4,11 +4,7 @@ import TurnNotification from "../Animations/TurnNotification";
 import CardController from "../Card/CardController";
 import { Translate } from "react-localize-redux";
 import { connect } from "react-redux";
-import {
-  updatePlayerCards,
-  updatePlayerDay,
-  updatePlayerMoney
-} from "../../actions/userActions";
+import { updatePlayerCards, updatePlayerDay, updatePlayerMoney } from "../../actions/userActions";
 
 import {
   animatePlayerMovement,
@@ -108,19 +104,13 @@ class UserPlayerTurn extends React.Component {
     } else {
       if (this.props.userTurnResult["hasTriggeredSetBack"]) {
         this.props.flagSetBackRotation(true);
-        this.props.showFullScreenNotification(
-         <Translate id={"user-go-back"} />
-        );
+        this.props.showFullScreenNotification(<Translate id={"user-go-back"} />);
         setTimeout(() => {
           this.props.dismissTurnNotification();
-          this.props.updateCurrentUserTurnResult(
-            this.props.userTurnResult["turnResult"]
-          );
+          this.props.updateCurrentUserTurnResult(this.props.userTurnResult["turnResult"]);
         }, NOTIFICATION_DISPLAY_TIME_MS);
       } else {
-        this.props.updateCurrentUserTurnResult(
-          this.props.userTurnResult["turnResult"]
-        );
+        this.props.updateCurrentUserTurnResult(this.props.userTurnResult["turnResult"]);
       }
     }
   };
@@ -152,8 +142,7 @@ class UserPlayerTurn extends React.Component {
   dieRollFinished = () => {
     this.setState({ showingDieAnimation: false }, () => {
       let isSetBackTurnResult =
-        this.props.playerStateBeforeTurn["day"] >
-        this.props.userTurnResult["currentDay"];
+        this.props.playerStateBeforeTurn["day"] > this.props.userTurnResult["currentDay"];
       this.props.flagAsSetBackTurn(isSetBackTurnResult);
       this.props.animatePlayerMovement();
     });
@@ -164,10 +153,7 @@ class UserPlayerTurn extends React.Component {
       return (
         <DieAnimation
           callback={this.dieRollFinished}
-          number={
-            this.props.userTurnResult["currentDay"] -
-            this.props.playerStateBeforeTurn["day"]
-          }
+          number={this.props.userTurnResult["currentDay"] - this.props.playerStateBeforeTurn["day"]}
         />
       );
     }

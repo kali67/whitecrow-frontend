@@ -3,6 +3,73 @@ import styled from "styled-components";
 import Tile, { IndicatedTileWrapper } from "./Tile";
 import { connect } from "react-redux";
 
+class PlayerPositionTile extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showingDetails: false
+    };
+  }
+
+  /**
+   * Handles clicking of a tile. This updates the state variable to
+   * switch the view of the tile.
+   */
+  onClick = e => {
+    e.preventDefault();
+    this.setState({ showingDetails: !this.state.showingDetails });
+  };
+
+  /**
+   * Creates the name tags for each player to show them
+   * as counters on each tile.
+   *
+   * @param players players to create name tags from
+   */
+  createNameTags = players => {
+    return players.map(player => {
+      let fullUsername = player["username"];
+      let endRange = 4;
+      if (fullUsername.length < endRange) {
+        endRange = fullUsername.length - 1;
+      }
+      return [fullUsername.slice(0, endRange).toUpperCase(), player.id];
+    });
+  };
+
+  /**
+   * Creates counters for each player position.
+   * @returns list of counter components
+   */
+  playerCounters = () => {
+    return this.createNameTags(this.props.players).map((element, i) => {
+      let idName = element[0];
+      if (this.props.userPlayerId === element[1]) {
+        idName = <p style={{ color: "purple", fontWeight: "900", fontSize: "1.2em" }}>YOU</p>;
+      }
+      return <Counter key={i}>{idName}</Counter>;
+    });
+  };
+
+  render() {
+    if (!this.state.showingDetails) {
+      return (
+        <IndicatedTileWrapper onClick={e => this.onClick(e)} inputColor={this.props.color}>
+          <CounterContainer>{this.playerCounters()}</CounterContainer>
+        </IndicatedTileWrapper>
+      );
+    } else {
+      return <Tile {...this.props} onClick={e => this.onClick(e)} isPlayerTile={true} />; //override onclick
+    }
+  }
+}
+
+const mapStateToProps = state => ({
+  userPlayerId: state.user.player["id"]
+});
+
+export default connect(mapStateToProps)(PlayerPositionTile);
+
 const Counter = styled.div`
   align-items: center;
   justify-content: center;
@@ -26,67 +93,3 @@ const CounterContainer = styled.div`
   align-items: center;
   justify-content: center;
 `;
-
-class PlayerPositionTile extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      showingDetails: false
-    };
-  }
-
-  onClick = e => {
-    e.preventDefault();
-    this.setState({ showingDetails: !this.state.showingDetails });
-  };
-
-  createNameTags = (players) => {
-    return players.map((player) => {
-      let fullUsername = player["username"];
-      let endRange = 4;
-      if (fullUsername.length < endRange){
-        endRange = fullUsername.length - 1
-      }
-      return [fullUsername.slice(0, endRange).toUpperCase(), player.id]
-    });
-
-
-  };
-
-  playerCounters = () => {
-    return this.createNameTags(this.props.players).map((element, i) => {
-      let idName = element[0];
-        if (this.props.userPlayerId === element[1]){
-          idName = <p style={{color: "purple", fontWeight: "900", fontSize: "1.2em"}}>YOU</p>
-        }
-      return <Counter key={i}>{idName}</Counter>;
-    });
-  };
-
-  render() {
-    if (!this.state.showingDetails) {
-      return (
-        <IndicatedTileWrapper
-          onClick={e => this.onClick(e)}
-          inputColor={this.props.color}
-        >
-          <CounterContainer>{this.playerCounters()}</CounterContainer>
-        </IndicatedTileWrapper>
-      );
-    } else {
-      return (
-        <Tile
-          {...this.props}
-          onClick={e => this.onClick(e)}
-          isPlayerTile={true}
-        />
-      ); //override onclick
-    }
-  }
-}
-
-const mapStateToProps = state => ({
-  userPlayerId: state.user.player["id"]
-});
-
-export default connect(mapStateToProps)(PlayerPositionTile)

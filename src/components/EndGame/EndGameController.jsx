@@ -21,12 +21,10 @@ class EndGameController extends React.Component {
     this.loadDetails(gameId);
   }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
+  componentDidUpdate(prevProps) {
     if (
-      !this.props.loadingGameDetails &&
-      !this.props.loadingUserDetails &&
-      (prevProps.loadingGameDetails !== this.props.loadingGameDetails ||
-        prevProps.loadingUserDetails !== this.props.loadingUserDetails)
+      (this.isLoading() && prevProps.loadingGameDetails !== this.props.loadingGameDetails) ||
+      prevProps.loadingUserDetails !== this.props.loadingUserDetails
     ) {
       this.fetchEndGameDetails();
     }
@@ -38,16 +36,27 @@ class EndGameController extends React.Component {
     document.getElementById("root").style = "background: #ffffff;";
   }
 
+  /**
+   * Determines if async requests have finished loading game and
+   * user details
+   */
+  isLoading = () => {
+    return !this.props.loadingGameDetails && !this.props.loadingUserDetails;
+  };
+
+  /**
+   * Fetches the end game details, this will contain the
+   * information of the end results of the game i.e. leaderboards.
+   * This updates the state of this component to contain the
+   * leaderboard/players.
+   */
   fetchEndGameDetails = () => {
+    let bearerToken = "Bearer " + localStorage.getItem("jwt");
     axios
       .post(
         `/game/${this.props.match.params.id}/end`,
         {},
-        {
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("jwt")
-          }
-        }
+        { headers: { Authorization: bearerToken } }
       )
       .then(response => {
         this.setState({ loading: false, gameData: response["data"] });

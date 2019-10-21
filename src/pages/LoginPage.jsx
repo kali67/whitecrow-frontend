@@ -135,10 +135,7 @@ class LoginPage extends React.Component {
             activeLanguage={this.props.activeLanguage}
           />
         </LoginWidgetWrapper>
-        <ConsentModal
-          isOpen={this.state.modalIsOpen}
-          closeConsent={this.closeConsent}
-        />
+        <ConsentModal isOpen={this.state.modalIsOpen} closeConsent={this.closeConsent} />
       </LoginWrapper>
     );
   }

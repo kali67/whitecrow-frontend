@@ -1,12 +1,53 @@
 import React from "react";
 import styled from "styled-components";
-import sanitizeHtml from 'sanitize-html';
+import sanitizeHtml from "sanitize-html";
 
+/**
+ * Bolds all text in quotes. This is used for opportunity cards
+ * and also areas of text that should be pronounced.
+ * @param paragraph of text to parse and bold
+ */
+const boldOpportunityCategories = paragraph => {
+  let dirty = paragraph.replace(/"([^"]+)"/g, `<b>$1</b>`);
+  return sanitizeHtml(dirty, {
+    allowedTags: ["b"]
+  });
+};
 
+/**
+ * Display component for a card, MAIL and OPPORTUNITY.
+ * These cards have two sizes, small and large which are used
+ * in the drawer and as players pick them up.
+ * @param  props card properties such as tile, description etc..
+ */
+const Card = props => {
+  return (
+    <CardWrapper height={props.small ? "300px" : "600px"}>
+      <CategoryColumn color={props.card["color"]} style={props.small ? ColumnFontSmall : null}>
+        {props.card["categoryDescription"]}
+      </CategoryColumn>
+      <ContentWrapper>
+        <Title style={props.small ? TitleFontSmall : null}>{props.card["title"]}</Title>
+        <Action style={props.small ? ActionFontSmall : null}>{props.card["action"]}</Action>
+        <SubTitle style={props.small ? SubTitleFontSmall : null}>{props.card["subTitle"]}</SubTitle>
+        <Divider />
+        <CardParagraph style={props.small ? DescriptionFontSmall : null}>
+          <div
+            dangerouslySetInnerHTML={{
+              __html: boldOpportunityCategories(props.card["description"])
+            }}
+          />
+        </CardParagraph>
+      </ContentWrapper>
+    </CardWrapper>
+  );
+};
+
+export default Card;
 
 const CardWrapper = styled.div`
   z-index: 1;
-  max-height:  ${props => props.height};
+  max-height: ${props => props.height};
   max-width: 300px;
   min-height: 300px;
   height: 100%;
@@ -88,31 +129,3 @@ const DescriptionFontSmall = {
 const ColumnFontSmall = {
   fontSize: "10px"
 };
-
-const boldOpportunityCategories = (paragraph) => {
-    let dirty = paragraph.replace(/"([^"]+)"/g, `<b>$1</b>`);
-    return sanitizeHtml(dirty, {
-        allowedTags: ['b']
-    });
-};
-
-const Card = props => {
-  return (
-    <CardWrapper height={props.small? "300px" : "600px"}>
-      <CategoryColumn color={props.card["color"]} style={props.small ? ColumnFontSmall : null}>
-        {props.card["categoryDescription"]}
-      </CategoryColumn>
-      <ContentWrapper>
-        <Title style={props.small ? TitleFontSmall : null}>{props.card["title"]}</Title>
-        <Action style={props.small ? ActionFontSmall : null}>{props.card["action"]}</Action>
-        <SubTitle style={props.small ? SubTitleFontSmall : null}>{props.card["subTitle"]}</SubTitle>
-        <Divider />
-        <CardParagraph style={props.small ? DescriptionFontSmall : null}>
-            <div dangerouslySetInnerHTML={{__html: boldOpportunityCategories(props.card["description"])}}/>
-        </CardParagraph>
-      </ContentWrapper>
-    </CardWrapper>
-  );
-};
-
-export default Card;

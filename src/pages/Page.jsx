@@ -6,6 +6,11 @@ import { WhitecrowBlack } from "../static/TileObjects";
 import { LogoutImage } from "../static/TileObjects";
 import { Translate } from "react-localize-redux";
 
+/**
+ * View component of a page with a navbar like
+ * that on the home page. This also wraps full components
+ * and displays them in the center of the page.
+ */
 const Page = props => {
   return (
     <React.Fragment>

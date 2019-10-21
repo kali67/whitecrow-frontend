@@ -77,9 +77,7 @@ class CreateGameForm extends React.Component {
 
 export default CreateGameForm;
 
-const gameTypeOptions = [
-  { value: "SINGLEPLAYER", label: "Single Player" }
-];
+const gameTypeOptions = [{ value: "SINGLEPLAYER", label: "Single Player" }];
 
 const numberOfPlayers = [
   { value: "2", label: "2" },
@@ -138,8 +136,7 @@ const CreateForm = props => {
           appearance="primary"
           onClick={e => props.joinGame(e)}
           role="button"
-          isDisabled={!props.hasTakenTest}
-        >
+          isDisabled={!props.hasTakenTest}>
           <Translate id="create" />
         </Button>
       </ButtonWrapper>

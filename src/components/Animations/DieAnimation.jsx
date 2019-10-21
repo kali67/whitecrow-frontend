@@ -9,33 +9,6 @@ import { ModalText, ModalBody } from "./TurnNotification";
 
 Modal.setAppElement("#root");
 
-const NonClickableDiv = styled.div`
-  pointer-events: none;
-`;
-
-const customStyles = {
-  content: {
-    height: "65%",
-    width: "65vw",
-    top: "50%",
-    left: "52%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-    alignItems: "center",
-    justifyContent: "center",
-    display: "flex",
-    flexDirection: "row",
-    backgroundColor: "rgba(0, 0, 0, 0)",
-    borderWidth: "0px",
-    overflow: "hidden"
-  },
-  overlay: {
-    backgroundColor: "rgba(0,0,0,0.9)"
-  }
-};
-
 export default class DieAnimation extends React.Component {
   constructor(props) {
     super(props);
@@ -45,6 +18,10 @@ export default class DieAnimation extends React.Component {
     };
   }
 
+  /**
+   * Mounts when die rolling is required. Begins the die
+   * roll by passing a number defined by props.
+   */
   componentDidMount() {
     if (this.props.number > 0) {
       setTimeout(() => {
@@ -59,6 +36,11 @@ export default class DieAnimation extends React.Component {
     }
   }
 
+  /**
+   * Callback once die rolling has finished. Calls passed
+   * in callback after showing the stationary die for 2
+   * seconds.
+   */
   rollDoneCallback = () => {
     setTimeout(() => {
       this.props.callback();
@@ -92,3 +74,30 @@ export default class DieAnimation extends React.Component {
     );
   }
 }
+
+const NonClickableDiv = styled.div`
+  pointer-events: none;
+`;
+
+const customStyles = {
+    content: {
+        height: "65%",
+        width: "65vw",
+        top: "50%",
+        left: "52%",
+        right: "auto",
+        bottom: "auto",
+        marginRight: "-50%",
+        transform: "translate(-50%, -50%)",
+        alignItems: "center",
+        justifyContent: "center",
+        display: "flex",
+        flexDirection: "row",
+        backgroundColor: "rgba(0, 0, 0, 0)",
+        borderWidth: "0px",
+        overflow: "hidden"
+    },
+    overlay: {
+        backgroundColor: "rgba(0,0,0,0.9)"
+    }
+};

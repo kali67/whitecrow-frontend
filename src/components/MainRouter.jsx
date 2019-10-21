@@ -9,9 +9,7 @@ import AuthenticationWrapper from "../components/RequiresAuthentication";
 import Page from "../pages/Page";
 import AccountInfoContainer from "./Account/AccountInfoContainer";
 
-const SinglePlayerControllerAuth = AuthenticationWrapper(
-  SinglePlayerController
-);
+const SinglePlayerControllerAuth = AuthenticationWrapper(SinglePlayerController);
 const HomePageAuth = AuthenticationWrapper(HomePage);
 const AccountPageAuth = AuthenticationWrapper(AccountInfoContainer);
 
@@ -44,9 +42,7 @@ class MainRouter extends React.Component {
           <Route
             exact
             path="/login"
-            render={({ history }) => (
-              <LoginPage history={history} {...this.props} />
-            )}
+            render={({ history }) => <LoginPage history={history} {...this.props} />}
           />
           <Route
             exact

@@ -8,14 +8,11 @@ import whitecrow from "../../static/image/whitecrow.png";
 
 Modal.setAppElement("#root");
 
-const CenteredCellText = styled.div`
-  text-align: center;
-`;
-
-const createContentKey = player => {
-  return player["id"] + player["username"];
-};
-
+/**
+ * Finds the rank of the users player within the game
+ * @param allPlayersInGame list of players in the game
+ * @param id  of the users player
+ */
 const findPlayerRank = (allPlayersInGame, id) => {
   for (let i = 0; i < allPlayersInGame.length; i++) {
     if (allPlayersInGame[i]["id"] === id) {
@@ -24,31 +21,10 @@ const findPlayerRank = (allPlayersInGame, id) => {
   }
 };
 
-const HomeButtonStyle = {
-  justifyContent: "center",
-  background: "#36B37E",
-  height: "50px",
-  width: "100px",
-  alignSelf: "flex-end"
-};
-
-const calculatePlacing = rank => {
-  switch (rank) {
-    case 1:
-      return "1st";
-    case 2:
-      return "2nd";
-    case 3:
-      return "3rd";
-    case 4:
-      return "4th";
-    case 5:
-      return "5th";
-    case 6:
-      return "6th";
-  }
-};
-
+/**
+ * View component of the end game screen. This details the
+ * view of the leaderboard through tables.
+ */
 const EndGameView = ({ gameData, userPlayerId, goHome }) => {
   let allPlayersInGame = gameData["players"];
   allPlayersInGame.sort((a, b) => b.score - a.score);
@@ -82,6 +58,83 @@ const EndGameView = ({ gameData, userPlayerId, goHome }) => {
 };
 
 export default EndGameView;
+
+/**
+ * Creates the headers of the leaderboard table
+ */
+const createHead = withWidth => {
+  return {
+    cells: [
+      {
+        key: "rank",
+        content: <CenteredCellText>{"Rank"}</CenteredCellText>,
+        isSortable: false,
+        width: withWidth ? 15 : undefined
+      },
+      {
+        key: "username",
+        content: <CenteredCellText>{"Username"}</CenteredCellText>,
+        isSortable: false,
+        width: withWidth ? 25 : undefined
+      },
+      {
+        key: "score",
+        content: <CenteredCellText>{"Score"}</CenteredCellText>,
+        isSortable: false,
+        width: withWidth ? 25 : undefined
+      },
+      {
+        key: "cards",
+        content: <CenteredCellText>{"Mail Cards Received"}</CenteredCellText>,
+        isSortable: false,
+        width: withWidth ? 25 : undefined
+      },
+      {
+        key: "opCards",
+        content: <CenteredCellText>{"Opportunities Taken"}</CenteredCellText>,
+        isSortable: false,
+        width: withWidth ? 25 : undefined
+      }
+    ]
+  };
+};
+
+/**
+ * Creates view components of a row in the leaderboard for
+ * each player.
+ * @param allPlayersInGame list of all players in the game
+ */
+const rows = allPlayersInGame => {
+  return allPlayersInGame.map(player => {
+    return {
+      key: player["id"],
+      cells: [
+        {
+          key: "test",
+          content: (
+            <CenteredCellText>{findPlayerRank(allPlayersInGame, player["id"])}</CenteredCellText>
+          )
+        },
+        {
+          key: createContentKey(player),
+          content: <CenteredCellText>{player["username"]}</CenteredCellText>
+        },
+        {
+          key: createContentKey(player),
+          content: <CenteredCellText>{player["score"]}</CenteredCellText>
+        },
+        {
+          key: createContentKey(player),
+          content: <CenteredCellText>{player["mailCards"].length}</CenteredCellText>
+        },
+        {
+          key: createContentKey(player),
+          content: <CenteredCellText>{player["opportunityCards"].length}</CenteredCellText>
+        }
+      ]
+    };
+  });
+};
 
 const Whitecrow = styled.div`
   background-image: url(${props => props.image});
@@ -122,71 +175,35 @@ const customStyles = {
   }
 };
 
-const createHead = withWidth => {
-  return {
-    cells: [
-      {
-        key: "rank",
-        content: <CenteredCellText>{"Rank"}</CenteredCellText>,
-        isSortable: false,
-        width: withWidth ? 15 : undefined
-      },
-      {
-        key: "username",
-        content: <CenteredCellText>{"Username"}</CenteredCellText>,
-        isSortable: false,
-        width: withWidth ? 25 : undefined
-      },
-      {
-        key: "score",
-        content: <CenteredCellText>{"Score"}</CenteredCellText>,
-        isSortable: false,
-        width: withWidth ? 25 : undefined
-      },
-      {
-        key: "cards",
-        content: <CenteredCellText>{"Mail Cards Received"}</CenteredCellText>,
-        isSortable: false,
-        width: withWidth ? 25 : undefined
-      },
-      {
-        key: "opCards",
-        content: <CenteredCellText>{"Opportunities Taken"}</CenteredCellText>,
-        isSortable: false,
-        width: withWidth ? 25 : undefined
-      }
-    ]
-  };
+const HomeButtonStyle = {
+  justifyContent: "center",
+  background: "#36B37E",
+  height: "50px",
+  width: "100px",
+  alignSelf: "flex-end"
 };
 
-const rows = allPlayersInGame => {
-  return allPlayersInGame.map(player => {
-    return {
-      key: player["id"],
-      cells: [
-        {
-          key: "test",
-          content: (
-            <CenteredCellText>{findPlayerRank(allPlayersInGame, player["id"])}</CenteredCellText>
-          )
-        },
-        {
-          key: createContentKey(player),
-          content: <CenteredCellText>{player["username"]}</CenteredCellText>
-        },
-        {
-          key: createContentKey(player),
-          content: <CenteredCellText>{player["score"]}</CenteredCellText>
-        },
-        {
-          key: createContentKey(player),
-          content: <CenteredCellText>{player["mailCards"].length}</CenteredCellText>
-        },
-        {
-          key: createContentKey(player),
-          content: <CenteredCellText>{player["opportunityCards"].length}</CenteredCellText>
-        }
-      ]
-    };
-  });
+const calculatePlacing = rank => {
+  switch (rank) {
+    case 1:
+      return "1st";
+    case 2:
+      return "2nd";
+    case 3:
+      return "3rd";
+    case 4:
+      return "4th";
+    case 5:
+      return "5th";
+    case 6:
+      return "6th";
+  }
+};
+
+const CenteredCellText = styled.div`
+  text-align: center;
+`;
+
+const createContentKey = player => {
+  return player["id"] + player["username"];
 };

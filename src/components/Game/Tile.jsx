@@ -89,6 +89,11 @@ const HR = styled.div`
   height: 0px;
 `;
 
+/**
+ * Inner view component of tile, handles positioning of small elements
+ * like date, title, description etc
+ * @param props properties of a tile like title, date, color...
+ */
 const TileInner = props => (
   <React.Fragment>
     <Title>{props.title}</Title>
@@ -104,6 +109,13 @@ const TileInner = props => (
   </React.Fragment>
 );
 
+/**
+ * View component of a tile, wraps smaller components
+ * that make up a tile.
+ * @param {isPlayerTile} props isPlayerTile determines if
+ * the tile contains a player sitting on it. If yes, then
+ * accent it from others.
+ */
 const Tile = props => {
   if (props.isPlayerTile) {
     return (
