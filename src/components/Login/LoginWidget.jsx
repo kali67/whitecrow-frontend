@@ -84,6 +84,7 @@ const LanguagesSelect = ({ languages, handleLanguageChange, activeLanguage }) =>
     </div>
   );
 };
+
 const LoginForm = ({
   showSignUp,
   authenticate,

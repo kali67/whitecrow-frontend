@@ -20,6 +20,11 @@ import { fetchUserPlayer, resetUserLoadingState } from "../actions/userActions";
 import { connect } from "react-redux";
 
 class SinglePlayerController extends React.Component {
+  /**
+   * Upon mounting of the controller, user and game details
+   * are fetched from the backend. This method also
+   * ensure the background is the correct color.
+   */
   componentDidMount() {
     document.getElementById("root").style = "background: #1c2321;";
     this.props.fetchGameDetails(this.props.match.params.id);
@@ -32,10 +37,20 @@ class SinglePlayerController extends React.Component {
     }
   }
 
+  /**
+   * Reset background colour to white once the component
+   * lifecycle has ended.
+   */
   componentWillUnmount() {
     document.getElementById("root").style = "background: #ffffff;";
   }
 
+  /**
+   * Updates the current players position. A current player
+   * can be consider the player who is using their turn at this point in
+   * time. This method syncs this back to the redux state.
+   * @param updatedPosition new position of the current player
+   */
   updatePlayersPosition = updatedPosition => {
     let players = this.props.players.slice();
     let updatedPlayer = this.props.players[this.props.playerTurnIndex];
@@ -44,10 +59,20 @@ class SinglePlayerController extends React.Component {
     this.props.updatePlayerModels(players);
   };
 
+  /**
+   * Users a players turn and is the start of the turn
+   * flow for the user.
+   */
   rollDie = () => {
     this.props.rollDie(this.props.userPlayer["id"], this.props.gameId);
   };
 
+  /**
+   * Finishes the player turn. This means that the player turn index
+   * will be updated and if required, AI turn results will be fetched.
+   * @param isUserTurn defaults to false, indicates whether system should
+   * fetch the AI players turns from the server.
+   */
   finishPlayerTurn = (isUserTurn = false) => {
     this.props.finishPlayerTurn(
       isUserTurn,
@@ -57,12 +82,21 @@ class SinglePlayerController extends React.Component {
     );
   };
 
+  /**
+   * Gets the current AI players turn result, again current means the AI player
+   * who is using their turn.
+   * @returns turnresult object detailing attribute changes in a single turn
+   */
   findPlayerTurnResult = () => {
     let playerNext = this.props.players[this.props.playerTurnIndex];
     return this.props.AITurnResults.filter(value => value["playerId"] === playerNext["id"])[0];
   };
 
-  // Used to keep the players turn but just animate a nested turn result i.e. set back
+  /**
+   * Used to keep the players turn but just animate a nested turn result i.e. set back
+   * with multiple 'turns' per turn.
+   * @param playerTurnResult parent turn result of the player
+   */
   updatePlayerTurnResult = playerTurnResult => {
     let currentPlayer = this.props.players[this.props.playerTurnIndex];
     let newAITurnResults = this.props.AITurnResults.map(x => {
@@ -74,11 +108,19 @@ class SinglePlayerController extends React.Component {
     this.props.updatePlayerTurnResult(newAITurnResults);
   };
 
+  /**
+   * Helper method to indicate if the current turn is the
+   * users turn.
+   * @returns true is the current turn is the users turn
+   */
   isUsersTurn = () => {
     let currentPlayerId = this.props.players[this.props.playerTurnIndex]["id"];
     return currentPlayerId === this.props.userPlayer["id"];
   };
 
+  /**
+   * Updates player model state in redux
+   */
   updatePlayerState = player => {
     let players = this.props.players.slice();
     players[this.props.playerTurnIndex] = player;
